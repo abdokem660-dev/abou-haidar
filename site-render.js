@@ -137,6 +137,17 @@ function _g(obj, path){
     var bd=_g(obj,"hero.badge");
     if(bd) return { ar:bd[kk+"_ar"], en:bd[kk+"_en"] };
   }
+  // 3b) hero.statN.value -> stats[N] {ar: value_ar, en: value_en}
+  if(/^hero\.stat(\d+)\.value$/.test(path)){
+    var sn=path.match(/^hero\.stat(\d+)\.value$/)[1];
+    var st=_g(obj,"hero.stats."+sn);
+    if(st) return { ar:st.value_ar, en:st.value_en };
+  }
+  // 3c) story.badge_value -> {ar: badge_value_ar, en: badge_value_en}
+  if(path==="story.badge_value"){
+    var sb=_g(obj,"story");
+    if(sb) return { ar:sb.badge_value_ar, en:sb.badge_value_en };
+  }
   // 4) menu.tab.<id>
   if(/^menu\.tab\.([a-z]+)$/.test(path)){
     var id=path.match(/^menu\.tab\.([a-z]+)$/)[1];
