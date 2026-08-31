@@ -8,6 +8,7 @@
 <meta property="og:title" content="أبو حيدر — أشهر شاورما في مصر">
 <meta property="og:description" content="منذ 1968، الخلطة السرية والطعم الأصيل في روكسي، مصر الجديدة.">
 <meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -868,14 +869,6 @@ storeArabic();
 applyFallback(localStorage.getItem("ah-lang") || "ar");
 const saved = localStorage.getItem("ah-lang") || "ar";
 setLang(saved);
-
-document.querySelectorAll("[data-lang]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const l = btn.getAttribute("data-lang");
-    applyFallback(l);
-    setLang(l);
-  });
-});
 
 /* ================= HEADER SCROLL ================= */
 const header=document.getElementById("header");
