@@ -870,6 +870,14 @@ applyFallback(localStorage.getItem("ah-lang") || "ar");
 const saved = localStorage.getItem("ah-lang") || "ar";
 setLang(saved);
 
+document.querySelectorAll("[data-lang]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const l = btn.getAttribute("data-lang");
+    applyFallback(l);
+    setLang(l);
+  });
+});
+
 /* ================= HEADER SCROLL ================= */
 const header=document.getElementById("header");
 const onScroll=()=>{ header.classList.toggle("scrolled", window.scrollY>40); };
