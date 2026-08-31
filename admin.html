@@ -113,13 +113,13 @@
 <!-- ================= LOGIN ================= -->
 <div id="loginView" class="wrap">
   <div class="login-wrap">
-    <h2 data-admin="login.title">طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„</h2>
-    <p class="sub" data-admin="login.sub">ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط§ظ„ظƒ â€” ظ…طµط±ظ‘ط­ ظ„ظƒ ط¨ط§ظ„طھط¹ط¯ظٹظ„ ط¹ظ„ظ‰ ظ…ط­طھظˆظ‰ ط§ظ„ظ…ظˆظ‚ط¹.</p>
-    <div class="field"><label data-admin="login.email">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</label><input type="email" id="loginEmail" placeholder="owner@example.com"></div>
-    <div class="field"><label data-admin="login.pass">ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±</label><input type="password" id="loginPass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style="text-align:start"></div>
+    <h2 data-admin="login_title">طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„</h2>
+    <p class="sub" data-admin="login_sub">ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط§ظ„ظƒ â€” ظ…طµط±ظ‘ط­ ظ„ظƒ ط¨ط§ظ„طھط¹ط¯ظٹظ„ ط¹ظ„ظ‰ ظ…ط­طھظˆظ‰ ط§ظ„ظ…ظˆظ‚ط¹.</p>
+    <div class="field"><label data-admin="login_email">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</label><input type="email" id="loginEmail" placeholder="owner@example.com"></div>
+    <div class="field"><label data-admin="login_pass">ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±</label><input type="password" id="loginPass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style="text-align:start"></div>
     <div class="btns"><button class="btn" id="loginBtn" style="width:100%">ط¯ط®ظˆظ„</button></div>
     <div class="err-msg" id="loginErr"></div>
-    <p class="hint" data-admin="login.hint">ط£ظˆظ„ ظ…ط±ط©طں ظپط¹ظ‘ظ„ Supabase ظپظٹ ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„طŒ ط«ظ… ط£ظ†ط´ط¦ ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ. ط§ظ„ط­ط³ط§ط¨ ظ‡ظˆ ط§ظ„ظ…ط³ط¤ظˆظ„ ط§ظ„ظˆط­ظٹط¯ ط¹ظ† طھط¹ط¯ظٹظ„ ط§ظ„ظ…ط­طھظˆظ‰.</p>
+    <p class="hint" data-admin="login_hint">ط£ظˆظ„ ظ…ط±ط©طں ظپط¹ظ‘ظ„ Supabase ظپظٹ ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„طŒ ط«ظ… ط£ظ†ط´ط¦ ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ. ط§ظ„ط­ط³ط§ط¨ ظ‡ظˆ ط§ظ„ظ…ط³ط¤ظˆظ„ ط§ظ„ظˆط­ظٹط¯ ط¹ظ† طھط¹ط¯ظٹظ„ ط§ظ„ظ…ط­طھظˆظ‰.</p>
   </div>
 </div>
 
@@ -408,17 +408,7 @@ function setAdminLang(l){
   document.getElementById("saveAll").textContent = T("save");
   localStorage.setItem("ah-admin-lang", LAN);
 }
-/* طھط±ط¬ظ…ط© ط¹ظ†ط§طµط± ط«ط§ط¨طھط© ظپظٹ login (ظ„ط§ طھط­ظ…ظ„ data-admin): */
-function applyStaticLabels(){
-  // login wrap sets from LOC
-  var txt=LOC[LAN];
-  setText("loginTitle", txt.login_title);
-  setText("loginSub", txt.login_sub);
-  setText("loginEmailLabel", txt.login_email);
-  setText("loginPassLabel", txt.login_pass);
-  setText("loginHint", txt.login_hint);
-}
-function setText(id, v){ var el=document.getElementById(id); if(el) el.textContent=v; }
+
 
 /* ---------------- ط£ط¯ظˆط§طھ ظ…ط³ط§ط¹ط¯ط© ---------------- */
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -856,7 +846,6 @@ function showLogin(){ document.getElementById("loginView").style.display="block"
 
 function init(){
   updateConn();
-  applyStaticLabels();
   setAdminLang(LAN);
 
   // طھط¨ظˆظٹط¨ط§طھ
