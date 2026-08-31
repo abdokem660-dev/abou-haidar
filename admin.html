@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ظ„ظˆط­ط© طھط­ظƒظ… ط£ط¨ظˆ ط­ظٹط¯ط±</title>
+<title>لوحة تحكم أبو حيدر</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -104,37 +104,37 @@
 <body class="lang-en">
 
 <div class="brand-bar">
-  <h1 data-admin-head>Abou Haidar â€” Admin Dashboard</h1>
+  <h1 data-admin-head>Abou Haidar — Admin Dashboard</h1>
   <button class="pill gold" id="cfgBtn">Supabase Settings</button>
-  <button class="pill" id="langToggle">ط¹ط±ط¨ظٹ</button>
+  <button class="pill" id="langToggle">عربي</button>
   <button class="pill" id="logoutBtn" style="display:none">Log out</button>
 </div>
 
 <!-- ================= LOGIN ================= -->
 <div id="loginView" class="wrap">
   <div class="login-wrap">
-    <h2 data-admin="login_title">طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„</h2>
-    <p class="sub" data-admin="login_sub">ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط§ظ„ظƒ â€” ظ…طµط±ظ‘ط­ ظ„ظƒ ط¨ط§ظ„طھط¹ط¯ظٹظ„ ط¹ظ„ظ‰ ظ…ط­طھظˆظ‰ ط§ظ„ظ…ظˆظ‚ط¹.</p>
-    <div class="field"><label data-admin="login_email">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</label><input type="email" id="loginEmail" placeholder="owner@example.com"></div>
-    <div class="field"><label data-admin="login_pass">ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±</label><input type="password" id="loginPass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" style="text-align:start"></div>
-    <div class="btns"><button class="btn" id="loginBtn" style="width:100%">ط¯ط®ظˆظ„</button></div>
+    <h2 data-admin="login_title">تسجيل الدخول</h2>
+    <p class="sub" data-admin="login_sub">لوحة تحكم المالك — مصرّح لك بالتعديل على محتوى الموقع.</p>
+    <div class="field"><label data-admin="login_email">البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="owner@example.com"></div>
+    <div class="field"><label data-admin="login_pass">كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••••" style="text-align:start"></div>
+    <div class="btns"><button class="btn" id="loginBtn" style="width:100%">دخول</button></div>
     <div class="err-msg" id="loginErr"></div>
-    <p class="hint" data-admin="login_hint">ط£ظˆظ„ ظ…ط±ط©طں ظپط¹ظ‘ظ„ Supabase ظپظٹ ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„طŒ ط«ظ… ط£ظ†ط´ط¦ ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ. ط§ظ„ط­ط³ط§ط¨ ظ‡ظˆ ط§ظ„ظ…ط³ط¤ظˆظ„ ط§ظ„ظˆط­ظٹط¯ ط¹ظ† طھط¹ط¯ظٹظ„ ط§ظ„ظ…ط­طھظˆظ‰.</p>
+    <p class="hint" data-admin="login_hint">أول مرة؟ فعّل Supabase في إعدادات الاتصال، ثم أنشئ حساب المالك. الحساب هو المسؤول الوحيد عن تعديل المحتوى.</p>
   </div>
 </div>
 
 <!-- ================= CONFIG MODAL ================= -->
 <div id="cfgModal">
   <div class="modal-card">
-    <h2>ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„ ط¨ظ€ Supabase</h2>
+    <h2>إعدادات الاتصال بـ Supabase</h2>
     <div class="field"><label>Supabase URL</label><input type="text" id="cfgUrl" placeholder="https://xxxx.supabase.co"></div>
-    <div class="field"><label>Anon Key (ط§ظ„ظ…ظپطھط§ط­ ط§ظ„ط¹ط§ظ…)</label><input type="text" id="cfgAnon" placeholder="eyJ..."></div>
-    <div class="field"><label>ط¨ط±ظٹط¯ طµط§ط­ط¨ ط§ظ„ط­ط³ط§ط¨</label><input type="email" id="cfgEmail" placeholder="owner@example.com"></div>
-    <div class="field"><label>ظƒظ„ظ…ط© ظ…ط±ظˆط± ط£ظˆظ„ظٹط© (ظ„ظ„ط¥ظ†ط´ط§ط، ط§ظ„ط£ظˆظ„ ظپظ‚ط·)</label><input type="password" id="cfgSetupPass" placeholder="ظƒظ„ظ…ط© ظ…ط±ظˆط± ظ‚ظˆظٹط©"></div>
+    <div class="field"><label>Anon Key (المفتاح العام)</label><input type="text" id="cfgAnon" placeholder="eyJ..."></div>
+    <div class="field"><label>بريد صاحب الحساب</label><input type="email" id="cfgEmail" placeholder="owner@example.com"></div>
+    <div class="field"><label>كلمة مرور أولية (للإنشاء الأول فقط)</label><input type="password" id="cfgSetupPass" placeholder="كلمة مرور قوية"></div>
     <div class="btns">
-      <button class="btn" id="cfgSave">ط­ظپط¸ ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ</button>
-      <button class="btn ghost" id="cfgCreateOwner">ط¥ظ†ط´ط§ط، ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ</button>
-      <button class="btn ghost" id="cfgClose">ط¥ط؛ظ„ط§ظ‚</button>
+      <button class="btn" id="cfgSave">حفظ الإعدادات</button>
+      <button class="btn ghost" id="cfgCreateOwner">إنشاء حساب المالك</button>
+      <button class="btn ghost" id="cfgClose">إغلاق</button>
     </div>
     <div class="hint" id="cfgHint"></div>
   </div>
@@ -144,70 +144,70 @@
 <div id="dashView" style="display:none">
   <div class="wrap">
     <div class="preview-bar">
-      <span>ظ…ط¹ط§ظٹظ†ط© ط§ظ„ظ…ظˆظ‚ط¹:</span>
-      <a href="index.html" target="_blank" rel="noopener">ظپطھط­ ط§ظ„ظ…ظˆظ‚ط¹ â†—</a>
+      <span>معاينة الموقع:</span>
+      <a href="index.html" target="_blank" rel="noopener">فتح الموقع ↗</a>
       <span style="flex:1"></span>
       <span class="status" id="connStatus"></span>
     </div>
 
     <div class="tabs" id="tabs">
-      <button class="tab on" data-v="identity">ط§ظ„ط¨ط±ط§ظ†ط¯ ظˆط§ظ„ط£ظ„ظˆط§ظ†</button>
-      <button class="tab" data-v="story">ط§ظ„ظ‚طµط© ظˆط§ظ„ظ…ظ…ظٹط²ط§طھ</button>
-      <button class="tab" data-v="menu">ط§ظ„ظ…ظ†ظٹظˆ</button>
-      <button class="tab" data-v="gallery">ط§ظ„ظ…ط¹ط±ط¶</button>
-      <button class="tab" data-v="contact">ط§ظ„طھظˆط§طµظ„ ظˆط§ظ„طھط°ظٹظٹظ„</button>
-      <button class="tab" data-v="account">ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط£ظ…ط§ظ†</button>
+      <button class="tab on" data-v="identity">البراند والألوان</button>
+      <button class="tab" data-v="story">القصة والمميزات</button>
+      <button class="tab" data-v="menu">المنيو</button>
+      <button class="tab" data-v="gallery">المعرض</button>
+      <button class="tab" data-v="contact">التواصل والتذييل</button>
+      <button class="tab" data-v="account">الحساب والأمان</button>
     </div>
 
     <!-- Identity -->
     <div id="identity" class="tabview on">
       <div class="card">
-        <h2><span class="sec-num">1</span>ط§ظ„ط¨ط±ط§ظ†ط¯ ظˆط¨ظٹط§ظ†ط§طھ ط§ظ„ظ…طھطµظپط­</h2>
+        <h2><span class="sec-num">1</span>البراند وبيانات المتصفح</h2>
         <div class="grid">
-          <div class="field"><label>ط§ط³ظ… ط§ظ„ط¨ط±ط§ظ†ط¯ (ط¹ط±ط¨ظٹ)</label><input data-path="brand_name_ar"></div>
-          <div class="field"><label>ط§ط³ظ… ط§ظ„ط¨ط±ط§ظ†ط¯ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="brand_name_en"></div>
-          <div class="field"><label>ظˆطµظپ ظپط±ط¹ظٹ (ط¹ط±ط¨ظٹ)</label><input data-path="brand_sub_ar"></div>
-          <div class="field"><label>ظˆطµظپ ظپط±ط¹ظٹ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="brand_sub_en"></div>
-          <div class="field"><label>ط¹ظ†ظˆط§ظ† ط§ظ„ظ…طھطµظپط­ (ط¹ط±ط¨ظٹ)</label><input data-path="meta.title_ar"></div>
-          <div class="field"><label>ط¹ظ†ظˆط§ظ† ط§ظ„ظ…طھطµظپط­ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="meta.title_en"></div>
-          <div class="field"><label class="mini">ظˆطµظپ ط§ظ„ظ…طھطµظپط­ (ط¹ط±ط¨ظٹ)</label><textarea data-path="meta.desc_ar"></textarea></div>
-          <div class="field"><label class="mini">ظˆطµظپ ط§ظ„ظ…طھطµظپط­ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="meta.desc_en"></textarea></div>
-          <div class="field"><label class="mini">ظ…ط³ط§ط± ط§ظ„ظ„ظˆط¬ظˆ</label><input data-path="meta.logo"></div>
+          <div class="field"><label>اسم البراند (عربي)</label><input data-path="brand_name_ar"></div>
+          <div class="field"><label>اسم البراند (إنجليزي)</label><input data-path="brand_name_en"></div>
+          <div class="field"><label>وصف فرعي (عربي)</label><input data-path="brand_sub_ar"></div>
+          <div class="field"><label>وصف فرعي (إنجليزي)</label><input data-path="brand_sub_en"></div>
+          <div class="field"><label>عنوان المتصفح (عربي)</label><input data-path="meta.title_ar"></div>
+          <div class="field"><label>عنوان المتصفح (إنجليزي)</label><input data-path="meta.title_en"></div>
+          <div class="field"><label class="mini">وصف المتصفح (عربي)</label><textarea data-path="meta.desc_ar"></textarea></div>
+          <div class="field"><label class="mini">وصف المتصفح (إنجليزي)</label><textarea data-path="meta.desc_en"></textarea></div>
+          <div class="field"><label class="mini">مسار اللوجو</label><input data-path="meta.logo"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">2</span>ط£ظ„ظˆط§ظ† ط§ظ„ظ‡ظˆظٹط©</h2>
+        <h2><span class="sec-num">2</span>ألوان الهوية</h2>
         <div class="theme-swatch-row" id="themeEditor"></div>
-        <p class="hint">ط§ط®طھط± ط§ظ„ط£ظ„ظˆط§ظ† ظ„طھط­ط¯ظٹط« ظ‡ظˆظٹط© ط§ظ„ظ…ظˆظ‚ط¹ ظ…ط¨ط§ط´ط±ط© (ط§ظ„ط£ط²ط±ط±ط§ط±طŒ ط§ظ„ط¹ظ†ط§ظˆظٹظ†طŒ ط§ظ„ط®ظ„ظپظٹط§طھâ€¦).</p>
+        <p class="hint">اختر الألوان لتحديث هوية الموقع مباشرة (الأزررار، العناوين، الخلفيات…).</p>
       </div>
     </div>
 
     <!-- Story -->
     <div id="story" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">3</span>ط§ظ„ظ‚طµط©</h2>
+        <h2><span class="sec-num">3</span>القصة</h2>
         <div class="grid">
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¹ط±ط¨ظٹ)</label><input data-path="story.tag.ar"></div>
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.tag.en"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† ط¬ظ…ظ„ط© 1 (ط¹ط±ط¨ظٹ)</label><input data-path="story.title_1.ar"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† ط¬ظ…ظ„ط© 1 (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.title_1.en"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† ط¬ظ…ظ„ط© 2 (ط¹ط±ط¨ظٹ)</label><input data-path="story.title_2.ar"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† ط¬ظ…ظ„ط© 2 (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.title_2.en"></div>
-          <div class="field"><label>ط§ظ„ظپظ‚ط±ط© 1 (ط¹ط±ط¨ظٹ)</label><textarea data-path="story.p1.ar"></textarea></div>
-          <div class="field"><label>ط§ظ„ظپظ‚ط±ط© 1 (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="story.p1.en"></textarea></div>
-          <div class="field"><label>ط§ظ„ظپظ‚ط±ط© 2 (ط¹ط±ط¨ظٹ)</label><textarea data-path="story.p2.ar"></textarea></div>
-          <div class="field"><label>ط§ظ„ظپظ‚ط±ط© 2 (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="story.p2.en"></textarea></div>
-          <div class="field"><label>ط²ط± ط§ظ„ظ‚طµط© (ط¹ط±ط¨ظٹ)</label><input data-path="story.cta.ar"></div>
-          <div class="field"><label>ط²ط± ط§ظ„ظ‚طµط© (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.cta.en"></div>
-          <div class="field"><label>ط´ط§ط±ط© ط§ظ„ط³ظ†ظˆط§طھ (ط¹ط±ط¨ظٹ)</label><input data-path="story.badge_value_ar"></div>
-          <div class="field"><label>ط´ط§ط±ط© ط§ظ„ط³ظ†ظˆط§طھ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.badge_value_en"></div>
-          <div class="field"><label>ظ…ط¹ط±ظ‘ظپ ط§ظ„ط´ط§ط±ط© (ط¹ط±ط¨ظٹ)</label><input data-path="story.badge_label.ar"></div>
-          <div class="field"><label>ظ…ط¹ط±ظ‘ظپ ط§ظ„ط´ط§ط±ط© (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="story.badge_label.en"></div>
+          <div class="field"><label>اللقب (عربي)</label><input data-path="story.tag.ar"></div>
+          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="story.tag.en"></div>
+          <div class="field"><label>العنوان جملة 1 (عربي)</label><input data-path="story.title_1.ar"></div>
+          <div class="field"><label>العنوان جملة 1 (إنجليزي)</label><input data-path="story.title_1.en"></div>
+          <div class="field"><label>العنوان جملة 2 (عربي)</label><input data-path="story.title_2.ar"></div>
+          <div class="field"><label>العنوان جملة 2 (إنجليزي)</label><input data-path="story.title_2.en"></div>
+          <div class="field"><label>الفقرة 1 (عربي)</label><textarea data-path="story.p1.ar"></textarea></div>
+          <div class="field"><label>الفقرة 1 (إنجليزي)</label><textarea data-path="story.p1.en"></textarea></div>
+          <div class="field"><label>الفقرة 2 (عربي)</label><textarea data-path="story.p2.ar"></textarea></div>
+          <div class="field"><label>الفقرة 2 (إنجليزي)</label><textarea data-path="story.p2.en"></textarea></div>
+          <div class="field"><label>زر القصة (عربي)</label><input data-path="story.cta.ar"></div>
+          <div class="field"><label>زر القصة (إنجليزي)</label><input data-path="story.cta.en"></div>
+          <div class="field"><label>شارة السنوات (عربي)</label><input data-path="story.badge_value_ar"></div>
+          <div class="field"><label>شارة السنوات (إنجليزي)</label><input data-path="story.badge_value_en"></div>
+          <div class="field"><label>معرّف الشارة (عربي)</label><input data-path="story.badge_label.ar"></div>
+          <div class="field"><label>معرّف الشارة (إنجليزي)</label><input data-path="story.badge_label.en"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">4</span>ظƒط±ظˆطھ ط§ظ„ظ…ظ…ظٹط²ط§طھ (ط§ظ„ظ‚ظ„ط§ط¨)</h2>
-        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addSig">+ ط¥ط¶ط§ظپط© ظƒط§ط±طھ</button></div>
+        <h2><span class="sec-num">4</span>كروت المميزات (القلاب)</h2>
+        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addSig">+ إضافة كارت</button></div>
         <div id="sigList"></div>
       </div>
     </div>
@@ -215,32 +215,32 @@
     <!-- Menu -->
     <div id="menu" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">5</span>ط§ظ„ط¹ظ†ط§ظˆظٹظ† ط§ظ„ط¹ط§ظ…ط© ظ„ظ„ظ…ظ†ظٹظˆ</h2>
+        <h2><span class="sec-num">5</span>العناوين العامة للمنيو</h2>
         <div class="grid">
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¹ط±ط¨ظٹ)</label><input data-path="menu.tag.ar"></div>
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="menu.tag.en"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¹ط±ط¨ظٹ)</label><input data-path="menu.title.ar"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="menu.title.en"></div>
-          <div class="field"><label>ط§ظ„ظˆطµظپ (ط¹ط±ط¨ظٹ)</label><textarea data-path="menu.sub.ar"></textarea></div>
-          <div class="field"><label>ط§ظ„ظˆطµظپ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="menu.sub.en"></textarea></div>
-          <div class="field"><label>ظ…ظ„ط§ط­ط¸ط© (ط¹ط±ط¨ظٹ)</label><input data-path="menu.note.ar"></div>
-          <div class="field"><label>ظ…ظ„ط§ط­ط¸ط© (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="menu.note.en"></div>
+          <div class="field"><label>اللقب (عربي)</label><input data-path="menu.tag.ar"></div>
+          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="menu.tag.en"></div>
+          <div class="field"><label>العنوان (عربي)</label><input data-path="menu.title.ar"></div>
+          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="menu.title.en"></div>
+          <div class="field"><label>الوصف (عربي)</label><textarea data-path="menu.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف (إنجليزي)</label><textarea data-path="menu.sub.en"></textarea></div>
+          <div class="field"><label>ملاحظة (عربي)</label><input data-path="menu.note.ar"></div>
+          <div class="field"><label>ملاحظة (إنجليزي)</label><input data-path="menu.note.en"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">6</span>ط§ظ„طھط¨ظˆظٹط¨ط§طھ</h2>
+        <h2><span class="sec-num">6</span>التبويبات</h2>
         <div id="tabList"></div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">7</span>ط§ظ„ط£طµظ†ط§ظپ ط­ط³ط¨ ط§ظ„ظپط¦ط©</h2>
+        <h2><span class="sec-num">7</span>الأصناف حسب الفئة</h2>
         <div id="menuEditor"></div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">8</span>طµظˆط±ط© ط§ظ„ظ…ظ†ظٹظˆ</h2>
+        <h2><span class="sec-num">8</span>صورة المنيو</h2>
         <div class="grid">
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¹ط±ط¨ظٹ)</label><input data-path="menu.menu_image_title.ar"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="menu.menu_image_title.en"></div>
-          <div class="field"><label class="mini">ظ…ط³ط§ط± ط§ظ„طµظˆط±ط©</label><input data-path="menu.menu_image"></div>
+          <div class="field"><label>العنوان (عربي)</label><input data-path="menu.menu_image_title.ar"></div>
+          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="menu.menu_image_title.en"></div>
+          <div class="field"><label class="mini">مسار الصورة</label><input data-path="menu.menu_image"></div>
         </div>
       </div>
     </div>
@@ -248,19 +248,19 @@
     <!-- Gallery -->
     <div id="gallery" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">9</span>ط¹ظ†ط§ظˆظٹظ† ط§ظ„ظ…ط¹ط±ط¶</h2>
+        <h2><span class="sec-num">9</span>عناوين المعرض</h2>
         <div class="grid">
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¹ط±ط¨ظٹ)</label><input data-path="gallery.tag.ar"></div>
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="gallery.tag.en"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¹ط±ط¨ظٹ)</label><input data-path="gallery.title.ar"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="gallery.title.en"></div>
-          <div class="field"><label>ط§ظ„ظˆطµظپ (ط¹ط±ط¨ظٹ)</label><textarea data-path="gallery.sub.ar"></textarea></div>
-          <div class="field"><label>ط§ظ„ظˆطµظپ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="gallery.sub.en"></textarea></div>
+          <div class="field"><label>اللقب (عربي)</label><input data-path="gallery.tag.ar"></div>
+          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="gallery.tag.en"></div>
+          <div class="field"><label>العنوان (عربي)</label><input data-path="gallery.title.ar"></div>
+          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="gallery.title.en"></div>
+          <div class="field"><label>الوصف (عربي)</label><textarea data-path="gallery.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف (إنجليزي)</label><textarea data-path="gallery.sub.en"></textarea></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">10</span>طµظˆط± ط§ظ„ظ…ط¹ط±ط¶</h2>
-        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addGal">+ ط¥ط¶ط§ظپط© طµظˆط±ط©</button></div>
+        <h2><span class="sec-num">10</span>صور المعرض</h2>
+        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addGal">+ إضافة صورة</button></div>
         <div id="galList"></div>
       </div>
     </div>
@@ -268,34 +268,34 @@
     <!-- Contact -->
     <div id="contact" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">11</span>ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„طھظˆط§طµظ„</h2>
+        <h2><span class="sec-num">11</span>معلومات التواصل</h2>
         <div class="grid">
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¹ط±ط¨ظٹ)</label><input data-path="contact.tag.ar"></div>
-          <div class="field"><label>ط§ظ„ظ„ظ‚ط¨ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="contact.tag.en"></div>
-          <div class="field"><label>ط±ظ‚ظ… ط§ظ„ظ‡ط§طھظپ</label><input data-path="contact.phone"></div>
-          <div class="field"><label class="mini">ط±ط§ط¨ط· ظپظٹط³ط¨ظˆظƒ</label><input data-path="contact.facebook"></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¹ط±ط¨ظٹ)</label><textarea data-path="contact.address_ar"></textarea></div>
-          <div class="field"><label>ط§ظ„ط¹ظ†ظˆط§ظ† (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="contact.address_en"></textarea></div>
-          <div class="field"><label>ظ…ظˆط§ط¹ظٹط¯ â€” ظٹظˆظ…ظٹظ‹ط§ (ط¹ط±ط¨ظٹ)</label><input data-path="contact.hours_daily.ar"></div>
-          <div class="field"><label>ظ…ظˆط§ط¹ظٹط¯ â€” ظٹظˆظ…ظٹظ‹ط§ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="contact.hours_daily.en"></div>
-          <div class="field"><label>ظ…ظˆط§ط¹ظٹط¯ â€” ط§ظ„ظˆظ‚طھ (ط¹ط±ط¨ظٹ)</label><input data-path="contact.hours_time.ar"></div>
-          <div class="field"><label>ظ…ظˆط§ط¹ظٹط¯ â€” ط§ظ„ظˆظ‚طھ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="contact.hours_time.en"></div>
-          <div class="field"><label>ظ…ظ„ط§ط­ط¸ط© ط§ظ„ظ†ظ‚ط¯ (ط¹ط±ط¨ظٹ)</label><input data-path="contact.hours_note.ar"></div>
-          <div class="field"><label>ظ…ظ„ط§ط­ط¸ط© ط§ظ„ظ†ظ‚ط¯ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="contact.hours_note.en"></div>
-          <div class="field"><label>ظ†طµ ط§ظ„ظ…طھط§ط¨ط¹ط© (ط¹ط±ط¨ظٹ)</label><input data-path="contact.follow_text.ar"></div>
-          <div class="field"><label>ظ†طµ ط§ظ„ظ…طھط§ط¨ط¹ط© (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="contact.follow_text.en"></div>
-          <div class="field"><label>ظ„ظٹظ†ظƒ ط¥ظ†ط³طھط¬ط±ط§ظ…</label><input data-path="contact.instagram"></div>
+          <div class="field"><label>اللقب (عربي)</label><input data-path="contact.tag.ar"></div>
+          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="contact.tag.en"></div>
+          <div class="field"><label>رقم الهاتف</label><input data-path="contact.phone"></div>
+          <div class="field"><label class="mini">رابط فيسبوك</label><input data-path="contact.facebook"></div>
+          <div class="field"><label>العنوان (عربي)</label><textarea data-path="contact.address_ar"></textarea></div>
+          <div class="field"><label>العنوان (إنجليزي)</label><textarea data-path="contact.address_en"></textarea></div>
+          <div class="field"><label>مواعيد — يوميًا (عربي)</label><input data-path="contact.hours_daily.ar"></div>
+          <div class="field"><label>مواعيد — يوميًا (إنجليزي)</label><input data-path="contact.hours_daily.en"></div>
+          <div class="field"><label>مواعيد — الوقت (عربي)</label><input data-path="contact.hours_time.ar"></div>
+          <div class="field"><label>مواعيد — الوقت (إنجليزي)</label><input data-path="contact.hours_time.en"></div>
+          <div class="field"><label>ملاحظة النقد (عربي)</label><input data-path="contact.hours_note.ar"></div>
+          <div class="field"><label>ملاحظة النقد (إنجليزي)</label><input data-path="contact.hours_note.en"></div>
+          <div class="field"><label>نص المتابعة (عربي)</label><input data-path="contact.follow_text.ar"></div>
+          <div class="field"><label>نص المتابعة (إنجليزي)</label><input data-path="contact.follow_text.en"></div>
+          <div class="field"><label>لينك إنستجرام</label><input data-path="contact.instagram"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">12</span>ط§ظ„طھط°ظٹظٹظ„</h2>
+        <h2><span class="sec-num">12</span>التذييل</h2>
         <div class="grid">
-          <div class="field"><label>ظˆطµظپ ط§ظ„ط¨ط±ط§ظ†ط¯ (ط¹ط±ط¨ظٹ)</label><textarea data-path="footer.brand_p.ar"></textarea></div>
-          <div class="field"><label>ظˆطµظپ ط§ظ„ط¨ط±ط§ظ†ط¯ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-path="footer.brand_p.en"></textarea></div>
-          <div class="field"><label>ط­ظ‚ظˆظ‚ ط§ظ„ظ†ط´ط± (ط¹ط±ط¨ظٹ)</label><input data-path="footer.bottom_copyright.ar"></div>
-          <div class="field"><label>ط­ظ‚ظˆظ‚ ط§ظ„ظ†ط´ط± (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="footer.bottom_copyright.en"></div>
-          <div class="field"><label>ط§ظ„ط®ط· ط§ظ„ط®طھط§ظ…ظٹ (ط¹ط±ط¨ظٹ)</label><input data-path="footer.bottom_tagline.ar"></div>
-          <div class="field"><label>ط§ظ„ط®ط· ط§ظ„ط®طھط§ظ…ظٹ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-path="footer.bottom_tagline.en"></div>
+          <div class="field"><label>وصف البراند (عربي)</label><textarea data-path="footer.brand_p.ar"></textarea></div>
+          <div class="field"><label>وصف البراند (إنجليزي)</label><textarea data-path="footer.brand_p.en"></textarea></div>
+          <div class="field"><label>حقوق النشر (عربي)</label><input data-path="footer.bottom_copyright.ar"></div>
+          <div class="field"><label>حقوق النشر (إنجليزي)</label><input data-path="footer.bottom_copyright.en"></div>
+          <div class="field"><label>الخط الختامي (عربي)</label><input data-path="footer.bottom_tagline.ar"></div>
+          <div class="field"><label>الخط الختامي (إنجليزي)</label><input data-path="footer.bottom_tagline.en"></div>
         </div>
       </div>
     </div>
@@ -303,26 +303,26 @@
     <!-- Account & Security -->
     <div id="account" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">13</span data-admin="acc_pass_title">طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ط³ط±</h2>
+        <h2><span class="sec-num">13</span data-admin="acc_pass_title">تغيير كلمة السر</h2>
         <div class="grid">
-          <div class="field"><label data-admin="acc_current_pass">ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط©</label><input type="password" id="accCurrentPass" autocomplete="current-password"></div>
-          <div class="field"><label data-admin="acc_new_pass">ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©</label><input type="password" id="accNewPass" autocomplete="new-password"></div>
-          <div class="field"><label data-admin="acc_confirm_pass">طھط£ظƒظٹط¯ ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©</label><input type="password" id="accNewPass2" autocomplete="new-password"></div>
+          <div class="field"><label data-admin="acc_current_pass">كلمة السر الحالية</label><input type="password" id="accCurrentPass" autocomplete="current-password"></div>
+          <div class="field"><label data-admin="acc_new_pass">كلمة السر الجديدة</label><input type="password" id="accNewPass" autocomplete="new-password"></div>
+          <div class="field"><label data-admin="acc_confirm_pass">تأكيد كلمة السر الجديدة</label><input type="password" id="accNewPass2" autocomplete="new-password"></div>
         </div>
-        <div class="btns"><button class="btn" id="accPassBtn" data-admin="acc_pass_btn">طھط­ط¯ظٹط« ظƒظ„ظ…ط© ط§ظ„ط³ط±</button></div>
-        <p class="hint" data-admin="acc_pass_hint">ط³طھظڈطھط­ظ‚ظژظ‘ظ‚ ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط© ظ‚ط¨ظ„ ط§ظ„طھط­ط¯ظٹط«طŒ ظˆط¨ط¹ط¯ظ‡ط§ طھط³ط¬ظ‘ظ„ ط§ظ„ط¯ط®ظˆظ„ ط¨ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©.</p>
+        <div class="btns"><button class="btn" id="accPassBtn" data-admin="acc_pass_btn">تحديث كلمة السر</button></div>
+        <p class="hint" data-admin="acc_pass_hint">ستُتحقَّق كلمة السر الحالية قبل التحديث، وبعدها تسجّل الدخول بكلمة السر الجديدة.</p>
       </div>
       <div class="card">
-        <h2><span class="sec-num">14</span data-admin="acc_email_title">طھط؛ظٹظٹط± ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</h2>
-        <div class="field"><label data-admin="acc_new_email">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط§ظ„ط¬ط¯ظٹط¯</label><input type="email" id="accNewEmail" autocomplete="email"></div>
-        <div class="btns"><button class="btn" id="accEmailBtn" data-admin="acc_email_btn">طھط­ط¯ظٹط« ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</button></div>
-        <p class="hint" data-admin="acc_email_hint">ط³ظٹظڈط±ط³ظ„ طھط£ظƒظٹط¯ ط¥ظ„ظ‰ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¬ط¯ظٹط¯ ظ‚ط¨ظ„ طھظپط¹ظٹظ„ظ‡ â€” ط£ظƒظ…ظ„ ط§ظ„ط®ط·ظˆط© ظ…ظ† ط§ظ„ط±ط³ط§ظ„ط©طŒ ظˆط³ظٹظڈط­ط¯ظژظ‘ط« ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ظ…ط­ظپظˆط¸ ظپظٹ ط§ظ„ظ…طھطµظپط­.</p>
+        <h2><span class="sec-num">14</span data-admin="acc_email_title">تغيير البريد الإلكتروني</h2>
+        <div class="field"><label data-admin="acc_new_email">البريد الإلكتروني الجديد</label><input type="email" id="accNewEmail" autocomplete="email"></div>
+        <div class="btns"><button class="btn" id="accEmailBtn" data-admin="acc_email_btn">تحديث البريد الإلكتروني</button></div>
+        <p class="hint" data-admin="acc_email_hint">سيُرسل تأكيد إلى البريد الجديد قبل تفعيله — أكمل الخطوة من الرسالة، وسيُحدَّث البريد المحفوظ في المتصفح.</p>
       </div>
     </div>
 
     <div class="save-row">
-      <button class="btn" id="saveAll">ط­ظپط¸ ظƒظ„ ط§ظ„طھط؛ظٹظٹط±ط§طھ</button>
-      <div class="status" id="saveStatus">ط§ط¶ط؛ط· ط­ظپط¸ ظ„ط¯ظپط¹ ط§ظ„طھط؛ظٹظٹط±ط§طھ ظ…ط¨ط§ط´ط±ط© ط¥ظ„ظ‰ ط§ظ„ظ…ظˆظ‚ط¹ (ظٹظ†ط´ط¦ ط§ظ„ط¬ط¯ط§ظˆظ„ طھظ„ظ‚ط§ط¦ظٹظ‹ط§ ط¹ظ†ط¯ ط£ظˆظ„ ط­ظپط¸).</div>
+      <button class="btn" id="saveAll">حفظ كل التغييرات</button>
+      <div class="status" id="saveStatus">اضغط حفظ لدفع التغييرات مباشرة إلى الموقع (ينشئ الجداول تلقائيًا عند أول حفظ).</div>
     </div>
   </div>
 </div>
@@ -331,13 +331,13 @@
 
 <script>
 /* =====================================================================
-   ط£ط¨ظˆ ط­ظٹط¯ط± â€” admin.html  (ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط§ظ„ظƒ)
-   ظٹظ‚ط±ط£/ظٹظƒطھط¨ ط¹ظ„ظ‰ Supabase ط¹ط¨ط± REST (GoTrue + PostgREST).
-   ط§ظ„ط¬ط¯ط§ظˆظ„ ط§ظ„ط®ظ…ط³ط©: site_text, menu_items, gallery_items, signature_cards, theme.
-   ظٹط¹ظ…ظ„ ط¹ظ„ظ‰ ظ†ط³ط®ط© ظ…ط­ظ„ظٹط© ظ…ظ† siteContent (site-content.js) ظˆظٹط¯ظپط¹ ط§ظ„طھط¹ط¯ظٹظ„ط§طھ.
+   أبو حيدر — admin.html  (لوحة تحكم المالك)
+   يقرأ/يكتب على Supabase عبر REST (GoTrue + PostgREST).
+   الجداول الخمسة: site_text, menu_items, gallery_items, signature_cards, theme.
+   يعمل على نسخة محلية من siteContent (site-content.js) ويدفع التعديلات.
    ===================================================================== */
 
-/* ---------------- ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ ---------------- */
+/* ---------------- الإعدادات ---------------- */
 var CFG = {
   url: localStorage.getItem("ah-url") || "",
   anon: localStorage.getItem("ah-anon") || "",
@@ -345,60 +345,60 @@ var CFG = {
   email: localStorage.getItem("ah-email") || ""
 };
 var LAN = localStorage.getItem("ah-admin-lang") || "ar";
-var WORK = null;             // ظ†ط³ط®ط© ط§ظ„ط¹ظ…ظ„ ظ…ظ† siteContent
+var WORK = null;             // نسخة العمل من siteContent
 var CURRENT_DB = null;       // {text:[],menu:[],gallery:[],sig:[],theme:[]}
 
-/* ---------------- ط§ظ„ظ†طµظˆطµ (ط§ظ„ظˆط§ط¬ظ‡ط©) ---------------- */
+/* ---------------- النصوص (الواجهة) ---------------- */
 var LOC = {
-  ar: { head:"ظ„ظˆط­ط© طھط­ظƒظ… ط£ط¨ظˆ ط­ظٹط¯ط±", cfg:"ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„", en:"ط¹ط±ط¨ظٹ", out:"طھط³ط¬ظٹظ„ ط§ظ„ط®ط±ظˆط¬",
-    login_title:"طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„", login_sub:"ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط§ظ„ظƒ â€” ظ…طµط±ظ‘ط­ ظ„ظƒ ط¨ط§ظ„طھط¹ط¯ظٹظ„ ط¹ظ„ظ‰ ظ…ط­طھظˆظ‰ ط§ظ„ظ…ظˆظ‚ط¹.",
-    login_email:"ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ", login_pass:"ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±", login_btn:"ط¯ط®ظˆظ„",
-    login_hint:"ط£ظˆظ„ ظ…ط±ط©طں ظپط¹ظ‘ظ„ Supabase ظپظٹ ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§طھطµط§ظ„طŒ ط«ظ… ط£ظ†ط´ط¦ ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ. ط§ظ„ط­ط³ط§ط¨ ظ‡ظˆ ط§ظ„ظ…ط³ط¤ظˆظ„ ط§ظ„ظˆط­ظٹط¯ ط¹ظ† طھط¹ط¯ظٹظ„ ط§ظ„ظ…ط­طھظˆظ‰.",
-    need_login:"ط³ط¬ظ‘ظ„ ط§ظ„ط¯ط®ظˆظ„ ط£ظˆظ„ظ‹ط§", login_ok:"طھظ… طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ âœ“", login_err:"ط¨ظٹط§ظ†ط§طھ ط§ظ„ط¯ط®ظˆظ„ ط؛ظٹط± طµط­ظٹط­ط© ط£ظˆ ط§ظ„ط­ط³ط§ط¨ ط؛ظٹط± ظ…ظپط¹ظ‘ظ„",
-    cfg_upd:"طھظ… طھط­ط¯ظٹط« ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ âœ“", owner_ok:"طھظ… ط¥ظ†ط´ط§ط، ط­ط³ط§ط¨ ط§ظ„ظ…ط§ظ„ظƒ âœ“ طھط­ظ‚ظ‚ ظ…ظ† ط¨ط±ظٹط¯ظƒ ط¥ظ† ظ„ط²ظ….",
-    save:"ط­ظپط¸ ظƒظ„ ط§ظ„طھط؛ظٹظٹط±ط§طھ", saving:"ط¬ط§ط±ظچ ط§ظ„ط­ظپط¸â€¦", saved:"طھظ… ط§ظ„ط­ظپط¸ ط¨ظ†ط¬ط§ط­ ط¥ظ„ظ‰ Supabase âœ“",
-    save_err:"ظپط´ظ„ ط§ظ„ط­ظپط¸:", no_data:"ظ„ط§ ط¨ظٹط§ظ†ط§طھ ط¨ط¹ط¯ â€” ط§ط¶ط؛ط· ط­ظپط¸ ظ„ط¥ظ†ط´ط§ط، ط§ظ„ط¬ط¯ط§ظˆظ„ طھظ„ظ‚ط§ط¦ظٹظ‹ط§.",
-    del:"ط­ط°ظپ", add_sig:"+ ط¥ط¶ط§ظپط© ظƒط§ط±طھ", add_gal:"+ ط¥ط¶ط§ظپط© طµظˆط±ط©", add_dish:"+ ط¥ط¶ط§ظپط© طµظ†ظپ",
-    preview:"ظ…ط¹ط§ظٹظ†ط© ط§ظ„ظ…ظˆظ‚ط¹:", open:"ظپطھط­ ط§ظ„ظ…ظˆظ‚ط¹ â†—", status_off:"ظ„ظ… ظٹطھظ… ط§ظ„ط§طھطµط§ظ„ ط¨ظ€ Supabase ط¨ط¹ط¯",
-    acc_pass_title:"طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ط³ط±", acc_current_pass:"ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط©", acc_new_pass:"ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©",
-    acc_confirm_pass:"طھط£ظƒظٹط¯ ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©", acc_pass_btn:"طھط­ط¯ظٹط« ظƒظ„ظ…ط© ط§ظ„ط³ط±",
-    acc_pass_hint:"ط³طھظڈطھط­ظ‚ظژظ‘ظ‚ ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط© ظ‚ط¨ظ„ ط§ظ„طھط­ط¯ظٹط«طŒ ظˆط¨ط¹ط¯ظ‡ط§ طھط³ط¬ظ‘ظ„ ط§ظ„ط¯ط®ظˆظ„ ط¨ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط¬ط¯ظٹط¯ط©.",
-    acc_email_title:"طھط؛ظٹظٹط± ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ", acc_new_email:"ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط§ظ„ط¬ط¯ظٹط¯", acc_email_btn:"طھط­ط¯ظٹط« ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ",
-    acc_email_hint:"ط³ظٹظڈط±ط³ظ„ طھط£ظƒظٹط¯ ط¥ظ„ظ‰ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¬ط¯ظٹط¯ ظ‚ط¨ظ„ طھظپط¹ظٹظ„ظ‡ â€” ط£ظƒظ…ظ„ ط§ظ„ط®ط·ظˆط© ظ…ظ† ط§ظ„ط±ط³ط§ظ„ط©طŒ ظˆط³ظٹظڈط­ط¯ظژظ‘ط« ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ظ…ط­ظپظˆط¸ ظپظٹ ط§ظ„ظ…طھطµظپط­.",
-    pass_ok:"طھظ… طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ط³ط± ط¨ظ†ط¬ط§ط­ âœ“", pass_err:"ظپط´ظ„ طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ط³ط±:",
-    pass_mismatch:"ظƒظ„ظ…طھط§ ط§ظ„ط³ط± ط؛ظٹط± ظ…طھط·ط§ط¨ظ‚طھظٹظ†", pass_weak:"ظƒظ„ظ…ط© ط§ظ„ط³ط± ظ‚طµظٹط±ط© ط¬ط¯ظ‹ط§ (ظ¦ ط£ط­ط±ظپ ط¹ظ„ظ‰ ط§ظ„ط£ظ‚ظ„)",
-    verify_err:"ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط© ط؛ظٹط± طµط­ظٹط­ط©",
-    email_ok:"طھظ… ط¥ط±ط³ط§ظ„ طھط£ظƒظٹط¯ ظ„طھط؛ظٹظٹط± ط§ظ„ط¨ط±ظٹط¯ â€” ط±ط§ط¬ط¹ ط¨ط±ظٹط¯ظƒ ط§ظ„ط¬ط¯ظٹط¯.", email_ok_direct:"طھظ… طھط؛ظٹظٹط± ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ âœ“",
-    email_err:"ظپط´ظ„ طھط؛ظٹظٹط± ط§ظ„ط¨ط±ظٹط¯:" },
-  en: { head:"Abou Haidar â€” Admin Dashboard", cfg:"Supabase Settings", en:"ط¹ط±ط¨ظٹ", out:"Log out",
-    login_title:"Sign in", login_sub:"Owner control panel â€” authorized to edit site content.",
+  ar: { head:"لوحة تحكم أبو حيدر", cfg:"إعدادات الاتصال", en:"عربي", out:"تسجيل الخروج",
+    login_title:"تسجيل الدخول", login_sub:"لوحة تحكم المالك — مصرّح لك بالتعديل على محتوى الموقع.",
+    login_email:"البريد الإلكتروني", login_pass:"كلمة المرور", login_btn:"دخول",
+    login_hint:"أول مرة؟ فعّل Supabase في إعدادات الاتصال، ثم أنشئ حساب المالك. الحساب هو المسؤول الوحيد عن تعديل المحتوى.",
+    need_login:"سجّل الدخول أولًا", login_ok:"تم تسجيل الدخول ✓", login_err:"بيانات الدخول غير صحيحة أو الحساب غير مفعّل",
+    cfg_upd:"تم تحديث الإعدادات ✓", owner_ok:"تم إنشاء حساب المالك ✓ تحقق من بريدك إن لزم.",
+    save:"حفظ كل التغييرات", saving:"جارٍ الحفظ…", saved:"تم الحفظ بنجاح إلى Supabase ✓",
+    save_err:"فشل الحفظ:", no_data:"لا بيانات بعد — اضغط حفظ لإنشاء الجداول تلقائيًا.",
+    del:"حذف", add_sig:"+ إضافة كارت", add_gal:"+ إضافة صورة", add_dish:"+ إضافة صنف",
+    preview:"معاينة الموقع:", open:"فتح الموقع ↗", status_off:"لم يتم الاتصال بـ Supabase بعد",
+    acc_pass_title:"تغيير كلمة السر", acc_current_pass:"كلمة السر الحالية", acc_new_pass:"كلمة السر الجديدة",
+    acc_confirm_pass:"تأكيد كلمة السر الجديدة", acc_pass_btn:"تحديث كلمة السر",
+    acc_pass_hint:"ستُتحقَّق كلمة السر الحالية قبل التحديث، وبعدها تسجّل الدخول بكلمة السر الجديدة.",
+    acc_email_title:"تغيير البريد الإلكتروني", acc_new_email:"البريد الإلكتروني الجديد", acc_email_btn:"تحديث البريد الإلكتروني",
+    acc_email_hint:"سيُرسل تأكيد إلى البريد الجديد قبل تفعيله — أكمل الخطوة من الرسالة، وسيُحدَّث البريد المحفوظ في المتصفح.",
+    pass_ok:"تم تغيير كلمة السر بنجاح ✓", pass_err:"فشل تغيير كلمة السر:",
+    pass_mismatch:"كلمتا السر غير متطابقتين", pass_weak:"كلمة السر قصيرة جدًا (٦ أحرف على الأقل)",
+    verify_err:"كلمة السر الحالية غير صحيحة",
+    email_ok:"تم إرسال تأكيد لتغيير البريد — راجع بريدك الجديد.", email_ok_direct:"تم تغيير البريد الإلكتروني ✓",
+    email_err:"فشل تغيير البريد:" },
+  en: { head:"Abou Haidar — Admin Dashboard", cfg:"Supabase Settings", en:"عربي", out:"Log out",
+    login_title:"Sign in", login_sub:"Owner control panel — authorized to edit site content.",
     login_email:"Email", login_pass:"Password", login_btn:"Sign in",
     login_hint:"First time? Enable Supabase in Settings, then create the owner account. This account is the only one that can edit content.",
-    need_login:"Please log in first", login_ok:"Signed in âœ“", login_err:"Invalid credentials or account not enabled",
-    cfg_upd:"Settings updated âœ“", owner_ok:"Owner account created âœ“ Check your inbox if needed.",
-    save:"Save all changes", saving:"Savingâ€¦", saved:"Saved to Supabase âœ“",
-    save_err:"Save failed:", no_data:"No data yet â€” press save to auto-create the tables.",
+    need_login:"Please log in first", login_ok:"Signed in ✓", login_err:"Invalid credentials or account not enabled",
+    cfg_upd:"Settings updated ✓", owner_ok:"Owner account created ✓ Check your inbox if needed.",
+    save:"Save all changes", saving:"Saving…", saved:"Saved to Supabase ✓",
+    save_err:"Save failed:", no_data:"No data yet — press save to auto-create the tables.",
     del:"Delete", add_sig:"+ Add card", add_gal:"+ Add image", add_dish:"+ Add item",
-    preview:"Preview:", open:"Open site â†—", status_off:"Not connected to Supabase yet",
+    preview:"Preview:", open:"Open site ↗", status_off:"Not connected to Supabase yet",
     acc_pass_title:"Change password", acc_current_pass:"Current password", acc_new_pass:"New password",
     acc_confirm_pass:"Confirm new password", acc_pass_btn:"Update password",
     acc_pass_hint:"Your current password is verified first. After updating, sign in with the new password.",
     acc_email_title:"Change email", acc_new_email:"New email", acc_email_btn:"Update email",
-    acc_email_hint:"A confirmation is sent to the new email before it takes effect â€” follow the link in that message. The saved email in this browser updates automatically.",
-    pass_ok:"Password changed successfully âœ“", pass_err:"Password change failed:",
+    acc_email_hint:"A confirmation is sent to the new email before it takes effect — follow the link in that message. The saved email in this browser updates automatically.",
+    pass_ok:"Password changed successfully ✓", pass_err:"Password change failed:",
     pass_mismatch:"Passwords do not match", pass_weak:"Password is too short (at least 6 characters)",
     verify_err:"Current password is incorrect",
-    email_ok:"Confirmation sent to your new email â€” check your inbox.", email_ok_direct:"Email changed âœ“",
+    email_ok:"Confirmation sent to your new email — check your inbox.", email_ok_direct:"Email changed ✓",
     email_err:"Email change failed:" }
 };
 function T(k){ return (LOC[LAN]&&LOC[LAN][k]!==undefined)?LOC[LAN][k]:k; }
 function setAdminLang(l){
   LAN=l; document.documentElement.lang = l==="ar"?"ar":"en"; document.documentElement.dir = l==="ar"?"rtl":"ltr";
   document.body.classList.toggle("lang-en", l==="en");
-  document.getElementById("langToggle").textContent = l==="ar"?"EN":"ط¹ط±ط¨ظٹ";
+  document.getElementById("langToggle").textContent = l==="ar"?"EN":"عربي";
   document.querySelectorAll("[data-admin]").forEach(function(el){ el.textContent = T(el.getAttribute("data-admin")); });
   var tabs=[document.querySelectorAll(".tab")];
-  var labels=["ط§ظ„ط¨ط±ط§ظ†ط¯ ظˆط§ظ„ط£ظ„ظˆط§ظ†","ط§ظ„ظ‚طµط© ظˆط§ظ„ظ…ظ…ظٹط²ط§طھ","ط§ظ„ظ…ظ†ظٹظˆ","ط§ظ„ظ…ط¹ط±ط¶","ط§ظ„طھظˆط§طµظ„ ظˆط§ظ„طھط°ظٹظٹظ„","ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط£ظ…ط§ظ†"];
+  var labels=["البراند والألوان","القصة والمميزات","المنيو","المعرض","التواصل والتذييل","الحساب والأمان"];
   var labelsEn=["Brand & Colors","Story & Signatures","Menu","Gallery","Contact & Footer","Account & Security"];
   document.querySelectorAll(".tab").forEach(function(t,i){ t.textContent = (LAN==="ar"?labels:labelsEn)[i]; });
   document.querySelectorAll("[data-admin-head]").forEach(function(e){ e.textContent = T("head"); });
@@ -410,9 +410,9 @@ function setAdminLang(l){
 }
 
 
-/* ---------------- ط£ط¯ظˆط§طھ ظ…ط³ط§ط¹ط¯ط© ---------------- */
+/* ---------------- أدوات مساعدة ---------------- */
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-/* ظ‚ط±ط§ط،ط© ظ‚ظٹظ…ط© ظ…ظ† ظƒط§ط¦ظ† ظ…طھط¯ط§ط®ظ„ ط¨ط§ظ„ظ…ط³ط§ط± (ظ…ط«ظ„ "hero.h1_1" ط£ظˆ "menu.categories.shawarma.0.name") */
+/* قراءة قيمة من كائن متداخل بالمسار (مثل "hero.h1_1" أو "menu.categories.shawarma.0.name") */
 function walk(obj, path){
   if(!obj||!path) return undefined;
   var parts=path.split("."); var o=obj;
@@ -451,7 +451,7 @@ function loginRequest(email){
     body:JSON.stringify({ email:email, password:document.getElementById("loginPass").value })
   }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error_description||j.msg||"login failed"); return j; }); });
 }
-/* ظ‚ط±ط§ط،ط© ط§ظ„ط¬ط¯ط§ظˆظ„ ط§ظ„ط®ظ…ط³ط© */
+/* قراءة الجداول الخمسة */
 function loadFromDB(){
   return Promise.all([
     api("GET","/rest/v1/site_text?select=*"),
@@ -464,11 +464,11 @@ function loadFromDB(){
   });
 }
 
-/* ---------------- طھط¬ظ…ظٹط¹ WORK ظ…ظ† siteContent + ظ‚ط§ط¹ط¯ط© ط§ظ„ط¨ظٹط§ظ†ط§طھ ---------------- */
-/* ظ†ط¨ط¯ط£ ظ…ظ† siteContent ط§ظ„ظ…ط¯ظ…ط¬طŒ ط«ظ… ظ†ط·ط¨ظ‚ طµظپظˆظپ DB ظپظˆظ‚ظ‡ (ظ…ط«ظ„ loadFromSupabase ظپظٹ site-render) */
+/* ---------------- تجميع WORK من siteContent + قاعدة البيانات ---------------- */
+/* نبدأ من siteContent المدمج، ثم نطبق صفوف DB فوقه (مثل loadFromSupabase في site-render) */
 function buildWorkFromDB(db){
   var base = deepClone(window.siteContent||{});
-  /* site_text: طھط·ط¨ظٹظ‚ ط¹ظ„ظ‰ ط§ظ„ط¹ظ‚ط¯ ط§ظ„ظˆط±ظ‚ظٹط© */
+  /* site_text: تطبيق على العقد الورقية */
   (db.text||[]).forEach(function(r){
     if(!r||!r.key) return;
     var parts=r.key.split("."); var node=base;
@@ -519,7 +519,7 @@ function buildWorkFromDB(db){
   return base;
 }
 
-/* ---------------- طھط¹ط¨ط¦ط© ط§ظ„ظ†ظ…ط§ط°ط¬ ظ…ظ† WORK ---------------- */
+/* ---------------- تعبئة النماذج من WORK ---------------- */
 function fillStaticFields(){
   document.querySelectorAll("[data-path]").forEach(function(inp){
     var path=inp.getAttribute("data-path");
@@ -530,7 +530,7 @@ function fillStaticFields(){
   });
 }
 
-/* ---------------- ظ…ط­ط±ط± ط§ظ„ط£ظ„ظˆط§ظ† ---------------- */
+/* ---------------- محرر الألوان ---------------- */
 function renderTheme(){
   var el=document.getElementById("themeEditor"); el.innerHTML="";
   var th=WORK.theme||{};
@@ -545,37 +545,37 @@ function renderTheme(){
   });
 }
 
-/* ---------------- ظ…ط­ط±ط± ط§ظ„ظ…ظ…ظٹط²ط§طھ (flip cards) ---------------- */
+/* ---------------- محرر المميزات (flip cards) ---------------- */
 function renderSig(){
   var el=document.getElementById("sigList"); el.innerHTML="";
   var cards=WORK.signatures.cards||[];
   cards.forEach(function(c,i){
     var it=document.createElement("div"); it.className="item";
     it.innerHTML =
-      '<div class="item-head"><b>ظƒط§ط±طھ '+(i+1)+'</b><div class="ops"><button class="del" data-del-sig="'+i+'">'+T("del")+'</button></div></div>'+
+      '<div class="item-head"><b>كارت '+(i+1)+'</b><div class="ops"><button class="del" data-del-sig="'+i+'">'+T("del")+'</button></div></div>'+
       '<div class="grid">'+
-        '<div class="field"><label>ط§ظ„ظˆط¬ظ‡ ط§ظ„ط£ظ…ط§ظ…ظٹ (ط¹ط±ط¨ظٹ)</label><input data-sig="'+i+'.front.ar" type="text" value="'+esc(c.front&&c.front.ar)+'"></div>'+
-        '<div class="field"><label>ط§ظ„ظˆط¬ظ‡ ط§ظ„ط£ظ…ط§ظ…ظٹ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-sig="'+i+'.front.en" type="text" value="'+esc(c.front&&c.front.en)+'"></div>'+
+        '<div class="field"><label>الوجه الأمامي (عربي)</label><input data-sig="'+i+'.front.ar" type="text" value="'+esc(c.front&&c.front.ar)+'"></div>'+
+        '<div class="field"><label>الوجه الأمامي (إنجليزي)</label><input data-sig="'+i+'.front.en" type="text" value="'+esc(c.front&&c.front.en)+'"></div>'+
       '</div>'+
-      '<div class="field"><label>ط§ظ„ظˆط¬ظ‡ ط§ظ„ط®ظ„ظپظٹ (ط¹ط±ط¨ظٹ)</label><textarea data-sig="'+i+'.back.ar">'+esc(c.back&&c.back.ar)+'</textarea></div>'+
-      '<div class="field"><label>ط§ظ„ظˆط¬ظ‡ ط§ظ„ط®ظ„ظپظٹ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-sig="'+i+'.back.en">'+esc(c.back&&c.back.en)+'</textarea></div>';
+      '<div class="field"><label>الوجه الخلفي (عربي)</label><textarea data-sig="'+i+'.back.ar">'+esc(c.back&&c.back.ar)+'</textarea></div>'+
+      '<div class="field"><label>الوجه الخلفي (إنجليزي)</label><textarea data-sig="'+i+'.back.en">'+esc(c.back&&c.back.en)+'</textarea></div>';
     el.appendChild(it);
   });
   if(!cards.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
 }
 
-/* ---------------- ظ…ط­ط±ط± ط§ظ„ظ…ظ†ظٹظˆ ---------------- */
+/* ---------------- محرر المنيو ---------------- */
 function renderTabs(){
   var el=document.getElementById("tabList"); el.innerHTML="";
   var tabs=WORK.menu.tabs||[];
   tabs.forEach(function(t,i){
     var it=document.createElement("div"); it.className="item";
     it.innerHTML =
-      '<div class="item-head"><b>طھط¨ظˆظٹط¨ '+(i+1)+'</b><div class="ops"><button class="del" data-del-tab="'+i+'">'+T("del")+'</button></div></div>'+
+      '<div class="item-head"><b>تبويب '+(i+1)+'</b><div class="ops"><button class="del" data-del-tab="'+i+'">'+T("del")+'</button></div></div>'+
       '<div class="grid three">'+
-        '<div class="field"><label class="mini">ط§ظ„ظ…ط¹ط±ظ‘ظپ (id)</label><input data-tab="'+i+'.id" type="text" value="'+esc(t.id)+'"></div>'+
-        '<div class="field"><label>ط§ظ„ط§ط³ظ… (ط¹ط±ط¨ظٹ)</label><input data-tab="'+i+'.ar" type="text" value="'+esc(t.ar)+'"></div>'+
-        '<div class="field"><label>ط§ظ„ط§ط³ظ… (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-tab="'+i+'.en" type="text" value="'+esc(t.en)+'"></div>'+
+        '<div class="field"><label class="mini">المعرّف (id)</label><input data-tab="'+i+'.id" type="text" value="'+esc(t.id)+'"></div>'+
+        '<div class="field"><label>الاسم (عربي)</label><input data-tab="'+i+'.ar" type="text" value="'+esc(t.ar)+'"></div>'+
+        '<div class="field"><label>الاسم (إنجليزي)</label><input data-tab="'+i+'.en" type="text" value="'+esc(t.en)+'"></div>'+
       '</div>';
     el.appendChild(it);
   });
@@ -586,54 +586,54 @@ function renderMenu(){
   tabs.forEach(function(tab,ti){
     var catId=tab.id, list=cats[catId]||[];
     var sec=document.createElement("div"); sec.className="card"; sec.style.background="var(--bg-alt)";
-    sec.innerHTML='<h2 style="margin-bottom:12px">ظپط¦ط©: <b style="color:var(--accent)">'+esc(tab.ar||catId)+'</b>'+
+    sec.innerHTML='<h2 style="margin-bottom:12px">فئة: <b style="color:var(--accent)">'+esc(tab.ar||catId)+'</b>'+
       '<button class="btn ghost small" data-add-dish="'+catId+'" style="margin-inline-start:auto">'+T("add_dish")+'</button></h2>';
     var box=document.createElement("div"); box.id="dishBox-"+catId; sec.appendChild(box);
     list.forEach(function(d,di){
       var it=document.createElement("div"); it.className="item";
       var tagV=d.tag&&d.tag.ar?d.tag.ar:"";
       it.innerHTML=
-        '<div class="item-head"><b>طµظ†ظپ '+(di+1)+'</b><div class="ops"><button class="del" data-del-dish="'+catId+'|'+di+'">'+T("del")+'</button></div></div>'+
+        '<div class="item-head"><b>صنف '+(di+1)+'</b><div class="ops"><button class="del" data-del-dish="'+catId+'|'+di+'">'+T("del")+'</button></div></div>'+
         '<div class="grid">'+
-          '<div class="field"><label>ط§ظ„ط§ط³ظ… (ط¹ط±ط¨ظٹ)</label><input data-dish="'+catId+'|'+di+'.name.ar" type="text" value="'+esc(d.name&&d.name.ar)+'"></div>'+
-          '<div class="field"><label>ط§ظ„ط§ط³ظ… (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-dish="'+catId+'|'+di+'.name.en" type="text" value="'+esc(d.name&&d.name.en)+'"></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ظˆطµظپ (ط¹ط±ط¨ظٹ)</label><textarea data-dish="'+catId+'|'+di+'.desc.ar">'+esc(d.desc&&d.desc.ar)+'</textarea></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ظˆطµظپ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><textarea data-dish="'+catId+'|'+di+'.desc.en">'+esc(d.desc&&d.desc.en)+'</textarea></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ط³ط¹ط± (ط¹ط±ط¨ظٹ)</label><input data-dish="'+catId+'|'+di+'.price_ar" type="text" value="'+esc(d.price_ar)+'"></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ط³ط¹ط± (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-dish="'+catId+'|'+di+'.price_en" type="text" value="'+esc(d.price_en)+'"></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ط´ط§ط±ط© (tag ط¹ط±ط¨ظٹ)</label><input data-dish="'+catId+'|'+di+'.tag.ar" type="text" value="'+esc(tagV)+'"></div>'+
-          '<div class="field"><label class="mini">ط§ظ„ط´ط§ط±ط© (tag ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-dish="'+catId+'|'+di+'.tag.en" type="text" value="'+esc(d.tag&&d.tag.en)+'"></div>'+
-          '<div class="field"><label class="mini">ظ…ط³ط§ط± ط§ظ„طµظˆط±ط©</label><input data-dish="'+catId+'|'+di+'.img" type="text" value="'+esc(d.img)+'"></div>'+
-          '<div class="field"><label class="mini">Alt ط¹ط±ط¨ظٹ</label><input data-dish="'+catId+'|'+di+'.alt_ar" type="text" value="'+esc(d.alt_ar)+'"></div>'+
+          '<div class="field"><label>الاسم (عربي)</label><input data-dish="'+catId+'|'+di+'.name.ar" type="text" value="'+esc(d.name&&d.name.ar)+'"></div>'+
+          '<div class="field"><label>الاسم (إنجليزي)</label><input data-dish="'+catId+'|'+di+'.name.en" type="text" value="'+esc(d.name&&d.name.en)+'"></div>'+
+          '<div class="field"><label class="mini">الوصف (عربي)</label><textarea data-dish="'+catId+'|'+di+'.desc.ar">'+esc(d.desc&&d.desc.ar)+'</textarea></div>'+
+          '<div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-dish="'+catId+'|'+di+'.desc.en">'+esc(d.desc&&d.desc.en)+'</textarea></div>'+
+          '<div class="field"><label class="mini">السعر (عربي)</label><input data-dish="'+catId+'|'+di+'.price_ar" type="text" value="'+esc(d.price_ar)+'"></div>'+
+          '<div class="field"><label class="mini">السعر (إنجليزي)</label><input data-dish="'+catId+'|'+di+'.price_en" type="text" value="'+esc(d.price_en)+'"></div>'+
+          '<div class="field"><label class="mini">الشارة (tag عربي)</label><input data-dish="'+catId+'|'+di+'.tag.ar" type="text" value="'+esc(tagV)+'"></div>'+
+          '<div class="field"><label class="mini">الشارة (tag إنجليزي)</label><input data-dish="'+catId+'|'+di+'.tag.en" type="text" value="'+esc(d.tag&&d.tag.en)+'"></div>'+
+          '<div class="field"><label class="mini">مسار الصورة</label><input data-dish="'+catId+'|'+di+'.img" type="text" value="'+esc(d.img)+'"></div>'+
+          '<div class="field"><label class="mini">Alt عربي</label><input data-dish="'+catId+'|'+di+'.alt_ar" type="text" value="'+esc(d.alt_ar)+'"></div>'+
         '</div>';
       box.appendChild(it);
     });
-    if(!list.length) box.innerHTML='<div class="empty">ظ„ط§ ط£ط·ط¨ط§ظ‚ ظپظٹ ظ‡ط°ظ‡ ط§ظ„ظپط¦ط©</div>';
+    if(!list.length) box.innerHTML='<div class="empty">لا أطباق في هذه الفئة</div>';
     el.appendChild(sec);
   });
 }
 
-/* ---------------- ظ…ط­ط±ط± ط§ظ„ظ…ط¹ط±ط¶ ---------------- */
+/* ---------------- محرر المعرض ---------------- */
 function renderGal(){
   var el=document.getElementById("galList"); el.innerHTML="";
   var items=WORK.gallery.items||[];
   items.forEach(function(g,i){
     var it=document.createElement("div"); it.className="item";
     it.innerHTML=
-      '<div class="item-head"><b>طµظˆط±ط© '+(i+1)+'</b><div class="ops"><button class="del" data-del-gal="'+i+'">'+T("del")+'</button></div></div>'+
+      '<div class="item-head"><b>صورة '+(i+1)+'</b><div class="ops"><button class="del" data-del-gal="'+i+'">'+T("del")+'</button></div></div>'+
       '<div class="grid">'+
-        '<div class="field"><label class="mini">ظ…ط³ط§ط± ط§ظ„طµظˆط±ط©</label><input data-gal="'+i+'.img" type="text" value="'+esc(g.img)+'"></div>'+
-        '<div class="field"><label class="mini">Alt ط¹ط±ط¨ظٹ</label><input data-gal="'+i+'.alt_ar" type="text" value="'+esc(g.alt_ar)+'"></div>'+
-        '<div class="field"><label class="mini">Alt ط¥ظ†ط¬ظ„ظٹط²ظٹ</label><input data-gal="'+i+'.alt_en" type="text" value="'+esc(g.alt_en)+'"></div>'+
-        '<div class="field"><label class="mini">ط§ظ„طھط¹ظ„ظٹظ‚ (ط¹ط±ط¨ظٹ)</label><input data-gal="'+i+'.caption.ar" type="text" value="'+esc(g.caption&&g.caption.ar)+'"></div>'+
-        '<div class="field"><label class="mini">ط§ظ„طھط¹ظ„ظٹظ‚ (ط¥ظ†ط¬ظ„ظٹط²ظٹ)</label><input data-gal="'+i+'.caption.en" type="text" value="'+esc(g.caption&&g.caption.en)+'"></div>'+
+        '<div class="field"><label class="mini">مسار الصورة</label><input data-gal="'+i+'.img" type="text" value="'+esc(g.img)+'"></div>'+
+        '<div class="field"><label class="mini">Alt عربي</label><input data-gal="'+i+'.alt_ar" type="text" value="'+esc(g.alt_ar)+'"></div>'+
+        '<div class="field"><label class="mini">Alt إنجليزي</label><input data-gal="'+i+'.alt_en" type="text" value="'+esc(g.alt_en)+'"></div>'+
+        '<div class="field"><label class="mini">التعليق (عربي)</label><input data-gal="'+i+'.caption.ar" type="text" value="'+esc(g.caption&&g.caption.ar)+'"></div>'+
+        '<div class="field"><label class="mini">التعليق (إنجليزي)</label><input data-gal="'+i+'.caption.en" type="text" value="'+esc(g.caption&&g.caption.en)+'"></div>'+
       '</div>';
     el.appendChild(it);
   });
   if(!items.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
 }
 
-/* ---------------- ط¥ط¹ط§ط¯ط© ط¨ظ†ط§ط، ظƒظ„ ط§ظ„ظ…ط­ط±ط±ط§طھ ---------------- */
+/* ---------------- إعادة بناء كل المحررات ---------------- */
 function renderAll(){
   fillStaticFields();
   renderTheme();
@@ -643,7 +643,7 @@ function renderAll(){
   renderGal();
 }
 
-/* ---------------- ظ‚ط±ط§ط،ط© ظ‚ظٹظ… ط§ظ„ظ†ظ…ط§ط°ط¬ ط¥ظ„ظ‰ WORK ---------------- */
+/* ---------------- قراءة قيم النماذج إلى WORK ---------------- */
 function syncFromForms(){
   document.querySelectorAll("[data-path]").forEach(function(inp){
     var path=inp.getAttribute("data-path");
@@ -652,7 +652,7 @@ function syncFromForms(){
     if(cur!=null && typeof cur==="object"){ setPath(WORK,path+".ar",v); }
     else setPath(WORK,path,v);
   });
-  /* ط§ظ„ط£ظ„ظˆط§ظ† ظ…ط­ظپظˆط¸ط© ظ…ط¨ط§ط´ط±ط© ط¹ط¨ط± listener ط§input */
+  /* الألوان محفوظة مباشرة عبر listener اinput */
   document.querySelectorAll("[data-sig]").forEach(function(inp){
     var k=inp.getAttribute("data-sig"); var parts=k.split(".");
     var idx=parseInt(parts[0],10);
@@ -682,7 +682,7 @@ function syncFromForms(){
   });
 }
 
-/* ---------------- طھظˆظ„ظٹط¯ طµظپظˆظپ ط§ظ„ط¬ط¯ط§ظˆظ„ ظ…ظ† WORK ---------------- */
+/* ---------------- توليد صفوف الجداول من WORK ---------------- */
 function flattenTextRows(obj, prefix, out){
   out=out||[];
   Object.keys(obj||{}).forEach(function(k){
@@ -691,7 +691,7 @@ function flattenTextRows(obj, prefix, out){
     if(v==null) return;
     if(typeof v==="object"){
       if(v.ar!==undefined || v.en!==undefined){
-        // ط²ظˆط¬ {ar,en}
+        // زوج {ar,en}
         out.push({ key:key, ar:(v.ar!=null?String(v.ar):null), en:(v.en!=null?String(v.en):null) });
       } else {
         flattenTextRows(v, key, out);
@@ -702,7 +702,7 @@ function flattenTextRows(obj, prefix, out){
   });
   return out;
 }
-/* ط¹ظˆط¯ط© ط£ط²ظˆط§ط¬ menu categories ظ„طµظپظˆظپ menu_items */
+/* عودة أزواج menu categories لصفوف menu_items */
 function buildMenuRows(){
   var rows=[]; var cats=WORK.menu.categories||{}; var tabs=WORK.menu.tabs||[];
   tabs.forEach(function(tab,ti){
@@ -737,22 +737,22 @@ function buildThemeRows(){
   return rows;
 }
 
-/* ---------------- ط­ظپط¸ ط§ظ„ظƒظ„ ---------------- */
+/* ---------------- حفظ الكل ---------------- */
 function replaceTable(table, rows, pk){
-  // ط­ط°ظپ ظƒظ„ ط§ظ„طµظپظˆظپ ط«ظ… ط¥ط¯ط±ط§ط¬ â€” ط¨ط³ظٹط· ظˆظ…ظˆط«ظˆظ‚ ظ„ظ„ظ…ط§ظ„ظƒ ط§ظ„ظˆط­ظٹط¯
+  // حذف كل الصفوف ثم إدراج — بسيط وموثوق للمالك الوحيد
   if(!rows.length) return api("DELETE","/rest/v1/"+table+"?select=id");
   return api("DELETE","/rest/v1/"+table+"?select=id").then(function(){
     return api("POST","/rest/v1/"+table, rows);
   });
 }
-/* ظ„طµظپظˆظپ site_text ظ†ط³طھط¹ظ…ظ„ upsert ط¹ظ„ظ‰ ط§ظ„ظ…ظپطھط§ط­ ظƒظٹ ظ„ط§ ظ†ط­ط°ظپ ط£ط¹ظ…ط¯ط© ط¥ط¶ط§ظپظٹط© ط¥ظ† ظˆظڈط¬ط¯طھ */
+/* لصفوف site_text نستعمل upsert على المفتاح كي لا نحذف أعمدة إضافية إن وُجدت */
 function upsertText(rows){
   return api("POST","/rest/v1/site_text?on_conflict=key", rows);
 }
 function saveAll(){
   var btn=document.getElementById("saveAll");
   btn.disabled=true; btn.textContent=T("saving");
-  var status=document.getElementById("saveStatus"); status.textContent="â€¦";
+  var status=document.getElementById("saveStatus"); status.textContent="…";
   syncFromForms();
   var textRows=flattenTextRows(WORK);
   var menuRows=buildMenuRows();
@@ -772,7 +772,7 @@ function saveAll(){
   }).then(function(){ btn.disabled=false; btn.textContent=T("save"); });
 }
 
-/* ---------------- ط¥ط¶ط§ظپط§طھ / ط­ط°ظپ ---------------- */
+/* ---------------- إضافات / حذف ---------------- */
 function rebindActions(){
   document.getElementById("addSig").onclick=function(){
     WORK.signatures.cards.push({ front:{ar:"",en:""}, back:{ar:"",en:""} });
@@ -803,7 +803,7 @@ function rebindActions(){
   });
 }
 
-/* ---------------- ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ (Config) ---------------- */
+/* ---------------- الإعدادات (Config) ---------------- */
 function openCfg(){
   document.getElementById("cfgUrl").value=CFG.url;
   document.getElementById("cfgAnon").value=CFG.anon;
@@ -824,18 +824,18 @@ function saveCfg(){
 }
 function createOwner(){
   var pass=document.getElementById("cfgSetupPass").value;
-  if(!CFG.anon||!CFG.url){ toast("ط§ط¶ط¨ط· ط¥ط¹ط¯ط§ط¯ط§طھ Supabase ط£ظˆظ„ظ‹ط§","err"); return; }
-  if(!CFG.email){ toast("ط¶ط¹ ط¨ط±ظٹط¯ طµط§ط­ط¨ ط§ظ„ط­ط³ط§ط¨","err"); return; }
-  if(!pass){ toast("ط¶ط¹ ظƒظ„ظ…ط© ظ…ط±ظˆط± ط£ظˆظ„ظٹط©","err"); return; }
+  if(!CFG.anon||!CFG.url){ toast("اضبط إعدادات Supabase أولًا","err"); return; }
+  if(!CFG.email){ toast("ضع بريد صاحب الحساب","err"); return; }
+  if(!pass){ toast("ضع كلمة مرور أولية","err"); return; }
   fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/signup",{
     method:"POST", headers:{ "Content-Type":"application/json", apikey:CFG.anon },
     body:JSON.stringify({ email:CFG.email, password:pass })
   }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.msg||"signup failed"); return j; }); })
   .then(function(){ toast(T("owner_ok"),"ok"); })
-  ["catch"](function(e){ toast("ظپط´ظ„ ط¥ظ†ط´ط§ط، ط§ظ„ط­ط³ط§ط¨: "+e.message,"err"); });
+  ["catch"](function(e){ toast("فشل إنشاء الحساب: "+e.message,"err"); });
 }
 
-/* ---------------- طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ / ط§ظ„طھظ‡ظٹط¦ط© ---------------- */
+/* ---------------- تسجيل الدخول / التهيئة ---------------- */
 function updateConn(){
   var st=document.getElementById("connStatus");
   if(CFG.url&&CFG.anon){ st.textContent="Supabase: "+CFG.url.replace(/^https?:\/\//,"").replace(/\/$/,""); }
@@ -848,7 +848,7 @@ function init(){
   updateConn();
   setAdminLang(LAN);
 
-  // طھط¨ظˆظٹط¨ط§طھ
+  // تبويبات
   document.querySelectorAll(".tab").forEach(function(t){
     t.addEventListener("click",function(){
       document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
@@ -867,7 +867,7 @@ function init(){
   document.getElementById("accPassBtn").onclick=changePassword;
   document.getElementById("accEmailBtn").onclick=changeEmail;
 
-  // طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„
+  // تسجيل الدخول
   document.getElementById("loginBtn").onclick=function(){
     var err=document.getElementById("loginErr"); err.style.display="none";
     if(!CFG.url||!CFG.anon){ err.textContent=T("need_login"); err.style.display="block"; openCfg(); return; }
@@ -888,16 +888,16 @@ function init(){
     });
   };
 
-  // ط®ط±ظˆط¬
+  // خروج
   document.getElementById("logoutBtn").onclick=function(){
     localStorage.removeItem("ah-token"); CFG.token="";
     showLogin(); document.getElementById("logoutBtn").style.display="none";
   };
 
-  // ط¥ط¸ظ‡ط§ط± ط²ط± ط§ظ„ط®ط±ظˆط¬ ظ„ظˆ ظ…ظˆط¬ظˆط¯ token
+  // إظهار زر الخروج لو موجود token
   if(CFG.token){ document.getElementById("logoutBtn").style.display="inline-block"; }
 
-  // ظ…طµط§ط¯ظ‚ط© ظ…ط³ط¨ظ‚ط© ط¹ط¨ط± token ظ…ط­ظپظˆط¸
+  // مصادقة مسبقة عبر token محفوظ
   if(CFG.token){
     loginRequest().then(function(j){
       CFG.token=j.access_token; localStorage.setItem("ah-token",CFG.token);
@@ -906,13 +906,13 @@ function init(){
       CURRENT_DB=db; WORK=buildWorkFromDB(db); renderAll(); rebindActions();
       showDash(); updateConn();
       toast(T("login_ok"),"ok");
-    })["catch"](function(){ /* token ظ…ظ†طھظ‡ظٹ */ localStorage.removeItem("ah-token"); CFG.token=""; });
+    })["catch"](function(){ /* token منتهي */ localStorage.removeItem("ah-token"); CFG.token=""; });
   }
 }
 
-/* ---------------- ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط£ظ…ط§ظ† (طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ط³ط± / ط§ظ„ط¨ط±ظٹط¯) ---------------- */
+/* ---------------- الحساب والأمان (تغيير كلمة السر / البريد) ---------------- */
 function verifyCurrentPassword(password){
-  /* طھط­ظ‚ظ‚ ظ…ظ† ظƒظ„ظ…ط© ط§ظ„ط³ط± ط§ظ„ط­ط§ظ„ظٹط© ط¹ط¨ط± ظ†ظ‚ط·ط© طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ط«ظ… ظ†ط¬ط±ظ‘ط¯ access_token ظپظ‚ط· */
+  /* تحقق من كلمة السر الحالية عبر نقطة تسجيل الدخول ثم نجرّد access_token فقط */
   return fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/token?grant_type=password",{
     method:"POST",
     headers:{ "Content-Type":"application/json", apikey:CFG.anon },
@@ -963,7 +963,7 @@ function toast(msg,type){
   toast._t=setTimeout(function(){ t.classList.remove("show"); },3200);
 }
 
-/* ---------------- ط±ظپط¹ ط§ظ„طµظˆط± (Drag & Drop) ---------------- */
+/* ---------------- رفع الصور (Drag & Drop) ---------------- */
 function isImageField(inp){
   var p = inp && inp.getAttribute ? inp.getAttribute("data-path") : "";
   if(p==="meta.logo"||p==="menu.menu_image") return true;
@@ -974,7 +974,7 @@ function isImageField(inp){
 function slugify(s){ return String(s||"img").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "img"; }
 function uploadSiteImage(file, label){
   if(!CFG.url||!CFG.anon) return Promise.reject(new Error(T("need_login")));
-  if(!/^image\//.test(file.type)) return Promise.reject(new Error("ظ…ظ„ظپ ط؛ظٹط± طµط§ظ„ط­ â€” ط§ط®طھط± طµظˆط±ط© (png/jpg/webp/gif)"));
+  if(!/^image\//.test(file.type)) return Promise.reject(new Error("ملف غير صالح — اختر صورة (png/jpg/webp/gif)"));
   var ext=(file.name.match(/\.([a-zA-Z0-9]+)$/)||[])[1]||"png";
   var name=slugify(label)+"_"+Date.now()+"_"+Math.floor(Math.random()*1000)+"."+ext;
   var url=CFG.url.replace(/\/+$/,"")+"/storage/v1/object/site-images/"+name;
@@ -996,14 +996,14 @@ function makeUploadWidget(inputEl, label){
   box.className="img-upload";
   box.innerHTML=
     '<div class="dropzone">'+
-      '<span class="dz-ico">â–²</span>'+
-      '<span class="dz-txt">ط§ط³ط­ط¨ ط§ظ„طµظˆط±ط© ظ‡ظ†ط§ ط£ظˆ ط§ط¶ط؛ط· ظ„ظ„ط§ط®طھظٹط§ط±</span>'+
-      '<span class="dz-sub">ظٹظڈط±ظپط¹ طھظ„ظ‚ط§ط¦ظٹظ‹ط§ ط¥ظ„ظ‰ Supabase ط¹ظ†ط¯ ط§ظ„ط­ظپط¸</span>'+
+      '<span class="dz-ico">▲</span>'+
+      '<span class="dz-txt">اسحب الصورة هنا أو اضغط للاختيار</span>'+
+      '<span class="dz-sub">يُرفع تلقائيًا إلى Supabase عند الحفظ</span>'+
       '<input type="file" accept="image/*" class="dz-file" style="display:none">'+
     '</div>'+
     '<div class="dz-preview"><img alt=""></div>'+
     '<div class="dz-actions">'+
-      '<button type="button" class="dz-remove" style="display:none">ط¥ط²ط§ظ„ط© ط§ظ„طµظˆط±ط©</button>'+
+      '<button type="button" class="dz-remove" style="display:none">إزالة الصورة</button>'+
     '</div>'+
     '<div class="dz-status"></div>';
 
@@ -1024,13 +1024,13 @@ function makeUploadWidget(inputEl, label){
   function doUpload(file){
     if(!file) return;
     dz.classList.add("dragover");
-    setStatus("ط¬ط§ط±ظٹ ط§ظ„ط±ظپط¹â€¦","load");
+    setStatus("جاري الرفع…","load");
     uploadSiteImage(file, label).then(function(pub){
       inputEl.value=pub;
       showPreview();
-      setStatus("طھظ… ط§ظ„ط±ظپط¹ âœ“ â€” ط³ظٹظڈط­ظپط¸ ط¹ظ†ط¯ ط§ظ„ط¶ط؛ط· ط¹ظ„ظ‰ آ«ط­ظپط¸ ظƒظ„ ط§ظ„طھط؛ظٹظٹط±ط§طھآ»","ok");
+      setStatus("تم الرفع ✓ — سيُحفظ عند الضغط على «حفظ كل التغييرات»","ok");
     })["catch"](function(e){
-      setStatus("ظپط´ظ„ ط§ظ„ط±ظپط¹: "+(e&&e.message||String(e)),"err");
+      setStatus("فشل الرفع: "+(e&&e.message||String(e)),"err");
     }).then(function(){ dz.classList.remove("dragover"); });
   }
 
