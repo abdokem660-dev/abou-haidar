@@ -73,6 +73,7 @@ window.siteContent = {
     hours: { ar: "مفتوح يوميًا · 11ص – 2ص", en: "Open daily · 11am – 2am" },
     street: { ar: "روكسي، مصر الجديدة، القاهرة", en: "Roxy, Heliopolis, Cairo" },
     seal: { ar: "منذ 1968", en: "1968" },
+    seal_label: { ar: "تأسس", en: "Est. Since" },
     stats: [
       { value_ar: "1968",   value_en: "1968",    label: { ar: "سنة التأسيس", en: "Founded" } },
       { value_ar: "+26 ألف", value_en: "+26K",   label: { ar: "تقييم على جوجل", en: "Google reviews" } },
