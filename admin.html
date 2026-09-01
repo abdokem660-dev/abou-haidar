@@ -99,6 +99,7 @@
   .dz-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
   .dz-actions button{font-size:.72rem;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:800;cursor:pointer}
   .dz-actions button:hover{border-color:var(--accent);color:var(--accent)}
+  .sec-sub-label{margin:.6rem 0 .3rem;font-weight:800;color:var(--ink-soft);font-size:.85rem}
 </style>
 </head>
 <body class="lang-en">
@@ -297,6 +298,40 @@
           <div class="field"><label>الخط الختامي (عربي)</label><input data-path="footer.bottom_tagline.ar"></div>
           <div class="field"><label>الخط الختامي (إنجليزي)</label><input data-path="footer.bottom_tagline.en"></div>
         </div>
+      </div>
+      <div class="card">
+        <h2><span class="sec-num">15</span>حالة الفتح / الإغلاق (الشريط العلوي)</h2>
+        <div class="field"><label>الحالة (auto = تلقائي، closed = مغلق استثنائي)</label><input data-path="overrides.status.ar"></div>
+        <div class="field"><label>نص مغلق مؤقتًا (عربي)</label><input data-path="overrides.closed_title.ar"></div>
+        <div class="field"><label>نص مغلق مؤقتًا (إنجليزي)</label><input data-path="overrides.closed_title.en"></div>
+        <div class="field"><label class="mini">سبب الإغلاق (عربي — يُعرض للمستخدم)</label><textarea data-path="overrides.closed_reason.ar"></textarea></div>
+        <div class="field"><label class="mini">سبب الإغلاق (إنجليزي)</label><textarea data-path="overrides.closed_reason.en"></textarea></div>
+        <p class="hint">لو الحالة "auto"، يُحسب الفتح تلقائيًا من مواعيد العمل. لو "closed"، يُعرض سبب الإغلاق للزائر ويغلق الحساب التلقائي.</p>
+      </div>
+      <div class="card">
+        <h2><span class="sec-num">16</span>ساعات العمل (تُستخدم لحساب الفتح/الإغلاق)</h2>
+        <div class="grid">
+          <div class="field"><label>الوقت (عربي)</label><input data-path="contact.hours_time.ar"></div>
+          <div class="field"><label>الوقت (إنجليزي)</label><input data-path="contact.hours_time.en"></div>
+        </div>
+        <p class="hint">الصيغة المتوقعة: "8:30 ص — 1:30 ص". يُستخرج منها وقتا الفتح والإغلاق تلقائيًا.</p>
+      </div>
+      <div class="card">
+        <h2><span class="sec-num">17</span>الوصول ومواقف السيارات</h2>
+        <div class="field"><label>اللقب (عربي)</label><input data-path="parking.tag.ar"></div>
+        <div class="field"><label>اللقب (إنجليزي)</label><input data-path="parking.tag.en"></div>
+        <div class="field"><label>العنوان (عربي)</label><input data-path="parking.title.ar"></div>
+        <div class="field"><label>العنوان (إنجليزي)</label><input data-path="parking.title.en"></div>
+        <div class="field"><label class="mini">الوصف (عربي)</label><textarea data-path="parking.sub.ar"></textarea></div>
+        <div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-path="parking.sub.en"></textarea></div>
+        <div class="field"><label class="mini">رابط الخريطة (embed src)</label><input data-path="parking.embed.ar"></div>
+        <div class="sec-sub-label">مواقف السيارات (4 بطاقات)</div>
+        <div id="parkList" class="park-list"></div>
+      </div>
+      <div class="card">
+        <h2><span class="sec-num">18</span>الأسئلة الشائعة (FAQ)</h2>
+        <div id="faqList"></div>
+        <div class="btns"><button class="btn ghost" id="addFaq">+ إضافة سؤال</button></div>
       </div>
     </div>
 
@@ -633,6 +668,45 @@ function renderGal(){
   if(!items.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
 }
 
+/* ---------------- محرر مواقف السيارات (4 بطاقات ثابتة) ---------------- */
+function renderParking(){
+  var el=document.getElementById("parkList"); if(!el) return;
+  el.innerHTML="";
+  var parks=WORK.parking||{};
+  ["p1","p2","p3","p4"].forEach(function(key, i){
+    var p=parks[key]||{ icon:{ar:"",en:""}, title:{ar:"",en:""}, desc:{ar:"",en:""} };
+    var it=document.createElement("div"); it.className="item";
+    it.innerHTML=
+      '<div class="item-head"><b>موقف '+(i+1)+'</b><div class="ops"></div></div>'+
+      '<div class="grid">'+
+        '<div class="field"><label class="mini">أيقونة</label><input data-park="'+key+'.icon.ar" type="text" value="'+esc(p.icon&&p.icon.ar)+'"></div>'+
+        '<div class="field"><label class="mini">العنوان (عربي)</label><input data-park="'+key+'.title.ar" type="text" value="'+esc(p.title&&p.title.ar)+'"></div>'+
+        '<div class="field"><label class="mini">العنوان (إنجليزي)</label><input data-park="'+key+'.title.en" type="text" value="'+esc(p.title&&p.title.en)+'"></div>'+
+      '</div>'+
+      '<div class="field"><label class="mini">الوصف (عربي)</label><textarea data-park="'+key+'.desc.ar">'+esc(p.desc&&p.desc.ar)+'</textarea></div>'+
+      '<div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-park="'+key+'.desc.en">'+esc(p.desc&&p.desc.en)+'</textarea></div>';
+    el.appendChild(it);
+  });
+}
+
+/* ---------------- محرر الأسئلة الشائعة (FAQ) ---------------- */
+function renderFaq(){
+  var el=document.getElementById("faqList"); if(!el) return;
+  el.innerHTML="";
+  var items=(WORK.faq&&WORK.faq.items)||[];
+  items.forEach(function(it,i){
+    var item=document.createElement("div"); item.className="item";
+    item.innerHTML=
+      '<div class="item-head"><b>سؤال '+(i+1)+'</b><div class="ops"><button class="del" data-del-faq="'+i+'">'+T("del")+'</button></div></div>'+
+      '<div class="field"><label>السؤال (عربي)</label><input data-faq="'+i+'.q.ar" type="text" value="'+esc(it.q&&it.q.ar)+'"></div>'+
+      '<div class="field"><label>السؤال (إنجليزي)</label><input data-faq="'+i+'.q.en" type="text" value="'+esc(it.q&&it.q.en)+'"></div>'+
+      '<div class="field"><label>الإجابة (عربي)</label><textarea data-faq="'+i+'.a.ar">'+esc(it.a&&it.a.ar)+'</textarea></div>'+
+      '<div class="field"><label>الإجابة (إنجليزي)</label><textarea data-faq="'+i+'.a.en">'+esc(it.a&&it.a.en)+'</textarea></div>';
+    el.appendChild(item);
+  });
+  if(!items.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
+}
+
 /* ---------------- إعادة بناء كل المحررات ---------------- */
 function renderAll(){
   fillStaticFields();
@@ -641,6 +715,8 @@ function renderAll(){
   renderTabs();
   renderMenu();
   renderGal();
+  renderParking();
+  renderFaq();
 }
 
 /* ---------------- قراءة قيم النماذج إلى WORK ---------------- */
@@ -679,6 +755,16 @@ function syncFromForms(){
     var idx=parseInt(parts[0],10);
     var g=WORK.gallery.items[idx]; if(!g) return;
     setPath(g, parts.slice(1).join("."), inp.value);
+  });
+  document.querySelectorAll("[data-park]").forEach(function(inp){
+    var k=inp.getAttribute("data-park"); // pN.path
+    setPath(WORK.parking, k, inp.value);
+  });
+  document.querySelectorAll("[data-faq]").forEach(function(inp){
+    var k=inp.getAttribute("data-faq"); // idx.q.ar
+    var m=k.match(/^(\d+)\.(.+)$/); if(!m) return;
+    var item=(WORK.faq.items||[])[parseInt(m[1],10)]; if(!item) return;
+    setPath(item, m[2], inp.value);
   });
 }
 
@@ -800,6 +886,14 @@ function rebindActions(){
   });
   document.querySelectorAll("[data-del-gal]").forEach(function(b){
     b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-gal"),10); WORK.gallery.items.splice(i,1); renderGal(); rebindActions(); };
+  });
+  var addFaq=document.getElementById("addFaq");
+  if(addFaq) addFaq.onclick=function(){
+    (WORK.faq.items=WORK.faq.items||[]).push({ q:{ar:"",en:""}, a:{ar:"",en:""} });
+    renderFaq(); rebindActions();
+  };
+  document.querySelectorAll("[data-del-faq]").forEach(function(b){
+    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-faq"),10); (WORK.faq.items=WORK.faq.items||[]).splice(i,1); renderFaq(); rebindActions(); };
   });
 }
 
