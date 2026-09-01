@@ -437,6 +437,40 @@
     *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
     .reveal{opacity:1;transform:none}
   }
+
+  /* ===== STATUS BAR — مفتوح / مغلق الآن ===== */
+  .status-bar{position:sticky;top:0;z-index:1000;background:var(--primary-deep);color:#fff;font-size:.85rem;font-weight:800;transition:border-radius .35s ease, box-shadow .35s ease, padding .35s ease;border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .status-bar.pill{border-bottom-left-radius:999px;border-bottom-right-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding-bottom:4px}
+  .status-inner{display:flex;align-items:center;gap:.6rem;justify-content:center;padding:.5rem 1rem;text-align:center;width:100%;max-width:1200px;margin:0 auto}
+  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(201,162,39,.6);flex-shrink:0;animation:pulse 2s infinite}
+  .status-bar.closed .status-dot{background:#e11d48;animation:none;box-shadow:none}
+  .status-title{color:var(--gold)}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}70%{box-shadow:0 0 0 8px rgba(201,162,39,0)}100%{box-shadow:0 0 0 0 rgba(201,162,39,0)}}
+
+  /* ===== PARKING & ACCESS ===== */
+  .parking{background:var(--bg-alt)}
+  .parking-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2.2rem}
+  .park-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.3rem;display:flex;flex-direction:column;gap:.4rem;box-shadow:0 6px 18px rgba(62,21,6,.05)}
+  .park-ico{font-size:1.6rem;line-height:1}
+  .park-card h4{color:var(--ink);font-size:1.05rem}
+  .park-card p{color:var(--ink-soft);font-size:.9rem;line-height:1.65}
+  .map-wrap{margin-top:2rem;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 24px rgba(62,21,6,.08)}
+  .map-title{margin:0;padding:1rem 1.2rem;font-size:1rem;color:var(--ink);background:var(--card);border-bottom:1px solid var(--border);text-align:center}
+  .map-wrap iframe{display:block;width:100%}
+
+  /* ===== FAQ — أكورديون ===== */
+  .faq{background:var(--bg)}
+  .faq-list{max-width:820px;margin:2.2rem auto 0}
+  .faq-item{border:1px solid var(--border);border-radius:14px;background:var(--card);margin-bottom:.8rem;overflow:hidden;box-shadow:0 4px 14px rgba(62,21,6,.04)}
+  .faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;background:none;border:none;cursor:pointer;font-family:inherit;font-size:1rem;font-weight:800;color:var(--ink);text-align:start}
+  .faq-q .faq-ico{font-size:.9rem;color:var(--accent);flex-shrink:0;transition:transform .3s ease}
+  .faq-item.open .faq-ico{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 1.2rem;color:var(--ink-soft);font-size:.92rem;line-height:1.7}
+  .faq-item.open .faq-a{max-height:400px;padding-bottom:1.1rem}
+
+  @media (max-width:640px){
+    .parking-grid{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -448,6 +482,7 @@
   <a href="#menu" data-nav data-en="Menu">المنيو</a>
   <a href="#gallery" data-nav data-en="Gallery">المعرض</a>
   <a href="#contact" data-nav data-en="Contact &amp; Booking">تواصل وحجز</a>
+  <a href="#parking" data-nav data-en="Parking &amp; Access">الوصول</a>
   <div class="mobile-lang" role="group" aria-label="تغيير اللغة">
     <button data-lang="ar" class="on" aria-pressed="true">عربي</button>
     <button data-lang="en" aria-pressed="false">EN</button>
@@ -458,6 +493,15 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="معاينة الصورة">
   <button class="lightbox-close" id="lbClose" aria-label="إغلاق">×</button>
   <img id="lbImg" src="" alt="">
+</div>
+
+<!-- ===== STATUS BAR (open/closed) ===== -->
+<div class="status-bar" id="statusBar" role="status" aria-live="polite">
+  <div class="wrap status-inner">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText" data-i data-key="overrides.open_label">مفتوح الآن</span>
+    <span class="status-reason" id="statusReason" style="display:none"></span>
+  </div>
 </div>
 
 <!-- ===== HEADER ===== -->
@@ -476,6 +520,7 @@
       <a href="#menu" data-nav data-key="nav.2">المنيو</a>
       <a href="#gallery" data-nav data-key="nav.3">المعرض</a>
       <a href="#contact" data-nav data-key="nav.4">تواصل وحجز</a>
+      <a href="#parking" data-nav data-en="Parking &amp; Access">الوصول</a>
     </nav>
 
     <div style="display:flex;align-items:center;gap:.8rem">
@@ -627,6 +672,18 @@
   </div>
 </section>
 
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag" data-i data-key="faq.tag" data-en="FAQs">الأسئلة الشائعة</span>
+      <h2 class="sec-title" data-i data-key="faq.title" data-en="Got a question? We've got the answer">عندك سؤال؟ <span class="gold">عندنا الإجابة</span></h2>
+      <p class="sec-sub" data-i data-key="faq.sub" data-en="The most common questions about Abou Haidar — editable from the dashboard.">أكثر الأسئلة تداولًا عن مطعم أبو حيدر — ويمكنك تعديلها من لوحة التحكم.</p>
+    </div>
+    <div class="faq-list" data-render="faq"></div>
+  </div>
+</section>
+
 <!-- ===== CONTACT / BOOKING ===== -->
 <section class="contact" id="contact">
   <div class="wrap">
@@ -654,7 +711,7 @@
           <span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           <div><h4 data-i data-key="contact.hours_title" data-en="Opening hours">مواعيد العمل</h4>
             <table class="hours-tbl">
-              <tr><td data-i data-key="contact.hours_daily" data-en="Daily">يوميًا</td><td data-i data-key="contact.hours_time" data-en="8:30 AM — 9:00 PM">8:30 ص — 9:00 م</td></tr>
+              <tr><td data-i data-key="contact.hours_daily" data-en="Daily">يوميًا</td><td data-i data-key="contact.hours_time" data-en="8:30 AM — 1:30 AM">8:30 ص — 1:30 ص</td></tr>
             </table>
             <p style="font-size:.85rem;color:var(--accent);margin-top:.3rem" data-i data-key="contact.hours_note" data-en="※ Please note the restaurant is cash only.">※ يرجى ملاحظة أن المحل يعمل بالنقد فقط (كاش).</p>
           </div>
@@ -725,6 +782,45 @@
   </div>
 </section>
 
+<!-- ===== PARKING & ACCESS ===== -->
+<section class="parking" id="parking">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag" data-i data-key="parking.tag" data-en="Parking &amp; Access">الوصول والمواقف</span>
+      <h2 class="sec-title" data-i data-key="parking.title" data-en="How to get here &amp; where to park">ممكن توصلك وتركن فين؟</h2>
+      <p class="sec-sub" data-i data-key="parking.sub" data-en="Detailed info on reaching Abou Haidar by car or public transport — for a worry-free visit.">معلومات مفصّلة للوصول إلى أبو حيدر بسيارتك أو بالمواصلات — لراحة زيارتك.</p>
+    </div>
+    <div class="parking-grid">
+      <div class="park-card reveal">
+        <span class="park-ico" data-i data-key="parking.p1.icon">🅿️</span>
+        <h4 data-i data-key="parking.p1.title">جراج روكسي الذكي</h4>
+        <p data-i data-key="parking.p1.desc">الخيار الأفضل والأكثر أمانًا — جراج أوتوماتيكي متعدد الطوابق على بعد 7–10 دقائق مشيًا من المطعم.</p>
+      </div>
+      <div class="park-card reveal">
+        <span class="park-ico" data-i data-key="parking.p2.icon">🅿️</span>
+        <h4 data-i data-key="parking.p2.title">جراج الميريلاند</h4>
+        <p data-i data-key="parking.p2.desc">ساحة انتظار مفتوحة قريبة من منطقة الميريلاند والكوربة — مناسبة للفترات العادية.</p>
+      </div>
+      <div class="park-card reveal">
+        <span class="park-ico" data-i data-key="parking.p3.icon">🅿️</span>
+        <h4 data-i data-key="parking.p3.title">شوارع نزيه خليفة والأهرام</h4>
+        <p data-i data-key="parking.p3.desc">ركنات على جانبي الطريق، لكنها محدودة في أوقات الذروة.</p>
+      </div>
+      <div class="park-card reveal">
+        <span class="park-ico" data-i data-key="parking.p4.icon">🚇</span>
+        <h4 data-i data-key="parking.p4.title">محطة مترو الأهرام</h4>
+        <p data-i data-key="parking.p4.desc">على الخط الثالث — الوصول بدون سيارة، وخطوات قليلة من شارع إبراهيم اللقاني.</p>
+      </div>
+    </div>
+    <div class="map-wrap reveal">
+      <h3 class="map-title" data-i data-key="parking.map_title">موقعنا على الخريطة</h3>
+      <iframe id="mapFrame" title="خريطة موقع أبو حيدر" 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.088090528631!2d31.316168875596805!3d30.091663374899884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e289a115227%3A0x24bce8d200a5a143!2sAbou%20Haidar%20Shawerma!5e0!3m2!1sen!2seg!4v1788271034769!5m2!1sen!2seg"
+        width="100%" height="380" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="wrap">
@@ -764,7 +860,7 @@
       <div>
         <h5 data-i data-en="Opening hours">ساعات العمل</h5>
         <ul>
-          <li><span data-i data-en="Daily:">يوميًا:</span> <span data-i data-en="8:30 AM — 9:00 PM">8:30 ص — 9:00 م</span></li>
+          <li><span data-i data-en="Daily:">يوميًا:</span> <span data-i data-en="8:30 AM — 1:30 AM">8:30 ص — 1:30 ص</span></li>
         </ul>
       </div>
     </div>
@@ -872,7 +968,7 @@ window.addEventListener("scroll",onScroll,{passive:true});
 onScroll();
 
 /* ================= ACTIVE NAV ================= */
-const sections=["home","story","menu","gallery","contact"];
+const sections=["home","story","menu","gallery","faq","contact","parking"];
 const navA=document.querySelectorAll(".nav-links a[data-nav]");
 const navObs=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
