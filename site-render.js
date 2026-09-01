@@ -334,6 +334,107 @@ function applyTheme(C){
   }
 }
 
+/* ---------- 6b) حالة الفتح / الإغلاق (الشريط العلوي) ---------- */
+/* status: "closed" = إغلاق استثنائي من المالك، أو "auto" = حساب تلقائي من ساعات العمل */
+function applyStatusBar(C){
+  var o = C && C.overrides; if(!o) return;
+  var bar = document.getElementById("statusBar");
+  var txt = document.getElementById("statusText");
+  var reason = document.getElementById("statusReason");
+  if(!bar || !txt) return;
+
+  // استخراج ساعات الفتح والإغلاق من hours_time (نص مثل "8:30 ص — 1:30 ص")
+  function parseTimes(str){
+    var nums = [];
+    var m, re = /(\d{1,2})(?::(\d{2}))?/g;
+    while((m = re.exec(str||"")) !== null){
+      var h = parseInt(m[1],10), mn = parseInt(m[2]||"0",10);
+      if(h<=12) nums.push(h*60+mn); else nums.push(h*60+mn);
+      if(nums.length>=2) break;
+    }
+    return nums; // [openMin, closeMin]
+  }
+
+  var hr = C.contact && C.contact.hours_time;
+  var pair = _pair(hr); // نص
+  var times = parseTimes(pair.ar || pair.en);
+  var openMin = times[0], closeMin = times[1];
+
+  var closedReason = _pair(o.closed_reason);
+  var openLabel = _pair(o.open_label);
+  var closedLabel = _pair(o.closed_label);
+  var closedTitle = _pair(o.closed_title);
+
+  var now = new Date();
+  var nowMin = now.getHours()*60 + now.getMinutes();
+  var isClosed = false;
+  var reasonText = "";
+
+  var statusIsClosed = /closed/i.test(_pair(o.status).ar || _pair(o.status).en || "");
+
+  if(statusIsClosed){
+    isClosed = true;
+    reasonText = closedReason.ar || closedReason.en || "";
+  } else if(openMin!=null && closeMin!=null){
+    if(closeMin < openMin){ isClosed = !(nowMin >= openMin || nowMin < closeMin); }
+    else { isClosed = !(nowMin >= openMin && nowMin < closeMin); }
+  }
+
+  bar.classList.toggle("closed", isClosed);
+  bar.classList.remove("pill");
+
+  var ar = isClosed ? (closedLabel.ar||"") : (openLabel.ar||"");
+  var en = isClosed ? (closedLabel.en||closedLabel.ar) : (openLabel.en||openLabel.ar);
+  txt.setAttribute("data-ar", ar);
+  txt.setAttribute("data-en", en);
+  txt.innerHTML = ar;
+
+  if(reason && (isClosed || statusIsClosed)){
+    reason.style.display = reasonText ? "inline" : "none";
+    reason.setAttribute("data-ar", reasonText || "");
+    reason.setAttribute("data-en", closedReason.en || closedReason.ar || "");
+    reason.innerHTML = reasonText || "";
+  } else if(reason){
+    reason.style.display = "none";
+  }
+}
+
+/* ---------- 6c) الخريطة (embed) ---------- */
+function applyMap(C){
+  var frame = document.getElementById("mapFrame");
+  var emb = C && C.parking && C.parking.embed;
+  if(!frame || !emb) return;
+  var p = _pair(emb);
+  var src = p.ar || p.en;
+  if(src) frame.setAttribute("src", src);
+}
+
+/* ---------- 6d) الأسئلة الشائعة (FAQ) ---------- */
+function applyFaq(C){
+  var f = C && C.faq; if(!f) return;
+  var mount = document.querySelector('[data-render="faq"]');
+  if(!mount || !f.items) return;
+  mount.innerHTML = "";
+  f.items.forEach(function(it, i){
+    var q = _pair(it.q), a = _pair(it.a);
+    var item = document.createElement("div");
+    item.className = "faq-item";
+    var qe = document.createElement("button");
+    qe.type = "button";
+    qe.className = "faq-q";
+    qe.setAttribute("aria-expanded","false");
+    qe.innerHTML = '<span data-ar="'+(q.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(q.en||"").replace(/"/g,"&quot;")+'">'+ (q.ar||"") +'</span><span class="faq-ico" aria-hidden="true">+</span>';
+    var ae = document.createElement("div");
+    ae.className = "faq-a";
+    ae.setAttribute("data-ar", (a.ar||"").replace(/"/g,"&quot;"));
+    ae.setAttribute("data-en", (a.en||"").replace(/"/g,"&quot;"));
+    ae.innerHTML = a.ar || "";
+    item.appendChild(qe);
+    item.appendChild(ae);
+    mount.appendChild(item);
+  });
+}
+
 /* ---------- نقاط الربط الديناميكية (يحتاج تنفيذ بعد إعادة البناء) ---------- */
 function bindDynamic(){
   // كروت الفليب
@@ -383,6 +484,25 @@ function bindDynamic(){
     lbClose.addEventListener("click",closeLb);
     lb.addEventListener("click",function(e){ if(e.target===lb) closeLb(); });
   }
+
+  // أكورديون الأسئلة الشائعة (FAQ)
+  document.querySelectorAll(".faq-item").forEach(function(item){
+    var q=item.querySelector(".faq-q");
+    if(!q) return;
+    q.addEventListener("click",function(){
+      var open=item.classList.contains("open");
+      item.classList.toggle("open",!open);
+      q.setAttribute("aria-expanded", String(!open));
+    });
+  });
+
+  // شريط الحالة — حواف بيضاوية عند السكرول
+  var statusBar=document.getElementById("statusBar");
+  if(statusBar){
+    var onScrollState=function(){ statusBar.classList.toggle("pill", window.scrollY>40); };
+    window.addEventListener("scroll",onScrollState,{passive:true});
+    onScrollState();
+  }
 }
 
 /* ---------- المنفّذ الرئيسي ---------- */
@@ -394,6 +514,9 @@ function applySiteContent(C){
   applySignatures(C);
   applyMenu(C);
   applyGallery(C);
+  applyFaq(C);
+  applyStatusBar(C);
+  applyMap(C);
 }
 
 /* ---------- التهيئة: تحميل غير متزامن ثم تطبيق، قبل init اللغة ---------- */
