@@ -381,7 +381,6 @@ function applyStatusBar(C){
   }
 
   bar.classList.toggle("closed", isClosed);
-  bar.classList.remove("pill");
 
   var ar = isClosed ? (closedLabel.ar||"") : (openLabel.ar||"");
   var en = isClosed ? (closedLabel.en||closedLabel.ar) : (openLabel.en||openLabel.ar);
@@ -390,7 +389,7 @@ function applyStatusBar(C){
   txt.innerHTML = ar;
 
   if(reason && (isClosed || statusIsClosed)){
-    reason.style.display = reasonText ? "inline" : "none";
+    reason.style.display = reasonText ? "block" : "none";
     reason.setAttribute("data-ar", reasonText || "");
     reason.setAttribute("data-en", closedReason.en || closedReason.ar || "");
     reason.innerHTML = reasonText || "";
@@ -496,12 +495,17 @@ function bindDynamic(){
     });
   });
 
-  // شريط الحالة — حواف بيضاوية عند السكرول
+  // دائرة الحالة — toggle للتوضيح على اللمس
   var statusBar=document.getElementById("statusBar");
   if(statusBar){
-    var onScrollState=function(){ statusBar.classList.toggle("pill", window.scrollY>40); };
-    window.addEventListener("scroll",onScrollState,{passive:true});
-    onScrollState();
+    var statusBtn=document.getElementById("statusBtn");
+    if(statusBtn){
+      statusBtn.addEventListener("click",function(){
+        statusBar.classList.toggle("show");
+        var open=statusBar.classList.contains("show");
+        statusBtn.setAttribute("aria-pressed", String(open));
+      });
+    }
   }
 }
 
