@@ -438,14 +438,19 @@
     .reveal{opacity:1;transform:none}
   }
 
-  /* ===== STATUS BAR — مفتوح / مغلق الآن ===== */
-  .status-bar{position:sticky;top:0;z-index:1000;background:var(--primary-deep);color:#fff;font-size:.85rem;font-weight:800;transition:border-radius .35s ease, box-shadow .35s ease, padding .35s ease;border-bottom-left-radius:0;border-bottom-right-radius:0}
-  .status-bar.pill{border-bottom-left-radius:999px;border-bottom-right-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding-bottom:4px}
-  .status-inner{display:flex;align-items:center;gap:.6rem;justify-content:center;padding:.5rem 1rem;text-align:center;width:100%;max-width:1200px;margin:0 auto}
-  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(201,162,39,.6);flex-shrink:0;animation:pulse 2s infinite}
-  .status-bar.closed .status-dot{background:#e11d48;animation:none;box-shadow:none}
-  .status-title{color:var(--gold)}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}70%{box-shadow:0 0 0 8px rgba(201,162,39,0)}100%{box-shadow:0 0 0 0 rgba(201,162,39,0)}}
+  /* ===== STATUS FAB — دائرة مفتوح / مغلق أسفل يمين الشاشة ===== */
+  .status-fab{position:fixed;bottom:20px;right:20px;z-index:1200;display:flex;align-items:center;gap:.7rem;flex-direction:row;direction:ltr}
+  .status-fab .status-btn{width:58px;height:58px;border-radius:50%;background:var(--primary-deep);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.32);padding:0;transition:transform .2s,box-shadow .2s;flex-shrink:0}
+  .status-fab .status-btn:hover{transform:scale(1.07);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .status-fab.closed .status-btn{background:#3f0d0d;border-color:#e11d48}
+  .status-dot{width:18px;height:18px;border-radius:50%;background:var(--gold);border:2.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 0 rgba(201,162,39,.6);animation:pulse 2s infinite}
+  .status-fab.closed .status-dot{background:#e11d48;animation:none;box-shadow:none;border-color:rgba(255,255,255,.8)}
+  .status-label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;transition:max-width .35s ease,opacity .3s ease;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 24px rgba(62,21,6,.16);padding:0}
+  .status-fab:hover .status-label,.status-fab.show .status-label{max-width:280px;opacity:1;padding:.6rem .95rem}
+  .status-label .status-text{display:block;font-weight:800;color:var(--ink);font-size:.92rem;text-align:center}
+  .status-label .status-reason{display:none;font-size:.78rem;color:var(--secondary);line-height:1.55;margin-top:.2rem;white-space:normal}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}70%{box-shadow:0 0 0 10px rgba(201,162,39,0)}100%{box-shadow:0 0 0 0 rgba(201,162,39,0)}}
+  @media (max-width:640px){.status-fab{bottom:14px;right:14px}.status-fab .status-btn{width:52px;height:52px}.status-fab:hover .status-label,.status-fab.show .status-label{max-width:220px}}
 
   /* ===== PARKING & ACCESS ===== */
   .parking{background:var(--bg-alt)}
@@ -495,13 +500,15 @@
   <img id="lbImg" src="" alt="">
 </div>
 
-<!-- ===== STATUS BAR (open/closed) ===== -->
-<div class="status-bar" id="statusBar" role="status" aria-live="polite">
-  <div class="wrap status-inner">
-    <span class="status-dot" id="statusDot"></span>
+<!-- ===== STATUS FAB — دائرة مفتوح/مغلق أسفل يمين الشاشة ===== -->
+<div class="status-fab" id="statusBar" role="status" aria-live="polite">
+  <div class="status-label" id="statusLabel">
     <span class="status-text" id="statusText" data-i data-key="overrides.open_label">مفتوح الآن</span>
-    <span class="status-reason" id="statusReason" style="display:none"></span>
+    <span class="status-reason" id="statusReason"></span>
   </div>
+  <button class="status-btn" type="button" id="statusBtn" aria-label="حالة المطعم">
+    <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+  </button>
 </div>
 
 <!-- ===== HEADER ===== -->
