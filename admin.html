@@ -468,9 +468,10 @@ function setPath(obj, path, val){
 function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
 
 /* ---------------- Supabase REST ---------------- */
-function api(method, path, body){
+function api(method, path, body, extra){
   var url = CFG.url.replace(/\/+$/,"") + path;
   var headers = { apikey: CFG.anon, Authorization: "Bearer " + (CFG.token||CFG.anon) };
+  if(extra){ for(var hk in extra){ if(extra.hasOwnProperty(hk)) headers[hk]=extra[hk]; } }
   var opts = { method:method, headers:headers };
   if(body!==undefined){ opts.headers["Content-Type"]="application/json"; opts.body=JSON.stringify(body); }
   return fetch(url, opts).then(function(r){
@@ -834,9 +835,13 @@ function replaceTable(table, rows, pk){
     return api("POST","/rest/v1/"+table, rows);
   });
 }
-/* لصفوف site_text نستعمل upsert على المفتاح كي لا نحذف أعمدة إضافية إن وُجدت */
+/* لصفوف site_text نستعمل upsert على المفتاح كي لا نحذف أعمدة إضافية إن وُجدت
+   مع هيدر Prefer: resolution=merge-duplicates (مطلوب لتطبيق on_conflict في PostgREST) */
 function upsertText(rows){
-  return api("POST","/rest/v1/site_text?on_conflict=key", rows);
+  var map={}; rows.forEach(function(r){ if(r&&r.key!=""&&r.key!=null) map[r.key]=r; });
+  var uniq=Object.keys(map).map(function(k){ return map[k]; });
+  return api("POST","/rest/v1/site_text?on_conflict=key", uniq,
+    { Prefer:"resolution=merge-duplicates" });
 }
 function saveAll(){
   var btn=document.getElementById("saveAll");
