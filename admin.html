@@ -826,8 +826,11 @@ function buildThemeRows(){
 /* ---------------- حفظ الكل ---------------- */
 function replaceTable(table, rows, pk){
   // حذف كل الصفوف ثم إدراج — بسيط وموثوق للمالك الوحيد
-  if(!rows.length) return api("DELETE","/rest/v1/"+table+"?select=id");
-  return api("DELETE","/rest/v1/"+table+"?select=id").then(function(){
+  // Supabase يرفض DELETE غير محدود، لذا نضيف شرط WHERE يطابق كل الصفوف
+  var all = (pk==="id") ? "?id=neq.0" : "?"+encodeURIComponent(pk)+"=neq.";
+  var url = "/rest/v1/"+table+all;
+  if(!rows.length) return api("DELETE", url);
+  return api("DELETE", url).then(function(){
     return api("POST","/rest/v1/"+table, rows);
   });
 }
