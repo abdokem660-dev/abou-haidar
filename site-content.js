@@ -229,7 +229,7 @@ window.siteContent = {
     phone: "+20 2 22570871",
     hours_title: { ar: "مواعيد العمل", en: "Opening hours" },
     hours_daily: { ar: "يوميًا", en: "Daily" },
-    hours_time: { ar: "8:30 ص — 9:00 م", en: "8:30 AM — 9:00 PM" },
+    hours_time: { ar: "8:30 ص — 1:30 ص", en: "8:30 AM — 1:30 AM" },
     hours_note: { ar: "※ يرجى ملاحظة أن المحل يعمل بالنقد فقط (كاش).", en: "※ Please note the restaurant is cash only." },
     follow_title: { ar: "تابعنا", en: "Follow us" },
     follow_text: { ar: "صفحتنا الرسمية على فيسبوك →", en: "Our official Facebook page →" },
@@ -264,10 +264,69 @@ window.siteContent = {
     col_contact_title: { ar: "تواصل", en: "Contact" },
     col_hours_title: { ar: "ساعات العمل", en: "Opening hours" },
     col_hours_daily: { ar: "يوميًا:", en: "Daily:" },
-    col_hours_time: { ar: "8:30 ص — 9:00 م", en: "8:30 AM — 9:00 PM" },
+    col_hours_time: { ar: "8:30 ص — 1:30 ص", en: "8:30 AM — 1:30 AM" },
     col_contact_roxy: { ar: "روكسي، مصر الجديدة", en: "Roxy, Heliopolis" },
     col_contact_facebook: { ar: "فيسبوك", en: "Facebook" },
     bottom_copyright: { ar: "© 2026 مطعم أبو حيدر — جميع الحقوق محفوظة", en: "© 2026 Abou Haidar Restaurant — All rights reserved" },
     bottom_tagline: { ar: "موقع تجريبي لعرض الهوية الحالية للمطعم.", en: "A demo website showcasing the restaurant's current identity." }
+  },
+
+  /* ---------- حالة الفتح / الإغلاق (مؤشر أعلى الصفحة) ---------- */
+  /* status: "auto" = يحسب تلقائيًا من ساعات العمل، 
+     status: "closed" = إغلاق استثنائي (يعرض السبب للزائر ويغلق التلقائي) */
+  overrides: {
+    status: { ar: "auto", en: "auto" },
+    closed_title: { ar: "مغلق مؤقتًا", en: "Temporarily closed" },
+    closed_reason: { ar: "نعتذر — المطعم مغلق اليوم لظرف استثنائي. سنعود قريبًا.", en: "Sorry — the restaurant is closed today due to exceptional circumstances. We'll be back soon." },
+    open_label: { ar: "مفتوح الآن", en: "Open now" },
+    closed_label: { ar: "مغلق الآن", en: "Closed now" }
+  },
+
+  /* ---------- الوصول ومواقف السيارات (قسم منفصل تحت التواصل) ---------- */
+  parking: {
+    tag: { ar: "الوصول والمواقف", en: "Parking & Access" },
+    title: { ar: "ممكن توصلك و<wbr>تركن فين؟", en: "How to get here & <wbr>where to park" },
+    sub: { ar: "معلومات مفصّلة للوصول إلى أبو حيدر بسيارتك أو بالمواصلات — لراحة زيارتك.", en: "Detailed info on reaching Abou Haidar by car or public transport — for a worry-free visit." },
+    map_title: { ar: "موقعنا على الخريطة", en: "Our location on the map" },
+    p1: {
+      icon: { ar: "🅿️", en: "🅿️" },
+      title: { ar: "جراج روكسي الذكي", en: "Roxy Smart Garage" },
+      desc: { ar: "الخيار الأفضل والأكثر أمانًا — جراج أوتوماتيكي متعدد الطوابق على بعد 7–10 دقائق مشيًا من المطعم.", en: "The best and safest option — a multi-storey automatic garage 7–10 minutes walk from the restaurant." }
+    },
+    p2: {
+      icon: { ar: "🅿️", en: "🅿️" },
+      title: { ar: "جراج الميريلاند", en: "Meriland Garage" },
+      desc: { ar: "ساحة انتظار مفتوحة قريبة من منطقة الميريلاند والكوربة — مناسبة للفترات العادية.", en: "An open parking lot near Meriland and Korba — suitable during normal hours." }
+    },
+    p3: {
+      icon: { ar: "🅿️", en: "🅿️" },
+      title: { ar: "شوارع نزيه خليفة والأهرام", en: "Nazih Khalifa & Al-Ahram streets" },
+      desc: { ar: "ركنات على جانبي الطريق، لكنها محدودة في أوقات الذروة.", en: "Street parking along both roads, though limited during peak hours." }
+    },
+    p4: {
+      icon: { ar: "🚇", en: "🚇" },
+      title: { ar: "محطة مترو الأهرام", en: "El-Ahram Metro Station" },
+      desc: { ar: "على الخط الثالث — الوصول بدون سيارة، وخطوات قليلة من شارع إبراهيم اللقاني.", en: "On Line 3 — arrive without a car, just a short walk from Ibrahim El-Lakkani Street." }
+    },
+    embed: { ar: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.088090528631!2d31.316168875596805!3d30.091663374899884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e289a115227%3A0x24bce8d200a5a143!2sAbou%20Haidar%20Shawerma!5e0!3m2!1sen!2seg!4v1788271034769!5m2!1sen!2seg", en: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.088090528631!2d31.316168875596805!3d30.091663374899884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e289a115227%3A0x24bce8d200a5a143!2sAbou%20Haidar%20Shawerma!5e0!3m2!1sen!2seg!4v1788271034769!5m2!1sen!2seg" }
+  },
+
+  /* ---------- الأسئلة الشائعة (FAQ) — فوق التواصل وتحت المعرض ---------- */
+  faq: {
+    tag: { ar: "الأسئلة الشائعة", en: "FAQs" },
+    title: { ar: "عندك سؤال؟ <span class='gold'>عندنا الإجابة</span>", en: "Got a question? <span class='gold'>We've got the answer</span>" },
+    sub: { ar: "أكثر الأسئلة تداولًا عن مطعم أبو حيدر — ويمكنك تعديلها من لوحة التحكم.", en: "The most common questions about Abou Haidar — editable from the dashboard." },
+    items: [
+      { q: { ar: "هل توفّرون خدمة التوصيل؟", en: "Do you offer delivery?" },
+        a: { ar: "الطلب حاليًا داخل المطعم فقط — يمكنك الاتصال بنا على 0222570871 للتأكد من الخدمة المتوفرة.", en: "Orders are currently in-house only — call us at 0222570871 to check available services." } },
+      { q: { ar: "هل الدفع بالبطاقة أم النقد فقط؟", en: "Card or cash only?" },
+        a: { ar: "حاليًا نقبل النقد (الكاش) فقط داخل المطعم.", en: "We currently accept cash only inside the restaurant." } },
+      { q: { ar: "أين يقع المطعم بالضبط؟", en: "Where exactly is the restaurant?" },
+        a: { ar: "الموقع في ١٣ شارع سكة سليمان باشا، متفرع من إبراهيم اللقاني، روكسي، مصر الجديدة. يمكنك استخدام الخريطة أعلاه.", en: "We're at 13 Sikka Suleiman Pasha St, off Ibrahim El-Lakkani, Roxy, Heliopolis. Use the map above." } },
+      { q: { ar: "ما هي ساعات العمل؟", en: "What are the opening hours?" },
+        a: { ar: "نعمل يوميًا من 8:30 صباحًا حتى 1:30 بعد منتصف الليل.", en: "We're open daily from 8:30 AM until 1:30 AM." } },
+      { q: { ar: "أين يمكنني ركن سيارتي؟", en: "Where can I park my car?" },
+        a: { ar: "لدينا عدة خيارات — تفقّد قسم الوصول والمواقف في الأسفل (جراج روكسي الذكي، الميريلاند، وغيرها).", en: "We have several options — check the Parking & Access section below (Roxy Smart Garage, Meriland, and more)." } }
+    ]
   }
 };
