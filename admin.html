@@ -6,121 +6,180 @@
 <title>لوحة تحكم أبو حيدر</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:wght@400;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="site-content.js"></script>
 <style>
   :root{
     --primary:#7C2D12; --primary-dark:#5b1f0a; --primary-deep:#3e1506;
     --secondary:#B91C1C; --accent:#A16207; --accent-light:#D97706; --gold:#C9A227;
-    --bg:#FDF6EC; --bg-alt:#F7EDDC; --card:#fff; --ink:#3E1506; --ink-soft:#7A5C47;
-    --muted:#9C8571; --border:#EDD9B8; --smoke:#F1E3CC;
+    --bg:#F7EFE0; --bg-alt:#F1E3CC; --card:#fff; --ink:#3E1506; --ink-soft:#7A5C47;
+    --muted:#9C8571; --border:#E7D8B8; --smoke:#F1E3CC;
     --ok:#1d7a3f; --err:#b3261e;
-    --shadow:0 10px 30px -12px rgba(62,21,6,.35);
-    --radius:20px;
+    --shadow:0 12px 30px -14px rgba(62,21,6,.28);
+    --radius:18px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Almarai',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth}
+  body{font-family:'Almarai',sans-serif;background:
+      radial-gradient(1200px 500px at 85% -10%,#fff 0%,rgba(255,255,255,0) 60%),
+      radial-gradient(900px 420px at -10% 0%,#fbeeda 0%,rgba(255,255,255,0) 55%),var(--bg);
+    color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;min-height:100vh}
   body.lang-en{font-family:'Barlow',sans-serif}
-  button{font-family:inherit;cursor:pointer}
+  body.lang-en .serif, h1.serif{font-family:'Barlow',sans-serif}
+  .serif{font-family:'Amiri',serif}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
   a{color:inherit}
-  .brand-bar{background:linear-gradient(135deg,var(--primary-deep),var(--primary));color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 18px -6px rgba(62,21,6,.5)}
-  .brand-bar h1{font-family:'Amiri',serif;font-size:1.3rem;font-weight:700;flex:1;letter-spacing:.01em}
-  .lang-en .brand-bar h1{font-family:'Playfair Display',serif}
-  .pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-size:.85rem;font-weight:700;transition:background .2s}
-  .pill:hover{background:rgba(255,255,255,.24)}
+
+  /* ===== Top bar ===== */
+  .brand-bar{background:linear-gradient(135deg,var(--primary-deep),var(--primary)) ;color:#fff;padding:13px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 4px 18px -6px rgba(62,21,6,.5);position:sticky;top:0;z-index:40}
+  .brand-bar .logo{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.5);flex:none;display:none}
+  .brand-bar h1{font-family:'Amiri',serif;font-size:1.22rem;font-weight:700;flex:1;letter-spacing:.01em}
+  body.lang-en .brand-bar h1{font-family:'Barlow',sans-serif}
+  .pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:7px 14px;font-size:.85rem;font-weight:800;transition:background .2s;display:inline-flex;align-items:center;gap:6px}
+  .pill:hover{background:rgba(255,255,255,.26)}
   .pill.gold{background:var(--accent);border-color:var(--accent)}
-  .wrap{max-width:1120px;margin:0 auto;padding:22px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px;box-shadow:var(--shadow)}
-  .card h2{font-family:'Amiri',serif;font-size:1.15rem;font-weight:700;color:var(--primary);border-bottom:2px solid var(--border);padding-bottom:10px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-  .lang-en .card h2{font-family:'Playfair Display',serif}
-  .card h2 .sec-num{background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
-  .tab{padding:9px 18px;border-radius:999px;border:2px solid var(--border);background:var(--card);cursor:pointer;font-weight:800;font-size:.9rem;transition:all .2s}
-  .tab:hover{border-color:var(--accent);color:var(--accent)}
-  .tab.on{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-color:var(--primary)}
-  .tabview{display:none;animation:fade .25s ease}
+  .pill.ghost{background:transparent;border-color:rgba(255,255,255,.35)}
+  .conn-dot{width:8px;height:8px;border-radius:50%;background:#f87171;display:inline-block;box-shadow:0 0 0 0 rgba(248,113,113,.6)}
+  .conn-dot.ok{background:#4ade80}
+
+  /* ===== Layout ===== */
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 20px 130px}
+  .preview-bar{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;box-shadow:var(--shadow)}
+  .preview-bar a{color:var(--accent);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .muted{color:var(--muted)}
+
+  /* ===== Tabs ===== */
+  .tabs{position:sticky;top:64px;z-index:30;display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 20px;padding:8px 0}
+  .tab{padding:10px 16px;border-radius:999px;border:2px solid var(--border);background:var(--card);cursor:pointer;font-weight:800;font-size:.88rem;transition:all .2s;color:var(--ink-soft)}
+  .tab:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .tab.on{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-color:var(--primary);box-shadow:0 8px 18px -8px rgba(124,45,18,.55)}
+  .tabview{display:none;animation:fade .28s ease}
   .tabview.on{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .grid.three{grid-template-columns:1fr 1fr 1fr}
-  .field{margin-bottom:12px}
-  .field label{display:block;font-size:.82rem;font-weight:800;color:var(--accent);margin-bottom:4px}
-  .field label .tag-en{display:inline-block;background:var(--smoke);border:1px solid var(--border);border-radius:6px;padding:0 6px;font-size:.68rem;color:var(--ink-soft);margin-inline-start:4px}
-  input[type=text],input[type=url],input[type=email],input[type=password],input[type=number],input[type=color],textarea,select{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:12px;background:#fffdf7;font-size:.95rem;color:var(--ink);font-family:inherit;transition:border-color .2s,box-shadow .2s}
-  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(161,98,7,.15)}
-  textarea{min-height:74px;resize:vertical}
-  input[type=color]{height:46px;padding:3px;cursor:pointer}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ===== Cards ===== */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:calc(var(--radius) + 4px);padding:22px 22px 18px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .card>h2{font-family:'Amiri',serif;font-size:1.14rem;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  body.lang-en .card>h2{font-family:'Barlow',sans-serif;font-weight:700}
+  .card>h2 .n{background:linear-gradient(135deg,var(--accent),var(--gold));color:#fff;width:28px;height:28px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;flex:none;font-family:'Almarai',sans-serif}
+  .card-desc{font-size:.82rem;color:var(--muted);margin:0 0 14px 38px;font-weight:600}
+  .card .card-sub{font-size:.85rem;color:var(--accent);font-weight:800;margin:6px 0 10px}
+
+  /* ===== Fields ===== */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+  .field{margin-bottom:2px}
+  .field label{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:800;color:var(--accent);margin-bottom:5px}
+  .field label .hint-tag{font-size:.66rem;font-weight:700;background:var(--smoke);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:0 6px;line-height:1.6}
+  .field .tip{font-size:.72rem;color:var(--muted);font-weight:600;margin-top:3px}
+  input[type=text],input[type=url],input[type=email],input[type=password],input[type=number],input[type=color],textarea,select{
+    width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:12px;background:#fffcf5;font-size:.95rem;color:var(--ink);font-family:inherit;transition:border-color .2s,box-shadow .2s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(161,98,7,.16)}
+  textarea{min-height:76px;resize:vertical}
+  input[type=color]{height:46px;padding:3px;cursor:pointer;border-radius:10px}
+  input[readonly]{background:var(--bg-alt);color:var(--ink-soft)}
+
+  /* ===== Buttons ===== */
   .btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .btn{background:linear-gradient(135deg,var(--accent),var(--secondary));color:#fff;border:none;border-radius:999px;padding:11px 26px;font-weight:800;cursor:pointer;font-size:.95rem;box-shadow:0 10px 22px -10px rgba(185,28,28,.6);transition:transform .2s,box-shadow .2s,opacity .2s}
+  .btn{background:linear-gradient(135deg,var(--accent),var(--secondary));color:#fff;border:none;border-radius:999px;padding:11px 24px;font-weight:800;font-size:.95rem;box-shadow:0 10px 22px -10px rgba(185,28,28,.6);transition:transform .2s,box-shadow .2s,opacity .2s}
   .btn:hover{transform:translateY(-2px);box-shadow:0 14px 26px -10px rgba(185,28,28,.7)}
   .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
   .btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary);box-shadow:none}
   .btn.ghost:hover{background:rgba(124,45,18,.06)}
   .btn.danger{background:var(--err);box-shadow:0 10px 22px -10px rgba(179,38,30,.6)}
-  .btn.small{padding:7px 14px;font-size:.8rem}
-  .item{border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px;background:linear-gradient(180deg,#fffdf7,#fffaf1)}
+  .btn.small{padding:6px 13px;font-size:.78rem}
+  .btn.goldbtn{background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;box-shadow:0 12px 26px -12px rgba(161,98,7,.85)}
+  .link-btn{color:var(--accent);font-weight:800;font-size:.82rem;text-decoration:underline;text-underline-offset:3px;padding:4px 2px}
+
+  /* ===== Lists ===== */
+  .item{border:1px solid var(--border);border-radius:16px;padding:15px;margin-bottom:14px;background:linear-gradient(180deg,#fffdf6,#fffaf0)}
   .item-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-  .item-head b{color:var(--primary);font-size:.98rem}
-  .item-head .ops{display:flex;gap:6px}
-  .del{background:var(--err);color:#fff;border:none;border-radius:999px;padding:6px 12px;font-weight:800;cursor:pointer;font-size:.78rem}
-  .mini{font-size:.72rem;color:var(--muted);font-weight:600}
-  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);max-width:460px;width:92%;padding:14px 20px;border-radius:14px;color:#fff;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.25);display:none;z-index:80;text-align:center}
-  .toast.ok{background:var(--ok)} .toast.err{background:var(--err)} .toast.show{display:block;animation:fade .25s}
-  .login-wrap{max-width:440px;margin:9vh auto;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:32px;box-shadow:var(--shadow)}
-  .login-wrap h2{margin-bottom:6px;text-align:center;font-family:'Amiri',serif}
-  .lang-en .login-wrap h2{font-family:'Playfair Display',serif}
-  .login-wrap .sub{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:22px}
-  .hint{font-size:.8rem;color:var(--ink-soft);margin-top:12px;line-height:1.7}
-  .err-msg{color:var(--err);font-size:.85rem;margin-top:8px}
-  .preview-bar{display:flex;align-items:center;gap:14px;background:linear-gradient(180deg,#fff8ec,#fffdf7);border:1px solid var(--border);border-radius:16px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;box-shadow:var(--shadow)}
-  .preview-bar a{color:var(--accent);font-weight:800;text-decoration:underline}
-  .status{font-size:.82rem;color:var(--ink-soft)}
-  .save-row{position:sticky;bottom:16px;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:16px;padding:14px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 8px 30px rgba(62,21,6,.15);z-index:20;flex-wrap:wrap}
-  .save-row .btn{flex:1;min-width:160px}
-  #cfgModal{display:none;position:fixed;inset:0;background:rgba(62,21,6,.55);z-index:70;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
-  #cfgModal .modal-card{background:#fff;border-radius:20px;max-width:540px;width:92%;padding:26px;max-height:88vh;overflow:auto;box-shadow:0 30px 60px rgba(0,0,0,.4)}
-  #cfgModal h2{border:none;padding:0;margin-bottom:16px}
+  .item-head b{color:var(--primary);font-size:.95rem}
+  .item-head .ops{display:flex;gap:6px;align-items:center}
+  .item-head .move{display:flex;gap:4px}
+  .item-head .move button{font-size:.8rem;padding:4px 9px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:800}
+  .item-head .move button:hover{border-color:var(--accent);color:var(--accent)}
+  .del{background:var(--err);color:#fff;border:none;border-radius:999px;padding:5px 13px;font-weight:800;font-size:.76rem}
+  .empty{color:var(--muted);text-align:center;padding:18px;font-style:italic}
+  .sec-sub-label{margin:.9rem 0 .5rem;font-weight:800;color:var(--ink-soft);font-size:.88rem}
+
+  /* ===== Theme swatches ===== */
   .theme-swatch-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-  .swatch-cell label{display:block;font-size:.74rem;font-weight:800;color:var(--accent);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .empty{color:var(--muted);text-align:center;padding:20px;font-style:italic}
-  .rec{font-size:.7rem;background:var(--smoke);color:var(--ink-soft);border-radius:6px;padding:1px 6px;margin-inline-start:6px}
-  .img-upload{border:1.5px dashed var(--border);border-radius:14px;padding:10px;background:#fffdf7}
+  .swatch-cell label{display:block;font-size:.72rem;font-weight:800;color:var(--accent);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:start}
+  .swatch-cell .cp{display:none}
+  .swatch-cell .sw{height:42px;border-radius:11px;border:2px solid rgba(0,0,0,.08);cursor:pointer;position:relative}
+  .swatch-cell .sw:hover{transform:scale(1.03);transition:transform .15s}
+
+  /* ===== Save bar ===== */
+  .save-row{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:min(680px,94vw);background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:18px;padding:13px 18px;display:flex;gap:12px;align-items:center;box-shadow:0 16px 40px -14px rgba(62,21,6,.4);z-index:50;flex-wrap:wrap}
+  .save-row .btn{flex:1;min-width:170px}
+  .save-row .stats{font-size:.74rem;color:var(--ink-soft);flex:1;min-width:150px;font-weight:700}
+
+  /* ===== Toast ===== */
+  .toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);max-width:470px;width:92%;padding:14px 20px;border-radius:14px;color:#fff;font-weight:800;box-shadow:0 12px 34px rgba(0,0,0,.28);display:none;z-index:90;text-align:center;font-size:.92rem}
+  .toast.ok{background:var(--ok)} .toast.err{background:var(--err)} .toast.show{display:block;animation:fade .25s}
+
+  /* ===== Login ===== */
+  .login-wrap{max-width:430px;margin:8vh auto;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:34px 30px;box-shadow:0 30px 60px -20px rgba(62,21,6,.35)}
+  .login-wrap .brand-ico{width:74px;height:74px;border-radius:50%;object-fit:cover;margin:0 auto 14px;display:block;border:3px solid var(--gold);box-shadow:0 8px 20px -8px rgba(161,98,7,.5)}
+  .login-wrap h2{margin-bottom:4px;text-align:center;font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary)}
+  body.lang-en .login-wrap h2{font-family:'Barlow',sans-serif}
+  .login-wrap .sub{text-align:center;color:var(--muted);font-size:.86rem;margin-bottom:22px}
+  .err-msg{color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;font-weight:700}
+  .hint{font-size:.8rem;color:var(--ink-soft);margin-top:14px;line-height:1.7;background:var(--bg);border-radius:12px;padding:10px 12px}
+  .ok-chip{display:inline-block;background:rgba(29,122,63,.1);color:var(--ok);border:1px solid rgba(29,122,63,.3);font-size:.75rem;font-weight:800;padding:3px 10px;border-radius:999px}
+
+  /* ===== Modal ===== */
+  #cfgModal{display:none;position:fixed;inset:0;background:rgba(62,21,6,.55);z-index:80;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+  #cfgModal .modal-card{background:#fff;border-radius:22px;max-width:540px;width:92%;padding:26px;max-height:88vh;overflow:auto;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+  #cfgModal h2{border:none;padding:0;margin:0 0 6px;font-family:'Amiri',serif;color:var(--primary)}
+  body.lang-en #cfgModal h2{font-family:'Barlow',sans-serif}
+
+  /* ===== Upload ===== */
+  .img-upload{border:1.5px dashed var(--border);border-radius:14px;padding:10px;background:#fffcf5}
   .img-upload.dragover{border-color:var(--accent);background:#fff6e6}
-  .dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 12px;cursor:pointer;color:var(--accent);text-align:center;border-radius:10px;transition:background .2s}
+  .dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:13px 12px;cursor:pointer;color:var(--accent);text-align:center;border-radius:10px;transition:background .2s}
   .dropzone:hover{background:rgba(161,98,7,.07)}
-  .dz-ico{font-size:1.5rem;line-height:1}
+  .dz-ico{font-size:1.4rem;line-height:1}
   .dz-txt{font-size:.8rem;font-weight:800;color:var(--ink-soft)}
   .dz-sub{font-size:.68rem;color:var(--muted);font-weight:600}
-  .dz-preview{display:none;margin-top:8px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+  .dz-preview{display:none;margin-top:8px;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:#fff}
   .dz-preview.show{display:block}
   .dz-preview img{width:100%;max-height:150px;object-fit:cover;display:block}
   .dz-status{font-size:.7rem;margin-top:6px;font-weight:700;line-height:1.5}
   .dz-status.ok{color:var(--ok)} .dz-status.err{color:var(--err)} .dz-status.load{color:var(--accent)}
   .dz-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-  .dz-actions button{font-size:.72rem;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:800;cursor:pointer}
-  .dz-actions button:hover{border-color:var(--accent);color:var(--accent)}
-  .sec-sub-label{margin:.6rem 0 .3rem;font-weight:800;color:var(--ink-soft);font-size:.85rem}
+  .dz-actions button{font-size:.72rem;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:800}
+
+  @media (max-width:680px){
+    .grid{grid-template-columns:1fr}
+    .tabs{top:60px}
+    .save-row .stats{min-width:100%}
+    .brand-bar h1{font-size:1.05rem}
+  }
 </style>
 </head>
 <body class="lang-en">
 
-<div class="brand-bar">
-  <h1 data-admin-head>Abou Haidar — Admin Dashboard</h1>
-  <button class="pill gold" id="cfgBtn">Supabase Settings</button>
-  <button class="pill" id="langToggle">عربي</button>
-  <button class="pill" id="logoutBtn" style="display:none">Log out</button>
-</div>
+<header class="brand-bar">
+  <img class="logo" id="barLogo" alt="" src="">
+  <h1 data-admin-head class="serif">لوحة تحكم أبو حيدر</h1>
+  <span class="ok-chip" id="connChip" style="display:none">متصل</span>
+  <button class="pill ghost" id="cfgBtn">إعدادات الاتصال</button>
+  <button class="pill" id="langToggle">English</button>
+  <button class="pill" id="logoutBtn" style="display:none">تسجيل الخروج</button>
+</header>
 
 <!-- ================= LOGIN ================= -->
 <div id="loginView" class="wrap">
   <div class="login-wrap">
+    <img class="brand-ico" id="loginLogo" alt="" src="">
     <h2 data-admin="login_title">تسجيل الدخول</h2>
-    <p class="sub" data-admin="login_sub">لوحة تحكم المالك — مصرّح لك بالتعديل على محتوى الموقع.</p>
-    <div class="field"><label data-admin="login_email">البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="owner@example.com"></div>
-    <div class="field"><label data-admin="login_pass">كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••••" style="text-align:start"></div>
-    <div class="btns"><button class="btn" id="loginBtn" style="width:100%">دخول</button></div>
+    <p class="sub" data-admin="login_sub">لوحة تحكم المالك — لتعديل محتوى الموقع بدون أي كود.</p>
+    <div class="field"><label data-admin="login_email">البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="owner@example.com" autocomplete="username"></div>
+    <div class="field" style="margin-top:12px"><label data-admin="login_pass">كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" style="text-align:start"></div>
+    <div class="btns" style="margin-top:18px"><button class="btn" id="loginBtn" style="width:100%">دخول</button></div>
     <div class="err-msg" id="loginErr"></div>
-    <p class="hint" data-admin="login_hint">أول مرة؟ فعّل Supabase في إعدادات الاتصال، ثم أنشئ حساب المالك. الحساب هو المسؤول الوحيد عن تعديل المحتوى.</p>
+    <p class="hint" data-admin="login_hint">أول مرة؟ اضغط «إعدادات الاتصال» بالأعلى، تأكد من البيانات، ثم اضغط «إنشاء حساب المالك». بعدها سجّل الدخول وسيظهر لك كل أقسام الموقع للتعديل.</p>
   </div>
 </div>
 
@@ -128,11 +187,12 @@
 <div id="cfgModal">
   <div class="modal-card">
     <h2>إعدادات الاتصال بـ Supabase</h2>
+    <p class="hint" style="margin:4px 0 16px">هذه البيانات موجودة مسبقًا — لا تغيّرها إلا إذا كنت تعرف ما تفعل.</p>
     <div class="field"><label>Supabase URL</label><input type="text" id="cfgUrl" placeholder="https://xxxx.supabase.co"></div>
-    <div class="field"><label>Anon Key (المفتاح العام)</label><input type="text" id="cfgAnon" placeholder="eyJ..."></div>
-    <div class="field"><label>بريد صاحب الحساب</label><input type="email" id="cfgEmail" placeholder="owner@example.com"></div>
-    <div class="field"><label>كلمة مرور أولية (للإنشاء الأول فقط)</label><input type="password" id="cfgSetupPass" placeholder="كلمة مرور قوية"></div>
-    <div class="btns">
+    <div class="field" style="margin-top:12px"><label>Anon Key (المفتاح العام)</label><input type="text" id="cfgAnon" placeholder="eyJ..." dir="ltr"></div>
+    <div class="field" style="margin-top:12px"><label>بريد صاحب الحساب</label><input type="email" id="cfgEmail" placeholder="owner@example.com"></div>
+    <div class="field" style="margin-top:12px"><label>كلمة مرور أولية (للإنشاء الأول فقط)</label><input type="password" id="cfgSetupPass" placeholder="كلمة مرور قوية" autocomplete="new-password"></div>
+    <div class="btns" style="margin-top:16px">
       <button class="btn" id="cfgSave">حفظ الإعدادات</button>
       <button class="btn ghost" id="cfgCreateOwner">إنشاء حساب المالك</button>
       <button class="btn ghost" id="cfgClose">إغلاق</button>
@@ -145,219 +205,372 @@
 <div id="dashView" style="display:none">
   <div class="wrap">
     <div class="preview-bar">
-      <span>معاينة الموقع:</span>
-      <a href="index.html" target="_blank" rel="noopener">فتح الموقع ↗</a>
+      <span><b>معاينة الموقع الجديد بنفس اللحظة:</b></span>
+      <a href="index.html" target="_blank" rel="noopener">فتح الموقع في تبويب جديد ↗</a>
       <span style="flex:1"></span>
-      <span class="status" id="connStatus"></span>
+      <span class="muted" id="connStatus">…</span>
     </div>
 
     <div class="tabs" id="tabs">
-      <button class="tab on" data-v="identity">البراند والألوان</button>
-      <button class="tab" data-v="story">القصة والمميزات</button>
+      <button class="tab on" data-v="identity">الهوية والألوان</button>
+      <button class="tab" data-v="story">القصة</button>
+      <button class="tab" data-v="signatures">المميزات</button>
       <button class="tab" data-v="menu">المنيو</button>
       <button class="tab" data-v="gallery">المعرض</button>
-      <button class="tab" data-v="contact">التواصل والتذييل</button>
+      <button class="tab" data-v="contact">التواصل</button>
+      <button class="tab" data-v="extras">الحالة والمواقف والأسئلة</button>
       <button class="tab" data-v="account">الحساب والأمان</button>
     </div>
 
-    <!-- Identity -->
+    <!-- ============ IDENTITY ============ -->
     <div id="identity" class="tabview on">
       <div class="card">
-        <h2><span class="sec-num">1</span>البراند وبيانات المتصفح</h2>
+        <h2><span class="n">1</span>البراند وبيانات المتصفح (Meta)</h2>
+        <p class="card-desc">اسم المطعم الذي يظهر في شريط المتصفح وعناوين الموقع.</p>
         <div class="grid">
-          <div class="field"><label>اسم البراند (عربي)</label><input data-path="brand_name_ar"></div>
-          <div class="field"><label>اسم البراند (إنجليزي)</label><input data-path="brand_name_en"></div>
-          <div class="field"><label>وصف فرعي (عربي)</label><input data-path="brand_sub_ar"></div>
-          <div class="field"><label>وصف فرعي (إنجليزي)</label><input data-path="brand_sub_en"></div>
-          <div class="field"><label>عنوان المتصفح (عربي)</label><input data-path="meta.title_ar"></div>
-          <div class="field"><label>عنوان المتصفح (إنجليزي)</label><input data-path="meta.title_en"></div>
-          <div class="field"><label class="mini">وصف المتصفح (عربي)</label><textarea data-path="meta.desc_ar"></textarea></div>
-          <div class="field"><label class="mini">وصف المتصفح (إنجليزي)</label><textarea data-path="meta.desc_en"></textarea></div>
-          <div class="field"><label class="mini">مسار اللوجو</label><input data-path="meta.logo"></div>
+          <div class="field"><label>اسم البراند <span class="hint-tag">عربي</span></label><input data-path="brand_name_ar"></div>
+          <div class="field"><label>اسم البراند <span class="hint-tag">English</span></label><input data-path="brand_name_en"></div>
+          <div class="field"><label>الوصف الفرعي <span class="hint-tag">عربي</span></label><input data-path="brand_sub_ar"></div>
+          <div class="field"><label>الوصف الفرعي <span class="hint-tag">English</span></label><input data-path="brand_sub_en"></div>
+          <div class="field"><label>عنوان المتصفح <span class="hint-tag">عربي</span></label><input data-path="meta.title_ar"></div>
+          <div class="field"><label>عنوان المتصفح <span class="hint-tag">English</span></label><input data-path="meta.title_en"></div>
+          <div class="field"><label>وصف المتصفح <span class="hint-tag">عربي</span></label><textarea data-path="meta.desc_ar"></textarea></div>
+          <div class="field"><label>وصف المتصفح <span class="hint-tag">English</span></label><textarea data-path="meta.desc_en"></textarea></div>
+          <div class="field"><label>عنوان المشاركة (OG) <span class="hint-tag">عربي</span></label><input data-path="meta.og_title_ar"></div>
+          <div class="field"><label>عنوان المشاركة (OG) <span class="hint-tag">English</span></label><input data-path="meta.og_title_en"></div>
+          <div class="field"><label>وصف المشاركة (OG) <span class="hint-tag">عربي</span></label><textarea data-path="meta.og_desc_ar"></textarea></div>
+          <div class="field"><label>وصف المشاركة (OG) <span class="hint-tag">English</span></label><textarea data-path="meta.og_desc_en"></textarea></div>
+          <div class="field"><label>الشعار (Logo) — ارفع صورة</label><input data-path="meta.logo"><div class="tip">اضغط المربع المنقّط لرفع صورة الشعار، أو الصق رابط مباشر.</div></div>
+          <div class="field"><label>وصف الشعار <span class="hint-tag">عربي</span></label><input data-path="meta.logo_alt_ar"></div>
+          <div class="field"><label>وصف الشعار <span class="hint-tag">English</span></label><input data-path="meta.logo_alt_en"></div>
         </div>
       </div>
+
       <div class="card">
-        <h2><span class="sec-num">2</span>ألوان الهوية</h2>
+        <h2><span class="n">2</span>الشاشة الأولى (Hero)</h2>
+        <p class="card-desc">أول ما يراه الزائر عند فتح الموقع — النظام نص "الخلطة السرية و… الطعم الأصيل".</p>
+        <div class="grid">
+          <div class="field"><label>السطر التعريفي <span class="hint-tag">عربي</span></label><input data-path="hero.eyebrow.ar"></div>
+          <div class="field"><label>السطر التعريفي <span class="hint-tag">English</span></label><input data-path="hero.eyebrow.en"></div>
+          <div class="field"><label>العنوان — الجزء 1 <span class="hint-tag">عربي</span></label><input data-path="hero.h1_1.ar"></div>
+          <div class="field"><label>العنوان — الجزء 1 <span class="hint-tag">English</span></label><input data-path="hero.h1_1.en"></div>
+          <div class="field"><label>العنوان — الجزء الملوّن <span class="hint-tag">عربي</span></label><input data-path="hero.h1_2.ar"></div>
+          <div class="field"><label>العنوان — الجزء الملوّن <span class="hint-tag">English</span></label><input data-path="hero.h1_2.en"></div>
+          <div class="field"><label>العنوان — الجزء 3 <span class="hint-tag">عربي</span></label><input data-path="hero.h1_3.ar"></div>
+          <div class="field"><label>العنوان — الجزء 3 <span class="hint-tag">English</span></label><input data-path="hero.h1_3.en"></div>
+          <div class="field"><label>الفقرة التعريفية <span class="hint-tag">عربي</span></label><textarea data-path="hero.lead.ar"></textarea></div>
+          <div class="field"><label>الفقرة التعريفية <span class="hint-tag">English</span></label><textarea data-path="hero.lead.en"></textarea></div>
+          <div class="field"><label>زر المنيو <span class="hint-tag">عربي</span></label><input data-path="hero.cta_menu.ar"></div>
+          <div class="field"><label>زر المنيو <span class="hint-tag">English</span></label><input data-path="hero.cta_menu.en"></div>
+          <div class="field"><label>زر التواصل <span class="hint-tag">عربي</span></label><input data-path="hero.cta_contact.ar"></div>
+          <div class="field"><label>زر التواصل <span class="hint-tag">English</span></label><input data-path="hero.cta_contact.en"></div>
+          <div class="field"><label>نص "مرر للأسفل" <span class="hint-tag">عربي</span></label><input data-path="hero.scroll.ar"></div>
+          <div class="field"><label>نص "مرر للأسفل" <span class="hint-tag">English</span></label><input data-path="hero.scroll.en"></div>
+          <div class="field"><label>سطر الساعات الظاهر <span class="hint-tag">عربي</span></label><input data-path="hero.hours.ar"><div class="tip">هذا نص العرض في الشاشة الأولى، أما حسابات الفتح/الإغلاق فتأخذ وقتها من قسم «التواصل».</div></div>
+          <div class="field"><label>سطر الساعات الظاهر <span class="hint-tag">English</span></label><input data-path="hero.hours.en"></div>
+          <div class="field"><label>الشارة — "منذ 1968" <span class="hint-tag">عربي</span></label><input data-path="hero.seal.ar"></div>
+          <div class="field"><label>الشارة <span class="hint-tag">English</span></label><input data-path="hero.seal.en"></div>
+          <div class="field"><label>ملصق الشارة <span class="hint-tag">عربي</span></label><input data-path="hero.seal_label.ar"></div>
+          <div class="field"><label>ملصق الشارة <span class="hint-tag">English</span></label><input data-path="hero.seal_label.en"></div>
+          <div class="field"><label>صورة الشاشة الأولى — ارفع صورة</label><input data-path="hero.image"></div>
+          <div class="field"><label>وصف صورة الشاشة <span class="hint-tag">عربي</span></label><input data-path="hero.image_alt_ar"></div>
+          <div class="field"><label>وصف صورة الشاشة <span class="hint-tag">English</span></label><input data-path="hero.image_alt_en"></div>
+          <div class="field"><label>ملاحظة الصورة <span class="hint-tag">عربي</span></label><input data-path="hero.frame_note.ar"></div>
+          <div class="field"><label>ملاحظة الصورة <span class="hint-tag">English</span></label><input data-path="hero.frame_note.en"></div>
+        </div>
+        <div class="card-sub" style="margin-top:8px">الإحصائيات (3 أرقام تحت العنوان)</div>
+        <div id="heroStats"></div>
+        <div class="card-sub">شارة تاريخ التأسيس</div>
+        <div class="grid">
+          <div class="field"><label>السنة <span class="hint-tag">عربي</span></label><input data-path="hero.badge.year_ar"></div>
+          <div class="field"><label>السنة <span class="hint-tag">English</span></label><input data-path="hero.badge.year_en"></div>
+          <div class="field"><label>كلمة "منذ" <span class="hint-tag">عربي</span></label><input data-path="hero.badge.since_ar"></div>
+          <div class="field"><label>كلمة "منذ" <span class="hint-tag">English</span></label><input data-path="hero.badge.since_en"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="n">3</span>ألوان الهوية</h2>
+        <p class="card-desc">اختر اللون وسيتحدّث الموقع مباشرة — الأزرار، العناوين، الخلفيات، الروابط…</p>
         <div class="theme-swatch-row" id="themeEditor"></div>
-        <p class="hint">اختر الألوان لتحديث هوية الموقع مباشرة (الأزررار، العناوين، الخلفيات…).</p>
+        <div class="btns" style="margin-top:14px"><button class="link-btn" id="themeReset">استعادة الألوان الافتراضية</button></div>
       </div>
     </div>
 
-    <!-- Story -->
+    <!-- ============ STORY ============ -->
     <div id="story" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">3</span>القصة</h2>
+        <h2><span class="n">4</span>قصة المطعم</h2>
+        <p class="card-desc">قسم «قصتنا» — من العنوان حتى نص الحكاية والزر.</p>
         <div class="grid">
-          <div class="field"><label>اللقب (عربي)</label><input data-path="story.tag.ar"></div>
-          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="story.tag.en"></div>
-          <div class="field"><label>العنوان جملة 1 (عربي)</label><input data-path="story.title_1.ar"></div>
-          <div class="field"><label>العنوان جملة 1 (إنجليزي)</label><input data-path="story.title_1.en"></div>
-          <div class="field"><label>العنوان جملة 2 (عربي)</label><input data-path="story.title_2.ar"></div>
-          <div class="field"><label>العنوان جملة 2 (إنجليزي)</label><input data-path="story.title_2.en"></div>
-          <div class="field"><label>الفقرة 1 (عربي)</label><textarea data-path="story.p1.ar"></textarea></div>
-          <div class="field"><label>الفقرة 1 (إنجليزي)</label><textarea data-path="story.p1.en"></textarea></div>
-          <div class="field"><label>الفقرة 2 (عربي)</label><textarea data-path="story.p2.ar"></textarea></div>
-          <div class="field"><label>الفقرة 2 (إنجليزي)</label><textarea data-path="story.p2.en"></textarea></div>
-          <div class="field"><label>زر القصة (عربي)</label><input data-path="story.cta.ar"></div>
-          <div class="field"><label>زر القصة (إنجليزي)</label><input data-path="story.cta.en"></div>
-          <div class="field"><label>شارة السنوات (عربي)</label><input data-path="story.badge_value_ar"></div>
-          <div class="field"><label>شارة السنوات (إنجليزي)</label><input data-path="story.badge_value_en"></div>
-          <div class="field"><label>معرّف الشارة (عربي)</label><input data-path="story.badge_label.ar"></div>
-          <div class="field"><label>معرّف الشارة (إنجليزي)</label><input data-path="story.badge_label.en"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="story.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="story.tag.en"></div>
+          <div class="field"><label>العنوان — جملة 1 <span class="hint-tag">عربي</span></label><input data-path="story.title_1.ar"></div>
+          <div class="field"><label>العنوان — جملة 1 <span class="hint-tag">English</span></label><input data-path="story.title_1.en"></div>
+          <div class="field"><label>العنوان — جملة 2 (الملوّنة) <span class="hint-tag">عربي</span></label><input data-path="story.title_2.ar"></div>
+          <div class="field"><label>العنوان — جملة 2 <span class="hint-tag">English</span></label><input data-path="story.title_2.en"></div>
+          <div class="field"><label>الفقرة 1 <span class="hint-tag">عربي</span></label><textarea data-path="story.p1.ar"></textarea></div>
+          <div class="field"><label>الفقرة 1 <span class="hint-tag">English</span></label><textarea data-path="story.p1.en"></textarea></div>
+          <div class="field"><label>الفقرة 2 <span class="hint-tag">عربي</span></label><textarea data-path="story.p2.ar"></textarea></div>
+          <div class="field"><label>الفقرة 2 <span class="hint-tag">English</span></label><textarea data-path="story.p2.en"></textarea></div>
+          <div class="field"><label>شارة السنوات <span class="hint-tag">عربي</span></label><input data-path="story.badge_value_ar"></div>
+          <div class="field"><label>شارة السنوات <span class="hint-tag">English</span></label><input data-path="story.badge_value_en"></div>
+          <div class="field"><label>ملصق الشارة <span class="hint-tag">عربي</span></label><input data-path="story.badge_label.ar"></div>
+          <div class="field"><label>ملصق الشارة <span class="hint-tag">English</span></label><input data-path="story.badge_label.en"></div>
+          <div class="field"><label>زر «جرّب الطعم» <span class="hint-tag">عربي</span></label><input data-path="story.cta.ar"></div>
+          <div class="field"><label>زر «جرّب الطعم» <span class="hint-tag">English</span></label><input data-path="story.cta.en"></div>
+          <div class="field"><label>صورة القصة — ارفع صورة</label><input data-path="story.image"></div>
+          <div class="field"><label>وصف صورة القصة <span class="hint-tag">عربي</span></label><input data-path="story.image_alt_ar"></div>
+          <div class="field"><label>وصف صورة القصة <span class="hint-tag">English</span></label><input data-path="story.image_alt_en"></div>
+        </div>
+        <div class="card-sub" style="margin-top:8px">بطاقات «لماذا نحن» (4 بطاقات بجانب القصة)</div>
+        <div id="kvList"></div>
+      </div>
+    </div>
+
+    <!-- ============ SIGNATURES ============ -->
+    <div id="signatures" class="tabview">
+      <div class="card">
+        <h2><span class="n">5</span>عناوين قسم المميزات</h2>
+        <div class="grid">
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="signatures.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="signatures.tag.en"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="signatures.title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="signatures.title.en"></div>
+          <div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-path="signatures.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-path="signatures.sub.en"></textarea></div>
+          <div class="field"><label>"اضغط لمعرفة المزيد" <span class="hint-tag">عربي</span></label><input data-path="signatures.hint_front.ar"></div>
+          <div class="field"><label>"اضغط لمعرفة المزيد" <span class="hint-tag">English</span></label><input data-path="signatures.hint_front.en"></div>
+          <div class="field"><label>"اضغط للإغلاق" <span class="hint-tag">عربي</span></label><input data-path="signatures.hint_back.ar"></div>
+          <div class="field"><label>"اضغط للإغلاق" <span class="hint-tag">English</span></label><input data-path="signatures.hint_back.en"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">4</span>كروت المميزات (القلاب)</h2>
-        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addSig">+ إضافة كارت</button></div>
+        <h2><span class="n">6</span>كروت المميزات (وجه أمامي + وجه خلفي)</h2>
+        <p class="card-desc">الزائر يضغط الكارت فتظهر التفاصيل. يمكنك إضافة أو حذف أي كارت.</p>
+        <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addSig">+ إضافة كارت جديد</button></div>
         <div id="sigList"></div>
       </div>
     </div>
 
-    <!-- Menu -->
+    <!-- ============ MENU ============ -->
     <div id="menu" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">5</span>العناوين العامة للمنيو</h2>
+        <h2><span class="n">7</span>عناوين المنيو</h2>
         <div class="grid">
-          <div class="field"><label>اللقب (عربي)</label><input data-path="menu.tag.ar"></div>
-          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="menu.tag.en"></div>
-          <div class="field"><label>العنوان (عربي)</label><input data-path="menu.title.ar"></div>
-          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="menu.title.en"></div>
-          <div class="field"><label>الوصف (عربي)</label><textarea data-path="menu.sub.ar"></textarea></div>
-          <div class="field"><label>الوصف (إنجليزي)</label><textarea data-path="menu.sub.en"></textarea></div>
-          <div class="field"><label>ملاحظة (عربي)</label><input data-path="menu.note.ar"></div>
-          <div class="field"><label>ملاحظة (إنجليزي)</label><input data-path="menu.note.en"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="menu.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="menu.tag.en"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="menu.title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="menu.title.en"></div>
+          <div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-path="menu.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-path="menu.sub.en"></textarea></div>
+          <div class="field"><label>ملاحظة الأسعار <span class="hint-tag">عربي</span></label><input data-path="menu.note.ar"></div>
+          <div class="field"><label>ملاحظة الأسعار <span class="hint-tag">English</span></label><input data-path="menu.note.en"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">6</span>التبويبات</h2>
+        <h2><span class="n">8</span>فئات المنيو (التبويبات)</h2>
+        <p class="card-desc">مثال: شاورما، سندوتشات، عصائر، حلويات. غيّر الأسماء من هنا.</p>
         <div id="tabList"></div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">7</span>الأصناف حسب الفئة</h2>
+        <h2><span class="n">9</span>الأصناف حسب الفئة</h2>
+        <p class="card-desc">أضف صنفًا جديدًا تحت أي فئة، وعند حفظ التغييرات يظهر مباشرة في الموقع.</p>
         <div id="menuEditor"></div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">8</span>صورة المنيو</h2>
+        <h2><span class="n">10</span>صورة المنيو الأصلية</h2>
         <div class="grid">
-          <div class="field"><label>العنوان (عربي)</label><input data-path="menu.menu_image_title.ar"></div>
-          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="menu.menu_image_title.en"></div>
-          <div class="field"><label class="mini">مسار الصورة</label><input data-path="menu.menu_image"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="menu.menu_image_title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="menu.menu_image_title.en"></div>
+          <div class="field"><label>صورة المنيو — ارفع صورة</label><input data-path="menu.menu_image"></div>
+          <div class="field"><label>وصف صورة المنيو <span class="hint-tag">عربي</span></label><input data-path="menu.menu_image_alt_ar"></div>
+          <div class="field"><label>وصف صورة المنيو <span class="hint-tag">English</span></label><input data-path="menu.menu_image_alt_en"></div>
         </div>
       </div>
     </div>
 
-    <!-- Gallery -->
+    <!-- ============ GALLERY ============ -->
     <div id="gallery" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">9</span>عناوين المعرض</h2>
+        <h2><span class="n">11</span>عناوين المعرض</h2>
         <div class="grid">
-          <div class="field"><label>اللقب (عربي)</label><input data-path="gallery.tag.ar"></div>
-          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="gallery.tag.en"></div>
-          <div class="field"><label>العنوان (عربي)</label><input data-path="gallery.title.ar"></div>
-          <div class="field"><label>العنوان (إنجليزي)</label><input data-path="gallery.title.en"></div>
-          <div class="field"><label>الوصف (عربي)</label><textarea data-path="gallery.sub.ar"></textarea></div>
-          <div class="field"><label>الوصف (إنجليزي)</label><textarea data-path="gallery.sub.en"></textarea></div>
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="gallery.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="gallery.tag.en"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="gallery.title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="gallery.title.en"></div>
+          <div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-path="gallery.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-path="gallery.sub.en"></textarea></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">10</span>صور المعرض</h2>
+        <h2><span class="n">12</span>صور المعرض</h2>
+        <p class="card-desc">اضغط «⬆» / «⬇» لتغيير الترتيب، أو ارفع صورة جديدة من مربع الصورة.</p>
         <div class="btns" style="margin-bottom:14px"><button class="btn ghost small" id="addGal">+ إضافة صورة</button></div>
         <div id="galList"></div>
       </div>
     </div>
 
-    <!-- Contact -->
+    <!-- ============ CONTACT ============ -->
     <div id="contact" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">11</span>معلومات التواصل</h2>
+        <h2><span class="n">13</span>معلومات التواصل</h2>
         <div class="grid">
-          <div class="field"><label>اللقب (عربي)</label><input data-path="contact.tag.ar"></div>
-          <div class="field"><label>اللقب (إنجليزي)</label><input data-path="contact.tag.en"></div>
-          <div class="field"><label>رقم الهاتف</label><input data-path="contact.phone"></div>
-          <div class="field"><label class="mini">رابط فيسبوك</label><input data-path="contact.facebook"></div>
-          <div class="field"><label>العنوان (عربي)</label><textarea data-path="contact.address_ar"></textarea></div>
-          <div class="field"><label>العنوان (إنجليزي)</label><textarea data-path="contact.address_en"></textarea></div>
-          <div class="field"><label>مواعيد — يوميًا (عربي)</label><input data-path="contact.hours_daily.ar"></div>
-          <div class="field"><label>مواعيد — يوميًا (إنجليزي)</label><input data-path="contact.hours_daily.en"></div>
-          <div class="field"><label>مواعيد — الوقت (عربي)</label><input data-path="contact.hours_time.ar"></div>
-          <div class="field"><label>مواعيد — الوقت (إنجليزي)</label><input data-path="contact.hours_time.en"></div>
-          <div class="field"><label>ملاحظة النقد (عربي)</label><input data-path="contact.hours_note.ar"></div>
-          <div class="field"><label>ملاحظة النقد (إنجليزي)</label><input data-path="contact.hours_note.en"></div>
-          <div class="field"><label>نص المتابعة (عربي)</label><input data-path="contact.follow_text.ar"></div>
-          <div class="field"><label>نص المتابعة (إنجليزي)</label><input data-path="contact.follow_text.en"></div>
-          <div class="field"><label>لينك إنستجرام</label><input data-path="contact.instagram"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="contact.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="contact.tag.en"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="contact.title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="contact.title.en"></div>
+          <div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-path="contact.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-path="contact.sub.en"></textarea></div>
+          <div class="field"><label>رقم الهاتف</label><input data-path="contact.phone" dir="ltr"></div>
+          <div class="field"><label>رابط فيسبوك</label><input data-path="contact.facebook" dir="ltr" style="font-size:.85rem"></div>
+          <div class="field"><label>رابط إنستجرام</label><input data-path="contact.instagram" dir="ltr" style="font-size:.85rem"></div>
+          <div class="field"><label>نص «تابعنا →» <span class="hint-tag">عربي</span></label><input data-path="contact.follow_text.ar"></div>
+          <div class="field"><label>نص «تابعنا →» <span class="hint-tag">English</span></label><input data-path="contact.follow_text.en"></div>
+          <div class="field"><label>عنوان النص «الهاتف» <span class="hint-tag">عربي</span></label><input data-path="contact.phone_title.ar"></div>
+          <div class="field"><label>عنوان النص «الهاتف» <span class="hint-tag">English</span></label><input data-path="contact.phone_title.en"></div>
+          <div class="field"><label>العنوان (نص الشارع) <span class="hint-tag">عربي</span></label><textarea data-path="contact.address_ar"></textarea></div>
+          <div class="field"><label>العنوان (نص الشارع) <span class="hint-tag">English</span></label><textarea data-path="contact.address_en"></textarea></div>
+          <div class="field"><label>عنوان «العنوان» <span class="hint-tag">عربي</span></label><input data-path="contact.address_title.ar"></div>
+          <div class="field"><label>عنوان «العنوان» <span class="hint-tag">English</span></label><input data-path="contact.address_title.en"></div>
+          <div class="field"><label>عنوان «مواعيد العمل» <span class="hint-tag">عربي</span></label><input data-path="contact.hours_title.ar"></div>
+          <div class="field"><label>عنوان «مواعيد العمل» <span class="hint-tag">English</span></label><input data-path="contact.hours_title.en"></div>
+          <div class="field"><label>«يوميًا» <span class="hint-tag">عربي</span></label><input data-path="contact.hours_daily.ar"></div>
+          <div class="field"><label>«يوميًا» <span class="hint-tag">English</span></label><input data-path="contact.hours_daily.en"></div>
+          <div class="field"><label>الوقت (يُستخدم لحساب الفتح/الإغلاق) <span class="hint-tag">عربي</span></label><input data-path="contact.hours_time.ar" placeholder="8:30 ص — 1:30 ص"></div>
+          <div class="field"><label>الوقت <span class="hint-tag">English</span></label><input data-path="contact.hours_time.en" placeholder="8:30 AM — 1:30 AM"></div>
+          <div class="field"><label>ملاحظة النقد <span class="hint-tag">عربي</span></label><input data-path="contact.hours_note.ar"></div>
+          <div class="field"><label>ملاحظة النقد <span class="hint-tag">English</span></label><input data-path="contact.hours_note.en"></div>
         </div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">12</span>التذييل</h2>
+        <h2><span class="n">14</span>نموذج الحجز (نصوص الفورم)</h2>
+        <p class="card-desc">تسميات حقول نموذج «احجز / تواصل معنا».</p>
         <div class="grid">
-          <div class="field"><label>وصف البراند (عربي)</label><textarea data-path="footer.brand_p.ar"></textarea></div>
-          <div class="field"><label>وصف البراند (إنجليزي)</label><textarea data-path="footer.brand_p.en"></textarea></div>
-          <div class="field"><label>حقوق النشر (عربي)</label><input data-path="footer.bottom_copyright.ar"></div>
-          <div class="field"><label>حقوق النشر (إنجليزي)</label><input data-path="footer.bottom_copyright.en"></div>
-          <div class="field"><label>الخط الختامي (عربي)</label><input data-path="footer.bottom_tagline.ar"></div>
-          <div class="field"><label>الخط الختامي (إنجليزي)</label><input data-path="footer.bottom_tagline.en"></div>
+          <div class="field"><label>عنوان النموذج <span class="hint-tag">عربي</span></label><input data-path="contact.booking_title.ar"></div>
+          <div class="field"><label>عنوان النموذج <span class="hint-tag">English</span></label><input data-path="contact.booking_title.en"></div>
+          <div class="field"><label>وصف النموذج <span class="hint-tag">عربي</span></label><textarea data-path="contact.booking_sub.ar"></textarea></div>
+          <div class="field"><label>وصف النموذج <span class="hint-tag">English</span></label><textarea data-path="contact.booking_sub.en"></textarea></div>
+          <div class="field"><label>حقل الاسم <span class="hint-tag">عربي</span></label><input data-path="contact.form.name.ar"></div>
+          <div class="field"><label>حقل الاسم <span class="hint-tag">English</span></label><input data-path="contact.form.name.en"></div>
+          <div class="field"><label>حقل الهاتف <span class="hint-tag">عربي</span></label><input data-path="contact.form.phone.ar"></div>
+          <div class="field"><label>حقل الهاتف <span class="hint-tag">English</span></label><input data-path="contact.form.phone.en"></div>
+          <div class="field"><label>حقل التاريخ <span class="hint-tag">عربي</span></label><input data-path="contact.form.date.ar"></div>
+          <div class="field"><label>حقل التاريخ <span class="hint-tag">English</span></label><input data-path="contact.form.date.en"></div>
+          <div class="field"><label>حقل الوقت <span class="hint-tag">عربي</span></label><input data-path="contact.form.time.ar"></div>
+          <div class="field"><label>حقل الوقت <span class="hint-tag">English</span></label><input data-path="contact.form.time.en"></div>
+          <div class="field"><label>حقل عدد الأشخاص <span class="hint-tag">عربي</span></label><input data-path="contact.form.persons.ar"></div>
+          <div class="field"><label>حقل عدد الأشخاص <span class="hint-tag">English</span></label><input data-path="contact.form.persons.en"></div>
+          <div class="field"><label>حقل نوع الطلب <span class="hint-tag">عربي</span></label><input data-path="contact.form.type.ar"></div>
+          <div class="field"><label>حقل نوع الطلب <span class="hint-tag">English</span></label><input data-path="contact.form.type.en"></div>
+          <div class="field"><label>حقل الرسالة <span class="hint-tag">عربي</span></label><input data-path="contact.form.message.ar"></div>
+          <div class="field"><label>حقل الرسالة <span class="hint-tag">English</span></label><input data-path="contact.form.message.en"></div>
+          <div class="field"><label>زر الإرسال <span class="hint-tag">عربي</span></label><input data-path="contact.form.submit.ar"></div>
+          <div class="field"><label>زر الإرسال <span class="hint-tag">English</span></label><input data-path="contact.form.submit.en"></div>
+          <div class="field"><label>"جاري الإرسال…" <span class="hint-tag">عربي</span></label><input data-path="contact.form.sending.ar"></div>
+          <div class="field"><label>"جاري الإرسال…" <span class="hint-tag">English</span></label><input data-path="contact.form.sending.en"></div>
+          <div class="field"><label>رسالة النجاح <span class="hint-tag">عربي</span></label><textarea data-path="contact.form.ok.ar"></textarea></div>
+          <div class="field"><label>رسالة النجاح <span class="hint-tag">English</span></label><textarea data-path="contact.form.ok.en"></textarea></div>
+          <div class="field"><label>رسالة الخطأ <span class="hint-tag">عربي</span></label><textarea data-path="contact.form.err.ar"></textarea></div>
+          <div class="field"><label>رسالة الخطأ <span class="hint-tag">English</span></label><textarea data-path="contact.form.err.en"></textarea></div>
         </div>
+        <div class="card-sub">خيارات نوع الطلب</div>
+        <div id="typeOptions"></div>
       </div>
       <div class="card">
-        <h2><span class="sec-num">15</span>حالة الفتح / الإغلاق (الشريط العلوي)</h2>
-        <div class="field"><label>الحالة (auto = تلقائي، closed = مغلق استثنائي)</label><input data-path="overrides.status.ar"></div>
-        <div class="field"><label>نص مغلق مؤقتًا (عربي)</label><input data-path="overrides.closed_title.ar"></div>
-        <div class="field"><label>نص مغلق مؤقتًا (إنجليزي)</label><input data-path="overrides.closed_title.en"></div>
-        <div class="field"><label class="mini">سبب الإغلاق (عربي — يُعرض للمستخدم)</label><textarea data-path="overrides.closed_reason.ar"></textarea></div>
-        <div class="field"><label class="mini">سبب الإغلاق (إنجليزي)</label><textarea data-path="overrides.closed_reason.en"></textarea></div>
-        <p class="hint">لو الحالة "auto"، يُحسب الفتح تلقائيًا من مواعيد العمل. لو "closed"، يُعرض سبب الإغلاق للزائر ويغلق الحساب التلقائي.</p>
-      </div>
-      <div class="card">
-        <h2><span class="sec-num">16</span>ساعات العمل (تُستخدم لحساب الفتح/الإغلاق)</h2>
+        <h2><span class="n">15</span>التذييل (Footer)</h2>
         <div class="grid">
-          <div class="field"><label>الوقت (عربي)</label><input data-path="contact.hours_time.ar"></div>
-          <div class="field"><label>الوقت (إنجليزي)</label><input data-path="contact.hours_time.en"></div>
+          <div class="field"><label>وصف البراند <span class="hint-tag">عربي</span></label><textarea data-path="footer.brand_p.ar"></textarea></div>
+          <div class="field"><label>وصف البراند <span class="hint-tag">English</span></label><textarea data-path="footer.brand_p.en"></textarea></div>
+          <div class="field"><label>عنوان عمود «الموقع» <span class="hint-tag">عربي</span></label><input data-path="footer.col_site_title.ar"></div>
+          <div class="field"><label>عنوان عمود «الموقع» <span class="hint-tag">English</span></label><input data-path="footer.col_site_title.en"></div>
+          <div class="field"><label>عنوان عمود «تواصل» <span class="hint-tag">عربي</span></label><input data-path="footer.col_contact_title.ar"></div>
+          <div class="field"><label>عنوان عمود «تواصل» <span class="hint-tag">English</span></label><input data-path="footer.col_contact_title.en"></div>
+          <div class="field"><label>عنوان عمود «ساعات العمل» <span class="hint-tag">عربي</span></label><input data-path="footer.col_hours_title.ar"></div>
+          <div class="field"><label>عنوان عمود «ساعات العمل» <span class="hint-tag">English</span></label><input data-path="footer.col_hours_title.en"></div>
+          <div class="field"><label>«يوميًا:» في التذييل <span class="hint-tag">عربي</span></label><input data-path="footer.col_hours_daily.ar"></div>
+          <div class="field"><label>«يوميًا:» في التذييل <span class="hint-tag">English</span></label><input data-path="footer.col_hours_daily.en"></div>
+          <div class="field"><label>الوقت في التذييل <span class="hint-tag">عربي</span></label><input data-path="footer.col_hours_time.ar"></div>
+          <div class="field"><label>الوقت في التذييل <span class="hint-tag">English</span></label><input data-path="footer.col_hours_time.en"></div>
+          <div class="field"><label>روكسي في التذييل <span class="hint-tag">عربي</span></label><input data-path="footer.col_contact_roxy.ar"></div>
+          <div class="field"><label>روكسي في التذييل <span class="hint-tag">English</span></label><input data-path="footer.col_contact_roxy.en"></div>
+          <div class="field"><label>«فيسبوك» <span class="hint-tag">عربي</span></label><input data-path="footer.col_contact_facebook.ar"></div>
+          <div class="field"><label>«فيسبوك» <span class="hint-tag">English</span></label><input data-path="footer.col_contact_facebook.en"></div>
+          <div class="field"><label>حقوق النشر <span class="hint-tag">عربي</span></label><input data-path="footer.bottom_copyright.ar"></div>
+          <div class="field"><label>حقوق النشر <span class="hint-tag">English</span></label><input data-path="footer.bottom_copyright.en"></div>
         </div>
-        <p class="hint">الصيغة المتوقعة: "8:30 ص — 1:30 ص". يُستخرج منها وقتا الفتح والإغلاق تلقائيًا.</p>
-      </div>
-      <div class="card">
-        <h2><span class="sec-num">17</span>الوصول ومواقف السيارات</h2>
-        <div class="field"><label>اللقب (عربي)</label><input data-path="parking.tag.ar"></div>
-        <div class="field"><label>اللقب (إنجليزي)</label><input data-path="parking.tag.en"></div>
-        <div class="field"><label>العنوان (عربي)</label><input data-path="parking.title.ar"></div>
-        <div class="field"><label>العنوان (إنجليزي)</label><input data-path="parking.title.en"></div>
-        <div class="field"><label class="mini">الوصف (عربي)</label><textarea data-path="parking.sub.ar"></textarea></div>
-        <div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-path="parking.sub.en"></textarea></div>
-        <div class="field"><label class="mini">رابط الخريطة (embed src)</label><input data-path="parking.embed.ar"></div>
-        <div class="sec-sub-label">مواقف السيارات (4 بطاقات)</div>
-        <div id="parkList" class="park-list"></div>
-      </div>
-      <div class="card">
-        <h2><span class="sec-num">18</span>الأسئلة الشائعة (FAQ)</h2>
-        <div id="faqList"></div>
-        <div class="btns"><button class="btn ghost" id="addFaq">+ إضافة سؤال</button></div>
       </div>
     </div>
 
-    <!-- Account & Security -->
-    <div id="account" class="tabview">
+    <!-- ============ EXTRAS (status/parking/faq) ============ -->
+    <div id="extras" class="tabview">
       <div class="card">
-        <h2><span class="sec-num">13</span data-admin="acc_pass_title">تغيير كلمة السر</h2>
+        <h2><span class="n">16</span>حالة الفتح / الإغلاق (مؤشر الموقع)</h2>
+        <p class="card-desc">دائرة الحالة في أسفل الموقع يمينًا — تُظهر «مفتوح الآن» أو «مغلق الآن» تلقائيًا من الوقت.</p>
         <div class="grid">
-          <div class="field"><label data-admin="acc_current_pass">كلمة السر الحالية</label><input type="password" id="accCurrentPass" autocomplete="current-password"></div>
-          <div class="field"><label data-admin="acc_new_pass">كلمة السر الجديدة</label><input type="password" id="accNewPass" autocomplete="new-password"></div>
-          <div class="field"><label data-admin="acc_confirm_pass">تأكيد كلمة السر الجديدة</label><input type="password" id="accNewPass2" autocomplete="new-password"></div>
+          <div class="field"><label>النظام</label>
+            <select id="ovStatus">
+              <option value="auto">تلقائي (يُحسب من الوقت)</option>
+              <option value="closed">مغلق استثنائيًا</option>
+            </select>
+            <div class="tip">لو اخترت «مغلق استثنائيًا» سيُعرض السبب للزائر ويغلق الحساب التلقائي.</div>
+          </div>
+          <div class="field"><label>نص «مفتوح الآن» <span class="hint-tag">عربي</span></label><input data-path="overrides.open_label.ar"></div>
+          <div class="field"><label>نص «مفتوح الآن» <span class="hint-tag">English</span></label><input data-path="overrides.open_label.en"></div>
+          <div class="field"><label>نص «مغلق الآن» <span class="hint-tag">عربي</span></label><input data-path="overrides.closed_label.ar"></div>
+          <div class="field"><label>نص «مغلق الآن» <span class="hint-tag">English</span></label><input data-path="overrides.closed_label.en"></div>
+          <div class="field"><label>عنوان «مغلق مؤقتًا» <span class="hint-tag">عربي</span></label><input data-path="overrides.closed_title.ar"></div>
+          <div class="field"><label>عنوان «مغلق مؤقتًا» <span class="hint-tag">English</span></label><input data-path="overrides.closed_title.en"></div>
+          <div class="field"><label>سبب الإغلاق <span class="hint-tag">عربي</span></label><textarea data-path="overrides.closed_reason.ar"></textarea></div>
+          <div class="field"><label>سبب الإغلاق <span class="hint-tag">English</span></label><textarea data-path="overrides.closed_reason.en"></textarea></div>
         </div>
-        <div class="btns"><button class="btn" id="accPassBtn" data-admin="acc_pass_btn">تحديث كلمة السر</button></div>
-        <p class="hint" data-admin="acc_pass_hint">ستُتحقَّق كلمة السر الحالية قبل التحديث، وبعدها تسجّل الدخول بكلمة السر الجديدة.</p>
       </div>
       <div class="card">
-        <h2><span class="sec-num">14</span data-admin="acc_email_title">تغيير البريد الإلكتروني</h2>
-        <div class="field"><label data-admin="acc_new_email">البريد الإلكتروني الجديد</label><input type="email" id="accNewEmail" autocomplete="email"></div>
-        <div class="btns"><button class="btn" id="accEmailBtn" data-admin="acc_email_btn">تحديث البريد الإلكتروني</button></div>
-        <p class="hint" data-admin="acc_email_hint">سيُرسل تأكيد إلى البريد الجديد قبل تفعيله — أكمل الخطوة من الرسالة، وسيُحدَّث البريد المحفوظ في المتصفح.</p>
+        <h2><span class="n">17</span>الوصول ومواقف السيارات</h2>
+        <div class="grid">
+          <div class="field"><label>اللقب <span class="hint-tag">عربي</span></label><input data-path="parking.tag.ar"></div>
+          <div class="field"><label>اللقب <span class="hint-tag">English</span></label><input data-path="parking.tag.en"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-path="parking.title.ar"></div>
+          <div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-path="parking.title.en"></div>
+          <div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-path="parking.sub.ar"></textarea></div>
+          <div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-path="parking.sub.en"></textarea></div>
+          <div class="field"><label>عنوان الخريطة <span class="hint-tag">عربي</span></label><input data-path="parking.map_title.ar"></div>
+          <div class="field"><label>عنوان الخريطة <span class="hint-tag">English</span></label><input data-path="parking.map_title.en"></div>
+          <div class="field"><label>رابط الخريطة (Embed)</label><input data-path="parking.embed.ar" dir="ltr" style="font-size:.72rem"></div>
+          <div class="field"><label>رابط الخريطة <span class="hint-tag">English</span></label><input data-path="parking.embed.en" dir="ltr" style="font-size:.72rem"></div>
+        </div>
+        <div class="sec-sub-label">بطاقات المواقف (أربع بطاقات)</div>
+        <div id="parkList"></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">18</span>الأسئلة الشائعة (FAQ)</h2>
+        <div id="faqList"></div>
+        <div class="btns" style="margin-top:8px"><button class="btn ghost small" id="addFaq">+ إضافة سؤال</button></div>
+      </div>
+    </div>
+
+    <!-- ============ ACCOUNT ============ -->
+    <div id="account" class="tabview">
+      <div class="card">
+        <h2><span class="n">19</span>تغيير كلمة المرور</h2>
+        <div class="grid">
+          <div class="field"><label data-admin="acc_current_pass">كلمة المرور الحالية</label><input type="password" id="accCurrentPass" autocomplete="current-password"></div>
+          <div class="field"><label>كلمة المرور الجديدة</label><input type="password" id="accNewPass" autocomplete="new-password"></div>
+          <div class="field"><label>تأكيد كلمة المرور الجديدة</label><input type="password" id="accNewPass2" autocomplete="new-password"></div>
+        </div>
+        <div class="btns" style="margin-top:10px"><button class="btn" id="accPassBtn">تحديث كلمة المرور</button></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">20</span>تغيير البريد الإلكتروني</h2>
+        <div class="field"><label>البريد الإلكتروني الجديد</label><input type="email" id="accNewEmail" autocomplete="email"></div>
+        <div class="btns" style="margin-top:10px"><button class="btn" id="accEmailBtn">تحديث البريد الإلكتروني</button></div>
+        <p class="hint">سيُرسل تأكيد إلى البريد الجديد قبل التفعيل — أكمل الخطوة من الرسالة.</p>
       </div>
     </div>
 
     <div class="save-row">
-      <button class="btn" id="saveAll">حفظ كل التغييرات</button>
-      <div class="status" id="saveStatus">اضغط حفظ لدفع التغييرات مباشرة إلى الموقع (ينشئ الجداول تلقائيًا عند أول حفظ).</div>
+      <button class="btn goldbtn" id="saveAll">حفظ ونشر الموقع</button>
+      <div class="stats" id="saveStatus">عدّل المحتوى ثم اضغط «حفظ ونشر» ليظهر الموقع بنفس اللحظة.</div>
     </div>
   </div>
 </div>
@@ -366,88 +579,25 @@
 
 <script>
 /* =====================================================================
-   أبو حيدر — admin.html  (لوحة تحكم المالك)
-   يقرأ/يكتب على Supabase عبر REST (GoTrue + PostgREST).
-   الجداول الخمسة: site_text, menu_items, gallery_items, signature_cards, theme.
-   يعمل على نسخة محلية من siteContent (site-content.js) ويدفع التعديلات.
+   أبو حيدر — لوحة تحكم المالك (إصدار 2 — إعادة بناء كاملة)
+   - حفظ ذرّي 100% عبر دالة واحدة في قاعدة البيانات: admin_publish_site
+   - كل الكتابة تحدث داخل معاملة واحدة، مستحيل تتخبّط البيانات
+   - واجهة عربية واضحة بدون أي برمجة
    ===================================================================== */
 
 /* ---------------- الإعدادات ---------------- */
 var CFG = {
-  url: localStorage.getItem("ah-url") || "",
-  anon: localStorage.getItem("ah-anon") || "",
+  url: localStorage.getItem("ah-url") || "https://qhvmyiyxkwaziwnerwzy.supabase.co",
+  anon: localStorage.getItem("ah-anon") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFodm15aXl4a3dheml3bmVyd3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTE2MTQsImV4cCI6MjEwMzY2NzYxNH0.R3yatbTc7DqaYS1WPMI18Gf04FwqKyc6Cc7ZiZDSuik",
   token: localStorage.getItem("ah-token") || "",
   email: localStorage.getItem("ah-email") || ""
 };
 var LAN = localStorage.getItem("ah-admin-lang") || "ar";
-var WORK = null;             // نسخة العمل من siteContent
-var CURRENT_DB = null;       // {text:[],menu:[],gallery:[],sig:[],theme:[]}
-
-/* ---------------- النصوص (الواجهة) ---------------- */
-var LOC = {
-  ar: { head:"لوحة تحكم أبو حيدر", cfg:"إعدادات الاتصال", en:"عربي", out:"تسجيل الخروج",
-    login_title:"تسجيل الدخول", login_sub:"لوحة تحكم المالك — مصرّح لك بالتعديل على محتوى الموقع.",
-    login_email:"البريد الإلكتروني", login_pass:"كلمة المرور", login_btn:"دخول",
-    login_hint:"أول مرة؟ فعّل Supabase في إعدادات الاتصال، ثم أنشئ حساب المالك. الحساب هو المسؤول الوحيد عن تعديل المحتوى.",
-    need_login:"سجّل الدخول أولًا", login_ok:"تم تسجيل الدخول ✓", login_err:"بيانات الدخول غير صحيحة أو الحساب غير مفعّل",
-    cfg_upd:"تم تحديث الإعدادات ✓", owner_ok:"تم إنشاء حساب المالك ✓ تحقق من بريدك إن لزم.",
-    save:"حفظ كل التغييرات", saving:"جارٍ الحفظ…", saved:"تم الحفظ بنجاح إلى Supabase ✓",
-    save_err:"فشل الحفظ:", no_data:"لا بيانات بعد — اضغط حفظ لإنشاء الجداول تلقائيًا.",
-    del:"حذف", add_sig:"+ إضافة كارت", add_gal:"+ إضافة صورة", add_dish:"+ إضافة صنف",
-    preview:"معاينة الموقع:", open:"فتح الموقع ↗", status_off:"لم يتم الاتصال بـ Supabase بعد",
-    acc_pass_title:"تغيير كلمة السر", acc_current_pass:"كلمة السر الحالية", acc_new_pass:"كلمة السر الجديدة",
-    acc_confirm_pass:"تأكيد كلمة السر الجديدة", acc_pass_btn:"تحديث كلمة السر",
-    acc_pass_hint:"ستُتحقَّق كلمة السر الحالية قبل التحديث، وبعدها تسجّل الدخول بكلمة السر الجديدة.",
-    acc_email_title:"تغيير البريد الإلكتروني", acc_new_email:"البريد الإلكتروني الجديد", acc_email_btn:"تحديث البريد الإلكتروني",
-    acc_email_hint:"سيُرسل تأكيد إلى البريد الجديد قبل تفعيله — أكمل الخطوة من الرسالة، وسيُحدَّث البريد المحفوظ في المتصفح.",
-    pass_ok:"تم تغيير كلمة السر بنجاح ✓", pass_err:"فشل تغيير كلمة السر:",
-    pass_mismatch:"كلمتا السر غير متطابقتين", pass_weak:"كلمة السر قصيرة جدًا (٦ أحرف على الأقل)",
-    verify_err:"كلمة السر الحالية غير صحيحة",
-    email_ok:"تم إرسال تأكيد لتغيير البريد — راجع بريدك الجديد.", email_ok_direct:"تم تغيير البريد الإلكتروني ✓",
-    email_err:"فشل تغيير البريد:" },
-  en: { head:"Abou Haidar — Admin Dashboard", cfg:"Supabase Settings", en:"عربي", out:"Log out",
-    login_title:"Sign in", login_sub:"Owner control panel — authorized to edit site content.",
-    login_email:"Email", login_pass:"Password", login_btn:"Sign in",
-    login_hint:"First time? Enable Supabase in Settings, then create the owner account. This account is the only one that can edit content.",
-    need_login:"Please log in first", login_ok:"Signed in ✓", login_err:"Invalid credentials or account not enabled",
-    cfg_upd:"Settings updated ✓", owner_ok:"Owner account created ✓ Check your inbox if needed.",
-    save:"Save all changes", saving:"Saving…", saved:"Saved to Supabase ✓",
-    save_err:"Save failed:", no_data:"No data yet — press save to auto-create the tables.",
-    del:"Delete", add_sig:"+ Add card", add_gal:"+ Add image", add_dish:"+ Add item",
-    preview:"Preview:", open:"Open site ↗", status_off:"Not connected to Supabase yet",
-    acc_pass_title:"Change password", acc_current_pass:"Current password", acc_new_pass:"New password",
-    acc_confirm_pass:"Confirm new password", acc_pass_btn:"Update password",
-    acc_pass_hint:"Your current password is verified first. After updating, sign in with the new password.",
-    acc_email_title:"Change email", acc_new_email:"New email", acc_email_btn:"Update email",
-    acc_email_hint:"A confirmation is sent to the new email before it takes effect — follow the link in that message. The saved email in this browser updates automatically.",
-    pass_ok:"Password changed successfully ✓", pass_err:"Password change failed:",
-    pass_mismatch:"Passwords do not match", pass_weak:"Password is too short (at least 6 characters)",
-    verify_err:"Current password is incorrect",
-    email_ok:"Confirmation sent to your new email — check your inbox.", email_ok_direct:"Email changed ✓",
-    email_err:"Email change failed:" }
-};
-function T(k){ return (LOC[LAN]&&LOC[LAN][k]!==undefined)?LOC[LAN][k]:k; }
-function setAdminLang(l){
-  LAN=l; document.documentElement.lang = l==="ar"?"ar":"en"; document.documentElement.dir = l==="ar"?"rtl":"ltr";
-  document.body.classList.toggle("lang-en", l==="en");
-  document.getElementById("langToggle").textContent = l==="ar"?"EN":"عربي";
-  document.querySelectorAll("[data-admin]").forEach(function(el){ el.textContent = T(el.getAttribute("data-admin")); });
-  var tabs=[document.querySelectorAll(".tab")];
-  var labels=["البراند والألوان","القصة والمميزات","المنيو","المعرض","التواصل والتذييل","الحساب والأمان"];
-  var labelsEn=["Brand & Colors","Story & Signatures","Menu","Gallery","Contact & Footer","Account & Security"];
-  document.querySelectorAll(".tab").forEach(function(t,i){ t.textContent = (LAN==="ar"?labels:labelsEn)[i]; });
-  document.querySelectorAll("[data-admin-head]").forEach(function(e){ e.textContent = T("head"); });
-  document.getElementById("cfgBtn").textContent = T("cfg");
-  document.getElementById("logoutBtn").textContent = T("out");
-  document.getElementById("loginBtn").textContent = T("login_btn");
-  document.getElementById("saveAll").textContent = T("save");
-  localStorage.setItem("ah-admin-lang", LAN);
-}
-
+var WORK = null;
+var CURRENT_DB = null;
 
 /* ---------------- أدوات مساعدة ---------------- */
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-/* قراءة قيمة من كائن متداخل بالمسار (مثل "hero.h1_1" أو "menu.categories.shawarma.0.name") */
 function walk(obj, path){
   if(!obj||!path) return undefined;
   var parts=path.split("."); var o=obj;
@@ -467,7 +617,7 @@ function setPath(obj, path, val){
 }
 function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
 
-/* ---------------- Supabase REST ---------------- */
+/* ---------------- Supabase REST (api محصّن بالكامل) ---------------- */
 function api(method, path, body, extra){
   var url = CFG.url.replace(/\/+$/,"") + path;
   var headers = { apikey: CFG.anon, Authorization: "Bearer " + (CFG.token||CFG.anon) };
@@ -475,19 +625,36 @@ function api(method, path, body, extra){
   var opts = { method:method, headers:headers };
   if(body!==undefined){ opts.headers["Content-Type"]="application/json"; opts.body=JSON.stringify(body); }
   return fetch(url, opts).then(function(r){
-    if(r.status===204) return null;
-    return r.json().then(function(j){ if(!r.ok) throw new Error((j&&j.message)||r.status); return j; });
+    return r.text().then(function(txt){
+      var j = null;
+      if(txt && txt.trim()){ try{ j = JSON.parse(txt); }catch(e){ j = txt; } }
+      if(r.status===204) return null;
+      if(!r.ok){
+        var msg = (j && (j.message || j.error_description || j.hint || j.details)) || txt || ("HTTP "+r.status);
+        var err = new Error(method+" "+path+" → "+r.status+": "+String(msg).slice(0,300));
+        err.status = r.status;
+        throw err;
+      }
+      return j;
+    });
   });
 }
-function loginRequest(email){
+function loginRequest(email, password){
   email = (email && email.trim()) || CFG.email;
   return fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/token?grant_type=password",{
     method:"POST",
     headers:{ "Content-Type":"application/json", apikey:CFG.anon },
-    body:JSON.stringify({ email:email, password:document.getElementById("loginPass").value })
-  }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error_description||j.msg||"login failed"); return j; }); });
+    body:JSON.stringify({ email:email, password:password })
+  }).then(function(r){
+    return r.text().then(function(txt){
+      var j=null; if(txt&&txt.trim()){ try{ j=JSON.parse(txt); }catch(e){ j=null; } }
+      if(!r.ok){ throw new Error((j&&(j.error_description||j.msg))||("HTTP "+r.status)); }
+      return j;
+    });
+  });
 }
-/* قراءة الجداول الخمسة */
+
+/* ---------------- قراءة الجداول الخمسة ---------------- */
 function loadFromDB(){
   return Promise.all([
     api("GET","/rest/v1/site_text?select=*"),
@@ -501,10 +668,8 @@ function loadFromDB(){
 }
 
 /* ---------------- تجميع WORK من siteContent + قاعدة البيانات ---------------- */
-/* نبدأ من siteContent المدمج، ثم نطبق صفوف DB فوقه (مثل loadFromSupabase في site-render) */
 function buildWorkFromDB(db){
   var base = deepClone(window.siteContent||{});
-  /* site_text: تطبيق على العقد الورقية */
   (db.text||[]).forEach(function(r){
     if(!r||!r.key) return;
     var parts=r.key.split("."); var node=base;
@@ -523,7 +688,6 @@ function buildWorkFromDB(db){
       if(r.ar!=null) node[last]=r.ar;
     }
   });
-  /* menu_items */
   if(base.menu && Array.isArray(db.menu)){
     var cats = db.menu.reduce(function(acc,it){ if(!it||!it.category) return acc; (acc[it.category]=acc[it.category]||[]).push(it); return acc; },{});
     Object.keys(cats).forEach(function(cat){
@@ -536,34 +700,33 @@ function buildWorkFromDB(db){
       });
     });
   }
-  /* gallery_items */
   if(base.gallery && Array.isArray(db.gallery) && db.gallery.length){
     base.gallery.items = db.gallery.slice().sort(function(a,b){return (a.sort||0)-(b.sort||0);}).map(function(it){
       return { img:it.img, alt_ar:it.alt_ar, alt_en:it.alt_en, caption:{ar:it.caption_ar,en:it.caption_en} };
     });
   }
-  /* signature_cards */
   if(base.signatures && Array.isArray(db.sig) && db.sig.length){
     base.signatures.cards = db.sig.slice().sort(function(a,b){return (a.sort||0)-(b.sort||0);}).map(function(it){
       return { front:{ar:it.front_ar,en:it.front_en}, back:{ar:it.back_ar,en:it.back_en} };
     });
   }
-  /* theme */
   if(base.theme && Array.isArray(db.theme)){
     (db.theme||[]).forEach(function(t){ if(t&&t.key) base.theme[t.key]=t.value; });
   }
   return base;
 }
 
-/* ---------------- تعبئة النماذج من WORK ---------------- */
+/* ---------------- تعبئة الحقول الثابتة ---------------- */
 function fillStaticFields(){
   document.querySelectorAll("[data-path]").forEach(function(inp){
     var path=inp.getAttribute("data-path");
     var v=walk(WORK,path);
     if(v==null){ inp.value=""; return; }
-    if(typeof v==="object"){ inp.value = (v.ar!=null? v.ar : (v.en!=null? v.en : "")); }
+    if(typeof v==="object"){ inp.value=(v.ar!=null? v.ar : (v.en!=null? v.en : "")); }
     else inp.value=String(v);
   });
+  var st=walk(WORK,"overrides.status.ar")||"auto";
+  var sel=document.getElementById("ovStatus"); if(sel) sel.value=(st==="closed")?"closed":"auto";
 }
 
 /* ---------------- محرر الألوان ---------------- */
@@ -574,10 +737,55 @@ function renderTheme(){
     if(k.indexOf("--")!==0) return;
     var cell=document.createElement("div"); cell.className="swatch-cell";
     var lab=document.createElement("label"); lab.textContent=k;
-    var inp=document.createElement("input"); inp.type="color"; inp.value=th[k]||"#000000";
-    inp.setAttribute("data-theme-key",k);
-    inp.addEventListener("input",function(){ WORK.theme[k]=inp.value; });
-    cell.appendChild(lab); cell.appendChild(inp); el.appendChild(cell);
+    var sw=document.createElement("div"); sw.className="sw"; sw.style.background=th[k]||"#000";
+    var inp=document.createElement("input"); inp.type="color"; inp.value=th[k]||"#000000"; inp.className="cp";
+    inp.addEventListener("input",function(){ WORK.theme[k]=inp.value; sw.style.background=inp.value; });
+    sw.addEventListener("click",function(){ inp.click(); });
+    cell.appendChild(lab); cell.appendChild(sw); cell.appendChild(inp); el.appendChild(cell);
+  });
+}
+/* استعادة الألوان الافتراضية من siteContent */
+function resetTheme(){
+  if(!window.siteContent || !window.siteContent.theme) return;
+  Object.keys(window.siteContent.theme).forEach(function(k){
+    if(k.indexOf("--")===0) WORK.theme[k]=window.siteContent.theme[k];
+  });
+  renderTheme(); toast("تمت استعادة الألوان الافتراضية — اضغط «حفظ ونشر»","ok");
+}
+
+/* ---------------- محرر إحصائيات الهيرو (3 بطاقات ثابتة + شارة) ---------------- */
+function renderHeroStats(){
+  var el=document.getElementById("heroStats"); el.innerHTML="";
+  var stats=(WORK.hero&&WORK.hero.stats)||[];
+  stats.forEach(function(st,i){
+    var it=document.createElement("div"); it.className="item";
+    it.innerHTML=
+      '<div class="item-head"><b>إحصائية '+(i+1)+'</b><div class="ops"></div></div>'+
+      '<div class="grid">'+
+        '<div class="field"><label>القيمة <span class="hint-tag">عربي</span></label><input data-hstat="'+i+'.value_ar" value="'+esc(st.value_ar)+'"></div>'+
+        '<div class="field"><label>القيمة <span class="hint-tag">English</span></label><input data-hstat="'+i+'.value_en" value="'+esc(st.value_en)+'"></div>'+
+        '<div class="field"><label>التسمية <span class="hint-tag">عربي</span></label><input data-hstat="'+i+'.label.ar" value="'+esc(st.label&&st.label.ar)+'"></div>'+
+        '<div class="field"><label>التسمية <span class="hint-tag">English</span></label><input data-hstat="'+i+'.label.en" value="'+esc(st.label&&st.label.en)+'"></div>'+
+      '</div>';
+    el.appendChild(it);
+  });
+}
+
+/* ---------------- محرر بطاقات KV الخاصة بالقصة ---------------- */
+function renderKv(){
+  var el=document.getElementById("kvList"); el.innerHTML="";
+  var kv=(WORK.story&&WORK.story.kv)||[];
+  kv.forEach(function(it,i){
+    var box=document.createElement("div"); box.className="item";
+    box.innerHTML=
+      '<div class="item-head"><b>بطاقة '+(i+1)+'</b><div class="ops"></div></div>'+
+      '<div class="grid">'+
+        '<div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-kv="'+i+'.title.ar" value="'+esc(it.title&&it.title.ar)+'"></div>'+
+        '<div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-kv="'+i+'.title.en" value="'+esc(it.title&&it.title.en)+'"></div>'+
+      '</div>'+
+      '<div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><input data-kv="'+i+'.desc.ar" value="'+esc(it.desc&&it.desc.ar)+'"></div>'+
+      '<div class="field"><label>الوصف <span class="hint-tag">English</span></label><input data-kv="'+i+'.desc.en" value="'+esc(it.desc&&it.desc.en)+'"></div>';
+    el.appendChild(box);
   });
 }
 
@@ -587,64 +795,73 @@ function renderSig(){
   var cards=WORK.signatures.cards||[];
   cards.forEach(function(c,i){
     var it=document.createElement("div"); it.className="item";
-    it.innerHTML =
-      '<div class="item-head"><b>كارت '+(i+1)+'</b><div class="ops"><button class="del" data-del-sig="'+i+'">'+T("del")+'</button></div></div>'+
+    it.innerHTML=
+      '<div class="item-head"><b>كارت '+(i+1)+'</b><div class="ops">'+
+        '<div class="move"><button type="button" data-move-sig="'+i+':-1">⬆</button><button type="button" data-move-sig="'+i+':1">⬇</button></div>'+
+        '<button class="del" data-del-sig="'+i+'">حذف</button></div></div>'+
       '<div class="grid">'+
-        '<div class="field"><label>الوجه الأمامي (عربي)</label><input data-sig="'+i+'.front.ar" type="text" value="'+esc(c.front&&c.front.ar)+'"></div>'+
-        '<div class="field"><label>الوجه الأمامي (إنجليزي)</label><input data-sig="'+i+'.front.en" type="text" value="'+esc(c.front&&c.front.en)+'"></div>'+
+        '<div class="field"><label>الوجه الأمامي <span class="hint-tag">عربي</span></label><input data-sig="'+i+'.front.ar" value="'+esc(c.front&&c.front.ar)+'"></div>'+
+        '<div class="field"><label>الوجه الأمامي <span class="hint-tag">English</span></label><input data-sig="'+i+'.front.en" value="'+esc(c.front&&c.front.en)+'"></div>'+
       '</div>'+
-      '<div class="field"><label>الوجه الخلفي (عربي)</label><textarea data-sig="'+i+'.back.ar">'+esc(c.back&&c.back.ar)+'</textarea></div>'+
-      '<div class="field"><label>الوجه الخلفي (إنجليزي)</label><textarea data-sig="'+i+'.back.en">'+esc(c.back&&c.back.en)+'</textarea></div>';
+      '<div class="field"><label>الوجه الخلفي <span class="hint-tag">عربي</span></label><textarea data-sig="'+i+'.back.ar">'+esc(c.back&&c.back.ar)+'</textarea></div>'+
+      '<div class="field"><label>الوجه الخلفي <span class="hint-tag">English</span></label><textarea data-sig="'+i+'.back.en">'+esc(c.back&&c.back.en)+'</textarea></div>';
     el.appendChild(it);
   });
-  if(!cards.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
+  if(!cards.length) el.innerHTML='<div class="empty">لا توجد كروت بعد — اضغط «+ إضافة كارت جديد»</div>';
 }
 
-/* ---------------- محرر المنيو ---------------- */
+/* ---------------- محرر فئات المنيو ---------------- */
 function renderTabs(){
   var el=document.getElementById("tabList"); el.innerHTML="";
   var tabs=WORK.menu.tabs||[];
   tabs.forEach(function(t,i){
     var it=document.createElement("div"); it.className="item";
-    it.innerHTML =
-      '<div class="item-head"><b>تبويب '+(i+1)+'</b><div class="ops"><button class="del" data-del-tab="'+i+'">'+T("del")+'</button></div></div>'+
-      '<div class="grid three">'+
-        '<div class="field"><label class="mini">المعرّف (id)</label><input data-tab="'+i+'.id" type="text" value="'+esc(t.id)+'"></div>'+
-        '<div class="field"><label>الاسم (عربي)</label><input data-tab="'+i+'.ar" type="text" value="'+esc(t.ar)+'"></div>'+
-        '<div class="field"><label>الاسم (إنجليزي)</label><input data-tab="'+i+'.en" type="text" value="'+esc(t.en)+'"></div>'+
+    it.innerHTML=
+      '<div class="item-head"><b>فئة '+(i+1)+'</b><div class="ops">'+
+        '<div class="move"><button type="button" data-move-tab="'+i+':-1">⬆</button><button type="button" data-move-tab="'+i+':1">⬇</button></div>'+
+        '<button class="del" data-del-tab="'+i+'">حذف</button></div></div>'+
+      '<div class="grid">'+
+        '<div class="field"><label>المعرّف (حرف لاتيني بدون مسافات)</label><input data-tab="'+i+'.id" value="'+esc(t.id)+'" dir="ltr"></div>'+
+        '<div class="field"><label>الاسم <span class="hint-tag">عربي</span></label><input data-tab="'+i+'.ar" value="'+esc(t.ar)+'"></div>'+
+        '<div class="field"><label>الاسم <span class="hint-tag">English</span></label><input data-tab="'+i+'.en" value="'+esc(t.en)+'"></div>'+
       '</div>';
     el.appendChild(it);
   });
 }
+
+/* ---------------- محرر الأصناف ---------------- */
 function renderMenu(){
   var el=document.getElementById("menuEditor"); el.innerHTML="";
   var cats=WORK.menu.categories||{}; var tabs=WORK.menu.tabs||[];
   tabs.forEach(function(tab,ti){
     var catId=tab.id, list=cats[catId]||[];
-    var sec=document.createElement("div"); sec.className="card"; sec.style.background="var(--bg-alt)";
-    sec.innerHTML='<h2 style="margin-bottom:12px">فئة: <b style="color:var(--accent)">'+esc(tab.ar||catId)+'</b>'+
-      '<button class="btn ghost small" data-add-dish="'+catId+'" style="margin-inline-start:auto">'+T("add_dish")+'</button></h2>';
+    var sec=document.createElement("div"); sec.className="card"; sec.style.background="linear-gradient(180deg,#fdf7ea,#fbf3e0)";
+    sec.innerHTML='<h2><span class="n">'+esc(tab.ar||catId)+'</span>'+
+      '<button class="btn ghost small" data-add-dish="'+catId+'" style="margin-inline-start:auto">+ إضافة صنف</button></h2>';
     var box=document.createElement("div"); box.id="dishBox-"+catId; sec.appendChild(box);
     list.forEach(function(d,di){
       var it=document.createElement("div"); it.className="item";
-      var tagV=d.tag&&d.tag.ar?d.tag.ar:"";
       it.innerHTML=
-        '<div class="item-head"><b>صنف '+(di+1)+'</b><div class="ops"><button class="del" data-del-dish="'+catId+'|'+di+'">'+T("del")+'</button></div></div>'+
+        '<div class="item-head"><b>صنف '+(di+1)+'</b><div class="ops">'+
+          '<div class="move"><button type="button" data-move-dish="'+catId+'|'+di+':-1">⬆</button><button type="button" data-move-dish="'+catId+'|'+di+':1">⬇</button></div>'+
+          '<button class="del" data-del-dish="'+catId+'|'+di+'">حذف</button></div></div>'+
         '<div class="grid">'+
-          '<div class="field"><label>الاسم (عربي)</label><input data-dish="'+catId+'|'+di+'.name.ar" type="text" value="'+esc(d.name&&d.name.ar)+'"></div>'+
-          '<div class="field"><label>الاسم (إنجليزي)</label><input data-dish="'+catId+'|'+di+'.name.en" type="text" value="'+esc(d.name&&d.name.en)+'"></div>'+
-          '<div class="field"><label class="mini">الوصف (عربي)</label><textarea data-dish="'+catId+'|'+di+'.desc.ar">'+esc(d.desc&&d.desc.ar)+'</textarea></div>'+
-          '<div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-dish="'+catId+'|'+di+'.desc.en">'+esc(d.desc&&d.desc.en)+'</textarea></div>'+
-          '<div class="field"><label class="mini">السعر (عربي)</label><input data-dish="'+catId+'|'+di+'.price_ar" type="text" value="'+esc(d.price_ar)+'"></div>'+
-          '<div class="field"><label class="mini">السعر (إنجليزي)</label><input data-dish="'+catId+'|'+di+'.price_en" type="text" value="'+esc(d.price_en)+'"></div>'+
-          '<div class="field"><label class="mini">الشارة (tag عربي)</label><input data-dish="'+catId+'|'+di+'.tag.ar" type="text" value="'+esc(tagV)+'"></div>'+
-          '<div class="field"><label class="mini">الشارة (tag إنجليزي)</label><input data-dish="'+catId+'|'+di+'.tag.en" type="text" value="'+esc(d.tag&&d.tag.en)+'"></div>'+
-          '<div class="field"><label class="mini">مسار الصورة</label><input data-dish="'+catId+'|'+di+'.img" type="text" value="'+esc(d.img)+'"></div>'+
-          '<div class="field"><label class="mini">Alt عربي</label><input data-dish="'+catId+'|'+di+'.alt_ar" type="text" value="'+esc(d.alt_ar)+'"></div>'+
+          '<div class="field"><label>الاسم <span class="hint-tag">عربي</span></label><input data-dish="'+catId+'|'+di+'.name.ar" value="'+esc(d.name&&d.name.ar)+'"></div>'+
+          '<div class="field"><label>الاسم <span class="hint-tag">English</span></label><input data-dish="'+catId+'|'+di+'.name.en" value="'+esc(d.name&&d.name.en)+'"></div>'+
+        '</div>'+
+        '<div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-dish="'+catId+'|'+di+'.desc.ar">'+esc(d.desc&&d.desc.ar)+'</textarea></div>'+
+        '<div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-dish="'+catId+'|'+di+'.desc.en">'+esc(d.desc&&d.desc.en)+'</textarea></div>'+
+        '<div class="grid">'+
+          '<div class="field"><label>السعر <span class="hint-tag">عربي</span></label><input data-dish="'+catId+'|'+di+'.price_ar" value="'+esc(d.price_ar)+'"></div>'+
+          '<div class="field"><label>السعر <span class="hint-tag">English</span></label><input data-dish="'+catId+'|'+di+'.price_en" value="'+esc(d.price_en)+'"></div>'+
+          '<div class="field"><label>الشارة (مثل: الأكثر طلبًا) <span class="hint-tag">عربي</span></label><input data-dish="'+catId+'|'+di+'.tag.ar" value="'+esc(d.tag&&d.tag.ar)+'"></div>'+
+          '<div class="field"><label>الشارة <span class="hint-tag">English</span></label><input data-dish="'+catId+'|'+di+'.tag.en" value="'+esc(d.tag&&d.tag.en)+'"></div>'+
+          '<div class="field"><label>صورة الصنف — ارفع</label><input data-dish="'+catId+'|'+di+'.img" value="'+esc(d.img)+'"></div>'+
+          '<div class="field"><label>وصف الصورة <span class="hint-tag">عربي</span></label><input data-dish="'+catId+'|'+di+'.alt_ar" value="'+esc(d.alt_ar)+'"></div>'+
         '</div>';
       box.appendChild(it);
     });
-    if(!list.length) box.innerHTML='<div class="empty">لا أطباق في هذه الفئة</div>';
+    if(!list.length){ var em=document.createElement("div"); em.className="empty"; em.textContent="لا أطباق في هذه الفئة — اضغط «+ إضافة صنف»"; box.appendChild(em); }
     el.appendChild(sec);
   });
 }
@@ -656,66 +873,91 @@ function renderGal(){
   items.forEach(function(g,i){
     var it=document.createElement("div"); it.className="item";
     it.innerHTML=
-      '<div class="item-head"><b>صورة '+(i+1)+'</b><div class="ops"><button class="del" data-del-gal="'+i+'">'+T("del")+'</button></div></div>'+
+      '<div class="item-head"><b>صورة '+(i+1)+'</b><div class="ops">'+
+        '<div class="move"><button type="button" data-move-gal="'+i+':-1">⬆</button><button type="button" data-move-gal="'+i+':1">⬇</button></div>'+
+        '<button class="del" data-del-gal="'+i+'">حذف</button></div></div>'+
       '<div class="grid">'+
-        '<div class="field"><label class="mini">مسار الصورة</label><input data-gal="'+i+'.img" type="text" value="'+esc(g.img)+'"></div>'+
-        '<div class="field"><label class="mini">Alt عربي</label><input data-gal="'+i+'.alt_ar" type="text" value="'+esc(g.alt_ar)+'"></div>'+
-        '<div class="field"><label class="mini">Alt إنجليزي</label><input data-gal="'+i+'.alt_en" type="text" value="'+esc(g.alt_en)+'"></div>'+
-        '<div class="field"><label class="mini">التعليق (عربي)</label><input data-gal="'+i+'.caption.ar" type="text" value="'+esc(g.caption&&g.caption.ar)+'"></div>'+
-        '<div class="field"><label class="mini">التعليق (إنجليزي)</label><input data-gal="'+i+'.caption.en" type="text" value="'+esc(g.caption&&g.caption.en)+'"></div>'+
+        '<div class="field"><label>مسار الصورة — ارفع</label><input data-gal="'+i+'.img" value="'+esc(g.img)+'"></div>'+
+        '<div class="field"><label>Alt <span class="hint-tag">عربي</span></label><input data-gal="'+i+'.alt_ar" value="'+esc(g.alt_ar)+'"></div>'+
+        '<div class="field"><label>Alt <span class="hint-tag">English</span></label><input data-gal="'+i+'.alt_en" value="'+esc(g.alt_en)+'"></div>'+
+      '</div>'+
+      '<div class="grid">'+
+        '<div class="field"><label>التعليق <span class="hint-tag">عربي</span></label><input data-gal="'+i+'.caption.ar" value="'+esc(g.caption&&g.caption.ar)+'"></div>'+
+        '<div class="field"><label>التعليق <span class="hint-tag">English</span></label><input data-gal="'+i+'.caption.en" value="'+esc(g.caption&&g.caption.en)+'"></div>'+
       '</div>';
     el.appendChild(it);
   });
-  if(!items.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
+  if(!items.length) el.innerHTML='<div class="empty">لا توجد صور بعد — اضغط «+ إضافة صورة»</div>';
 }
 
-/* ---------------- محرر مواقف السيارات (4 بطاقات ثابتة) ---------------- */
+/* ---------------- محرر خيارات نوع الطلب ---------------- */
+function renderTypeOptions(){
+  var el=document.getElementById("typeOptions"); el.innerHTML="";
+  var opts=WORK.contact.form.type_options||[];
+  opts.forEach(function(o,i){
+    var it=document.createElement("div"); it.className="item";
+    it.innerHTML=
+      '<div class="item-head"><b>خيار '+(i+1)+'</b><div class="ops"><button class="del" data-del-opt="'+i+'">حذف</button></div></div>'+
+      '<div class="grid">'+
+        '<div class="field"><label>النص <span class="hint-tag">عربي</span></label><input data-opt="'+i+'.ar" value="'+esc(o.ar)+'"></div>'+
+        '<div class="field"><label>النص <span class="hint-tag">English</span></label><input data-opt="'+i+'.en" value="'+esc(o.en)+'"></div>'+
+      '</div>';
+    el.appendChild(it);
+  });
+}
+
+/* ---------------- محرر مواقف السيارات ---------------- */
 function renderParking(){
   var el=document.getElementById("parkList"); if(!el) return;
   el.innerHTML="";
   var parks=WORK.parking||{};
-  ["p1","p2","p3","p4"].forEach(function(key, i){
+  ["p1","p2","p3","p4"].forEach(function(key,i){
     var p=parks[key]||{ icon:{ar:"",en:""}, title:{ar:"",en:""}, desc:{ar:"",en:""} };
     var it=document.createElement("div"); it.className="item";
     it.innerHTML=
       '<div class="item-head"><b>موقف '+(i+1)+'</b><div class="ops"></div></div>'+
       '<div class="grid">'+
-        '<div class="field"><label class="mini">أيقونة</label><input data-park="'+key+'.icon.ar" type="text" value="'+esc(p.icon&&p.icon.ar)+'"></div>'+
-        '<div class="field"><label class="mini">العنوان (عربي)</label><input data-park="'+key+'.title.ar" type="text" value="'+esc(p.title&&p.title.ar)+'"></div>'+
-        '<div class="field"><label class="mini">العنوان (إنجليزي)</label><input data-park="'+key+'.title.en" type="text" value="'+esc(p.title&&p.title.en)+'"></div>'+
+        '<div class="field"><label>أيقونة</label><input data-park="'+key+'.icon.ar" value="'+esc(p.icon&&p.icon.ar)+'"></div>'+
+        '<div class="field"><label>العنوان <span class="hint-tag">عربي</span></label><input data-park="'+key+'.title.ar" value="'+esc(p.title&&p.title.ar)+'"></div>'+
+        '<div class="field"><label>العنوان <span class="hint-tag">English</span></label><input data-park="'+key+'.title.en" value="'+esc(p.title&&p.title.en)+'"></div>'+
       '</div>'+
-      '<div class="field"><label class="mini">الوصف (عربي)</label><textarea data-park="'+key+'.desc.ar">'+esc(p.desc&&p.desc.ar)+'</textarea></div>'+
-      '<div class="field"><label class="mini">الوصف (إنجليزي)</label><textarea data-park="'+key+'.desc.en">'+esc(p.desc&&p.desc.en)+'</textarea></div>';
+      '<div class="field"><label>الوصف <span class="hint-tag">عربي</span></label><textarea data-park="'+key+'.desc.ar">'+esc(p.desc&&p.desc.ar)+'</textarea></div>'+
+      '<div class="field"><label>الوصف <span class="hint-tag">English</span></label><textarea data-park="'+key+'.desc.en">'+esc(p.desc&&p.desc.en)+'</textarea></div>';
     el.appendChild(it);
   });
 }
 
-/* ---------------- محرر الأسئلة الشائعة (FAQ) ---------------- */
+/* ---------------- محرر الأسئلة الشائعة ---------------- */
 function renderFaq(){
   var el=document.getElementById("faqList"); if(!el) return;
   el.innerHTML="";
   var items=(WORK.faq&&WORK.faq.items)||[];
   items.forEach(function(it,i){
-    var item=document.createElement("div"); item.className="item";
-    item.innerHTML=
-      '<div class="item-head"><b>سؤال '+(i+1)+'</b><div class="ops"><button class="del" data-del-faq="'+i+'">'+T("del")+'</button></div></div>'+
-      '<div class="field"><label>السؤال (عربي)</label><input data-faq="'+i+'.q.ar" type="text" value="'+esc(it.q&&it.q.ar)+'"></div>'+
-      '<div class="field"><label>السؤال (إنجليزي)</label><input data-faq="'+i+'.q.en" type="text" value="'+esc(it.q&&it.q.en)+'"></div>'+
-      '<div class="field"><label>الإجابة (عربي)</label><textarea data-faq="'+i+'.a.ar">'+esc(it.a&&it.a.ar)+'</textarea></div>'+
-      '<div class="field"><label>الإجابة (إنجليزي)</label><textarea data-faq="'+i+'.a.en">'+esc(it.a&&it.a.en)+'</textarea></div>';
-    el.appendChild(item);
+    var box=document.createElement("div"); box.className="item";
+    box.innerHTML=
+      '<div class="item-head"><b>سؤال '+(i+1)+'</b><div class="ops">'+
+        '<div class="move"><button type="button" data-move-faq="'+i+':-1">⬆</button><button type="button" data-move-faq="'+i+':1">⬇</button></div>'+
+        '<button class="del" data-del-faq="'+i+'">حذف</button></div></div>'+
+      '<div class="field"><label>السؤال <span class="hint-tag">عربي</span></label><input data-faq="'+i+'.q.ar" value="'+esc(it.q&&it.q.ar)+'"></div>'+
+      '<div class="field"><label>السؤال <span class="hint-tag">English</span></label><input data-faq="'+i+'.q.en" value="'+esc(it.q&&it.q.en)+'"></div>'+
+      '<div class="field"><label>الإجابة <span class="hint-tag">عربي</span></label><textarea data-faq="'+i+'.a.ar">'+esc(it.a&&it.a.ar)+'</textarea></div>'+
+      '<div class="field"><label>الإجابة <span class="hint-tag">English</span></label><textarea data-faq="'+i+'.a.en">'+esc(it.a&&it.a.en)+'</textarea></div>';
+    el.appendChild(box);
   });
-  if(!items.length) el.innerHTML='<div class="empty">'+T("no_data")+'</div>';
+  if(!items.length) el.innerHTML='<div class="empty">لا توجد أسئلة — اضغط «+ إضافة سؤال»</div>';
 }
 
 /* ---------------- إعادة بناء كل المحررات ---------------- */
 function renderAll(){
   fillStaticFields();
   renderTheme();
+  renderHeroStats();
+  renderKv();
   renderSig();
   renderTabs();
   renderMenu();
   renderGal();
+  renderTypeOptions();
   renderParking();
   renderFaq();
 }
@@ -729,56 +971,70 @@ function syncFromForms(){
     if(cur!=null && typeof cur==="object"){ setPath(WORK,path+".ar",v); }
     else setPath(WORK,path,v);
   });
-  /* الألوان محفوظة مباشرة عبر listener اinput */
+  var sel=document.getElementById("ovStatus");
+  if(sel) setPath(WORK,"overrides.status.ar",sel.value);
+  document.querySelectorAll("[data-hstat]").forEach(function(inp){
+    var m=inp.getAttribute("data-hstat").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var st=(WORK.hero.stats||[])[parseInt(m[1],10)]; if(!st) return;
+    setPath(st, m[2], inp.value);
+  });
+  document.querySelectorAll("[data-kv]").forEach(function(inp){
+    var m=inp.getAttribute("data-kv").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var it=(WORK.story.kv||[])[parseInt(m[1],10)]; if(!it) return;
+    setPath(it, m[2], inp.value);
+  });
   document.querySelectorAll("[data-sig]").forEach(function(inp){
-    var k=inp.getAttribute("data-sig"); var parts=k.split(".");
-    var idx=parseInt(parts[0],10);
-    var card=WORK.signatures.cards[idx]; if(!card) return;
-    var sub=parts[1]; var lang=parts[2];
-    var target = sub==="front"?card.front:card.back;
-    target[lang]=inp.value;
+    var m=inp.getAttribute("data-sig").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var card=WORK.signatures.cards[parseInt(m[1],10)]; if(!card) return;
+    setPath(card, m[2], inp.value);
   });
   document.querySelectorAll("[data-tab]").forEach(function(inp){
-    var k=inp.getAttribute("data-tab"); var parts=k.split(".");
-    var idx=parseInt(parts[0],10);
-    var tab=WORK.menu.tabs[idx]; if(!tab) return;
-    tab[parts[1]]=inp.value;
+    var m=inp.getAttribute("data-tab").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var tab=WORK.menu.tabs[parseInt(m[1],10)]; if(!tab) return;
+    tab[m[2]]=inp.value;
   });
   document.querySelectorAll("[data-dish]").forEach(function(inp){
-    var k=inp.getAttribute("data-dish"); // cat|idx.path
-    var m=k.match(/^(.*)\|(\d+)\.(.+)$/); if(!m) return;
-    var cat=m[1], idx=parseInt(m[2],10), path=m[3];
-    var dish=(WORK.menu.categories[cat]||[])[idx]; if(!dish) return;
-    setPath(dish, path, inp.value);
+    var m=inp.getAttribute("data-dish").match(/^(.*)\|(\d+)\.(.+)$/); if(!m) return;
+    var dish=(WORK.menu.categories[m[1]]||[])[parseInt(m[2],10)]; if(!dish) return;
+    setPath(dish, m[3], inp.value);
   });
   document.querySelectorAll("[data-gal]").forEach(function(inp){
-    var k=inp.getAttribute("data-gal"); var parts=k.split(".");
-    var idx=parseInt(parts[0],10);
-    var g=WORK.gallery.items[idx]; if(!g) return;
-    setPath(g, parts.slice(1).join("."), inp.value);
+    var m=inp.getAttribute("data-gal").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var g=WORK.gallery.items[parseInt(m[1],10)]; if(!g) return;
+    setPath(g, m[2], inp.value);
+  });
+  document.querySelectorAll("[data-opt]").forEach(function(inp){
+    var m=inp.getAttribute("data-opt").match(/^(\d+)\.(.+)$/); if(!m) return;
+    var o=WORK.contact.form.type_options[parseInt(m[1],10)]; if(!o) return;
+    setPath(o, m[2], inp.value);
   });
   document.querySelectorAll("[data-park]").forEach(function(inp){
-    var k=inp.getAttribute("data-park"); // pN.path
-    setPath(WORK.parking, k, inp.value);
+    setPath(WORK.parking, inp.getAttribute("data-park"), inp.value);
   });
   document.querySelectorAll("[data-faq]").forEach(function(inp){
-    var k=inp.getAttribute("data-faq"); // idx.q.ar
-    var m=k.match(/^(\d+)\.(.+)$/); if(!m) return;
+    var m=inp.getAttribute("data-faq").match(/^(\d+)\.(.+)$/); if(!m) return;
     var item=(WORK.faq.items||[])[parseInt(m[1],10)]; if(!item) return;
     setPath(item, m[2], inp.value);
   });
 }
 
-/* ---------------- توليد صفوف الجداول من WORK ---------------- */
+/* ---------------- توليد payload الحفظ ---------------- */
+/* المسارات المخزّنة في جداول مستقلة (theme/menu/gallery/sig) تُستبعد من site_text
+   لأن بياناتها تُحفظ في جداولها الخاصة — هذا يمنع تكرار فوضوي مثل 341 صفًّا. */
+function skipTextKey(key){
+  return key==="theme" || key.indexOf("theme.")===0 ||
+         key==="menu.categories" || key.indexOf("menu.categories.")===0 ||
+         key==="gallery.items" || key.indexOf("gallery.items.")===0 ||
+         key==="signatures.cards" || key.indexOf("signatures.cards.")===0;
+}
 function flattenTextRows(obj, prefix, out){
   out=out||[];
   Object.keys(obj||{}).forEach(function(k){
     if(/^_/.test(k)) return;
     var v=obj[k]; var key = prefix? prefix+"."+k : k;
-    if(v==null) return;
+    if(v==null || skipTextKey(key)) return;
     if(typeof v==="object"){
       if(v.ar!==undefined || v.en!==undefined){
-        // زوج {ar,en}
         out.push({ key:key, ar:(v.ar!=null?String(v.ar):null), en:(v.en!=null?String(v.en):null) });
       } else {
         flattenTextRows(v, key, out);
@@ -789,7 +1045,6 @@ function flattenTextRows(obj, prefix, out){
   });
   return out;
 }
-/* عودة أزواج menu categories لصفوف menu_items */
 function buildMenuRows(){
   var rows=[]; var cats=WORK.menu.categories||{}; var tabs=WORK.menu.tabs||[];
   tabs.forEach(function(tab,ti){
@@ -824,49 +1079,41 @@ function buildThemeRows(){
   return rows;
 }
 
-/* ---------------- حفظ الكل ---------------- */
-function replaceTable(table, rows, pk){
-  // حذف كل الصفوف ثم إدراج — بسيط وموثوق للمالك الوحيد
-  // Supabase يرفض DELETE غير محدود، لذا نضيف شرط WHERE يطابق كل الصفوف
-  var all = (pk==="id") ? "?id=neq.0" : "?"+encodeURIComponent(pk)+"=neq.";
-  var url = "/rest/v1/"+table+all;
-  if(!rows.length) return api("DELETE", url);
-  return api("DELETE", url).then(function(){
-    return api("POST","/rest/v1/"+table, rows);
-  });
-}
-/* لصفوف site_text نستعمل upsert على المفتاح كي لا نحذف أعمدة إضافية إن وُجدت
-   مع هيدر Prefer: resolution=merge-duplicates (مطلوب لتطبيق on_conflict في PostgREST) */
-function upsertText(rows){
-  var map={}; rows.forEach(function(r){ if(r&&r.key!=""&&r.key!=null) map[r.key]=r; });
-  var uniq=Object.keys(map).map(function(k){ return map[k]; });
-  return api("POST","/rest/v1/site_text?on_conflict=key", uniq,
-    { Prefer:"resolution=merge-duplicates" });
-}
+/* ---------------- الحفظ الذرّي عبر RPC ---------------- */
 function saveAll(){
   var btn=document.getElementById("saveAll");
-  btn.disabled=true; btn.textContent=T("saving");
-  var status=document.getElementById("saveStatus"); status.textContent="…";
+  var status=document.getElementById("saveStatus");
+  btn.disabled=true; btn.textContent="جارٍ الحفظ…";
+  status.textContent="جاري نشر التغييرات إلى الموقع…";
   syncFromForms();
-  var textRows=flattenTextRows(WORK);
-  var menuRows=buildMenuRows();
-  var galRows=buildGalRows();
-  var sigRows=buildSigRows();
-  var themeRows=buildThemeRows();
-  return Promise.all([
-    upsertText(textRows),
-    replaceTable("menu_items", menuRows, "id"),
-    replaceTable("gallery_items", galRows, "id"),
-    replaceTable("signature_cards", sigRows, "id"),
-    replaceTable("theme", themeRows, "key")
-  ]).then(function(){
-    toast(T("saved"),"ok"); status.textContent=T("saved");
-  })["catch"](function(e){
-    toast(T("save_err")+" "+e.message,"err"); status.textContent=e.message;
-  }).then(function(){ btn.disabled=false; btn.textContent=T("save"); });
+  var payload = {
+    text: flattenTextRows(WORK),
+    menu: buildMenuRows(),
+    gallery: buildGalRows(),
+    sig: buildSigRows(),
+    theme: buildThemeRows()
+  };
+  return api("POST","/rest/v1/rpc/admin_publish_site", { payload: payload })
+    .then(function(res){
+      var s = (res && res.ok) ? ("تم الحفظ ذرّيًا ✓ — نصوص: "+res.text+" · أصناف: "+res.menu+" · صور: "+res.gallery+" · كروت: "+res.sig+" · ألوان: "+res.theme) : "تم الحفظ بنجاح ✓ — اضغط «حفظ ونشر» عند الحاجة";
+      toast("تم حفظ ونشر الموقع بنجاح ✓","ok");
+      status.textContent=s;
+      /* نعيد التحميل من قاعدة البيانات ليعكس ما حُفظ فعليًا */
+      return loadFromDB().then(function(db){
+        CURRENT_DB=db; WORK=buildWorkFromDB(db); renderAll();
+      });
+    })
+    ["catch"](function(e){
+      toast("فشل الحفظ: "+e.message,"err");
+      status.textContent="فشل الحفظ — حاول مرة أخرى، وإذا استمرت المشكلة تواصل مع المطوّر.";
+    }).then(function(){ btn.disabled=false; btn.textContent="حفظ ونشر الموقع"; });
 }
 
-/* ---------------- إضافات / حذف ---------------- */
+/* ---------------- إضافات / حذف / نقل ---------------- */
+function move(arr, from, dir){
+  var to=from+dir; if(to<0||to>=arr.length) return;
+  var t=arr.splice(from,1)[0]; arr.splice(to,0,t);
+}
 function rebindActions(){
   document.getElementById("addSig").onclick=function(){
     WORK.signatures.cards.push({ front:{ar:"",en:""}, back:{ar:"",en:""} });
@@ -883,26 +1130,91 @@ function rebindActions(){
       renderMenu(); rebindActions();
     };
   });
+  document.querySelectorAll("[data-move-sig]").forEach(function(b){
+    b.onclick=function(){ var s=b.getAttribute("data-move-sig").split(":"); var i=parseInt(s[0],10); move(WORK.signatures.cards,i,parseInt(s[1],10)); renderSig(); rebindActions(); };
+  });
   document.querySelectorAll("[data-del-sig]").forEach(function(b){
     b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-sig"),10); WORK.signatures.cards.splice(i,1); renderSig(); rebindActions(); };
   });
+  document.querySelectorAll("[data-move-tab]").forEach(function(b){
+    b.onclick=function(){ var s=b.getAttribute("data-move-tab").split(":"); var i=parseInt(s[0],10); move(WORK.menu.tabs,i,parseInt(s[1],10)); renderTabs(); renderMenu(); rebindActions(); };
+  });
   document.querySelectorAll("[data-del-tab]").forEach(function(b){
-    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-tab"),10); var t=WORK.menu.tabs.splice(i,1)[0]; delete WORK.menu.categories[t.id]; renderTabs(); renderMenu(); rebindActions(); };
+    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-tab"),10); var t=WORK.menu.tabs.splice(i,1)[0]; if(t) delete WORK.menu.categories[t.id]; renderTabs(); renderMenu(); rebindActions(); };
+  });
+  document.querySelectorAll("[data-move-dish]").forEach(function(b){
+    b.onclick=function(){ var s=b.getAttribute("data-move-dish").split(":"); var p=s[0].split("|"); move(WORK.menu.categories[p[0]]||[],parseInt(p[1],10),parseInt(s[1],10)); renderMenu(); rebindActions(); };
   });
   document.querySelectorAll("[data-del-dish]").forEach(function(b){
     b.onclick=function(){ var s=b.getAttribute("data-del-dish").split("|"); var cat=s[0], i=parseInt(s[1],10); (WORK.menu.categories[cat]||[]).splice(i,1); renderMenu(); rebindActions(); };
   });
+  document.querySelectorAll("[data-move-gal]").forEach(function(b){
+    b.onclick=function(){ var s=b.getAttribute("data-move-gal").split(":"); move(WORK.gallery.items,parseInt(s[0],10),parseInt(s[1],10)); renderGal(); rebindActions(); };
+  });
   document.querySelectorAll("[data-del-gal]").forEach(function(b){
     b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-gal"),10); WORK.gallery.items.splice(i,1); renderGal(); rebindActions(); };
   });
+  document.querySelectorAll("[data-del-opt]").forEach(function(b){
+    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-opt"),10); WORK.contact.form.type_options.splice(i,1); renderTypeOptions(); rebindActions(); };
+  });
+  document.querySelectorAll("[data-move-faq]").forEach(function(b){
+    b.onclick=function(){ var s=b.getAttribute("data-move-faq").split(":"); move(WORK.faq.items,parseInt(s[0],10),parseInt(s[1],10)); renderFaq(); rebindActions(); };
+  });
+  document.querySelectorAll("[data-del-faq]").forEach(function(b){
+    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-faq"),10); (WORK.faq.items||[]).splice(i,1); renderFaq(); rebindActions(); };
+  });
+  /* إضافة خيار جديد في نوع الطلب */
+  if(!document.getElementById("addOpt")){
+    var label=document.createElement("div");
+    label.innerHTML='<div class="btns" style="margin-top:6px"><button class="btn ghost small" id="addOpt">+ إضافة خيار</button></div>';
+    var tO=document.getElementById("typeOptions"); if(tO) tO.parentNode.appendChild(label);
+  }
+  var addOpt=document.getElementById("addOpt");
+  if(addOpt) addOpt.onclick=function(){
+    (WORK.contact.form.type_options=WORK.contact.form.type_options||[]).push({ar:"",en:""});
+    renderTypeOptions(); rebindActions();
+  };
   var addFaq=document.getElementById("addFaq");
   if(addFaq) addFaq.onclick=function(){
     (WORK.faq.items=WORK.faq.items||[]).push({ q:{ar:"",en:""}, a:{ar:"",en:""} });
     renderFaq(); rebindActions();
   };
-  document.querySelectorAll("[data-del-faq]").forEach(function(b){
-    b.onclick=function(){ var i=parseInt(b.getAttribute("data-del-faq"),10); (WORK.faq.items=WORK.faq.items||[]).splice(i,1); renderFaq(); rebindActions(); };
-  });
+}
+
+/* ---------------- النصوص (الواجهة) ---------------- */
+var LOC = {
+  ar: { head:"لوحة تحكم أبو حيدر", cfg:"إعدادات الاتصال", out:"تسجيل الخروج", en:"English",
+    login_title:"تسجيل الدخول", login_sub:"لوحة تحكم المالك — لتعديل محتوى الموقع بدون أي كود.",
+    login_email:"البريد الإلكتروني", login_pass:"كلمة المرور", login_btn:"دخول",
+    login_hint:"أول مرة؟ اضغط «إعدادات الاتصال» بالأعلى، تأكد من البيانات، ثم اضغط «إنشاء حساب المالك». بعدها سجّل الدخول وسيظهر لك كل أقسام الموقع للتعديل.",
+    need_login:"سجّل الدخول أولًا", login_ok:"تم تسجيل الدخول ✓", login_err:"بيانات الدخول غير صحيحة أو الحساب غير مفعّل",
+    cfg_upd:"تم تحديث الإعدادات ✓", owner_ok:"تم إنشاء حساب المالك ✓ — تحقق من بريدك إن لزم.",
+    acc_current_pass:"كلمة المرور الحالية",
+    pass_ok:"تم تغيير كلمة المرور بنجاح ✓", pass_err:"فشل تغيير كلمة المرور:",
+    pass_mismatch:"كلمتا المرور غير متطابقتين", pass_weak:"كلمة المرور قصيرة جدًا (٦ أحرف على الأقل)",
+    verify_err:"كلمة المرور الحالية غير صحيحة",
+    email_ok:"تم إرسال تأكيد لتغيير البريد — راجع بريدك الجديد.", email_ok_direct:"تم تغيير البريد الإلكتروني ✓",
+    email_err:"فشل تغيير البريد:" },
+  en: { head:"Abou Haidar — Admin", cfg:"Connection Settings", out:"Log out", en:"عربي",
+    login_title:"Sign in", login_sub:"Owner control panel — edit the site without any code.",
+    login_email:"Email", login_pass:"Password", login_btn:"Sign in",
+    login_hint:"First time? Press “Connection Settings” above, verify the data, then press “Create owner account”. Then sign in and every section will appear.",
+    need_login:"Please sign in first", login_ok:"Signed in ✓", login_err:"Invalid credentials or account not enabled",
+    cfg_upd:"Settings updated ✓", owner_ok:"Owner account created ✓ — check your inbox if needed.",
+    acc_current_pass:"Current password",
+    pass_ok:"Password changed ✓", pass_err:"Failed to change password:",
+    pass_mismatch:"Passwords do not match", pass_weak:"Password too short (6+ characters)",
+    verify_err:"Current password is incorrect",
+    email_ok:"Confirmation sent to your new email.", email_ok_direct:"Email changed ✓",
+    email_err:"Failed to change email:" }
+};
+function T(k){ return (LOC[LAN]&&LOC[LAN][k]!==undefined)?LOC[LAN][k]:k; }
+function setAdminLang(l){
+  LAN=l; document.documentElement.lang = l==="ar"?"ar":"en"; document.documentElement.dir = l==="ar"?"rtl":"ltr";
+  document.body.classList.toggle("lang-en", l==="en");
+  document.getElementById("langToggle").textContent = l==="ar"?"English":"عربي";
+  document.querySelectorAll("[data-admin]").forEach(function(el){ el.textContent = T(el.getAttribute("data-admin")); });
+  localStorage.setItem("ah-admin-lang", LAN);
 }
 
 /* ---------------- الإعدادات (Config) ---------------- */
@@ -911,11 +1223,12 @@ function openCfg(){
   document.getElementById("cfgAnon").value=CFG.anon;
   document.getElementById("cfgEmail").value=CFG.email;
   document.getElementById("cfgSetupPass").value="";
+  document.getElementById("cfgHint").textContent="";
   document.getElementById("cfgModal").style.display="flex";
 }
 function saveCfg(){
-  CFG.url=document.getElementById("cfgUrl").value.trim();
-  CFG.anon=document.getElementById("cfgAnon").value.trim();
+  CFG.url=document.getElementById("cfgUrl").value.trim() || CFG.url;
+  CFG.anon=document.getElementById("cfgAnon").value.trim() || CFG.anon;
   CFG.email=document.getElementById("cfgEmail").value.trim();
   localStorage.setItem("ah-url",CFG.url);
   localStorage.setItem("ah-anon",CFG.anon);
@@ -926,37 +1239,55 @@ function saveCfg(){
 }
 function createOwner(){
   var pass=document.getElementById("cfgSetupPass").value;
-  if(!CFG.anon||!CFG.url){ toast("اضبط إعدادات Supabase أولًا","err"); return; }
-  if(!CFG.email){ toast("ضع بريد صاحب الحساب","err"); return; }
-  if(!pass){ toast("ضع كلمة مرور أولية","err"); return; }
+  var err=document.getElementById("cfgHint");
+  if(!CFG.anon||!CFG.url){ err.textContent="اضبط إعدادات Supabase أولًا"; return; }
+  if(!CFG.email){ err.textContent="ضع بريد صاحب الحساب"; return; }
+  if(!pass){ err.textContent="ضع كلمة مرور أولية (٦ أحرف على الأقل)"; return; }
   fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/signup",{
     method:"POST", headers:{ "Content-Type":"application/json", apikey:CFG.anon },
     body:JSON.stringify({ email:CFG.email, password:pass })
-  }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.msg||"signup failed"); return j; }); })
-  .then(function(){ toast(T("owner_ok"),"ok"); })
-  ["catch"](function(e){ toast("فشل إنشاء الحساب: "+e.message,"err"); });
+  }).then(function(r){ return r.text().then(function(txt){ var j=null; if(txt&&txt.trim()){try{j=JSON.parse(txt);}catch(e){}} if(!r.ok) throw new Error((j&&(j.msg||j.error_description))||("HTTP "+r.status)); return j; }); })
+  .then(function(){ err.textContent=""; toast(T("owner_ok"),"ok"); document.getElementById("cfgSetupPass").value=""; })
+  ["catch"](function(e){ err.textContent="فشل إنشاء الحساب: "+e.message; });
 }
 
 /* ---------------- تسجيل الدخول / التهيئة ---------------- */
 function updateConn(){
   var st=document.getElementById("connStatus");
-  if(CFG.url&&CFG.anon){ st.textContent="Supabase: "+CFG.url.replace(/^https?:\/\//,"").replace(/\/$/,""); }
-  else st.textContent=T("status_off");
+  var chip=document.getElementById("connChip");
+  if(CFG.url){ st.textContent="Supabase: "+CFG.url.replace(/^https?:\/\//,"").replace(/\/$/,""); if(chip){chip.style.display="inline-block";} }
+  else { st.textContent="غير متصل بعد"; if(chip) chip.style.display="none"; }
 }
-function showDash(){ document.getElementById("loginView").style.display="none"; document.getElementById("dashView").style.display="block"; }
-function showLogin(){ document.getElementById("loginView").style.display="block"; document.getElementById("dashView").style.display="none"; var le=document.getElementById("loginEmail"); if(le) le.value=CFG.email; }
+function showDash(){
+  document.getElementById("loginView").style.display="none";
+  document.getElementById("dashView").style.display="block";
+  var logo=document.getElementById("barLogo");
+  if(logo && WORK && walk(WORK,"meta.logo")){ logo.src=walk(WORK,"meta.logo"); logo.style.display="block"; }
+}
+function showLogin(){
+  document.getElementById("loginView").style.display="block";
+  document.getElementById("dashView").style.display="none";
+  var le=document.getElementById("loginEmail"); if(le) le.value=CFG.email;
+  var logo=document.getElementById("loginLogo");
+  if(logo && window.siteContent && window.siteContent.meta) logo.src=window.siteContent.meta.logo;
+}
+
+function enterDash(db){
+  CURRENT_DB=db; WORK=buildWorkFromDB(db); renderAll(); rebindActions();
+  showDash(); updateConn();
+  toast(T("login_ok"),"ok");
+}
 
 function init(){
   updateConn();
   setAdminLang(LAN);
 
-  // تبويبات
   document.querySelectorAll(".tab").forEach(function(t){
     t.addEventListener("click",function(){
       document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
       t.classList.add("on");
       document.querySelectorAll(".tabview").forEach(function(v){v.classList.remove("on");});
-      document.getElementById(t.getAttribute("data-v")).classList.add("on");
+      var tv=document.getElementById(t.getAttribute("data-v")); if(tv) tv.classList.add("on");
     });
   });
 
@@ -968,58 +1299,46 @@ function init(){
   document.getElementById("saveAll").onclick=saveAll;
   document.getElementById("accPassBtn").onclick=changePassword;
   document.getElementById("accEmailBtn").onclick=changeEmail;
+  document.getElementById("themeReset").onclick=resetTheme;
 
-  // تسجيل الدخول
   document.getElementById("loginBtn").onclick=function(){
     var err=document.getElementById("loginErr"); err.style.display="none";
     if(!CFG.url||!CFG.anon){ err.textContent=T("need_login"); err.style.display="block"; openCfg(); return; }
     var typedEmail=document.getElementById("loginEmail").value.trim();
+    var passInput=document.getElementById("loginPass").value;
     if(typedEmail){ CFG.email=typedEmail; localStorage.setItem("ah-email",CFG.email); }
-    loginRequest(typedEmail).then(function(j){
+    loginRequest(typedEmail, passInput).then(function(j){
       CFG.token=j.access_token;
       localStorage.setItem("ah-token",CFG.token);
       return loadFromDB();
-    }).then(function(db){
-      CURRENT_DB=db;
-      WORK=buildWorkFromDB(db);
-      renderAll(); rebindActions();
-      showDash(); updateConn();
-      toast(T("login_ok"),"ok");
-    })["catch"](function(e){
+    }).then(enterDash)
+    ["catch"](function(e){
       err.textContent=e.message||T("login_err"); err.style.display="block";
     });
   };
 
-  // خروج
   document.getElementById("logoutBtn").onclick=function(){
     localStorage.removeItem("ah-token"); CFG.token="";
     showLogin(); document.getElementById("logoutBtn").style.display="none";
+    document.getElementById("connChip").style.display="none";
   };
 
-  // إظهار زر الخروج لو موجود token
   if(CFG.token){ document.getElementById("logoutBtn").style.display="inline-block"; }
 
-  // مصادقة مسبقة عبر token محفوظ
   if(CFG.token){
-    loginRequest().then(function(j){
-      CFG.token=j.access_token; localStorage.setItem("ah-token",CFG.token);
+    api("GET","/auth/v1/user").then(function(u){
+      if(!u || u.error){ throw new Error("bad token"); }
       return loadFromDB();
-    }).then(function(db){
-      CURRENT_DB=db; WORK=buildWorkFromDB(db); renderAll(); rebindActions();
-      showDash(); updateConn();
-      toast(T("login_ok"),"ok");
-    })["catch"](function(){ /* token منتهي */ localStorage.removeItem("ah-token"); CFG.token=""; });
+    }).then(enterDash)["catch"](function(){
+      localStorage.removeItem("ah-token"); CFG.token="";
+      document.getElementById("logoutBtn").style.display="none";
+    });
   }
 }
 
-/* ---------------- الحساب والأمان (تغيير كلمة السر / البريد) ---------------- */
+/* ---------------- الحساب والأمان ---------------- */
 function verifyCurrentPassword(password){
-  /* تحقق من كلمة السر الحالية عبر نقطة تسجيل الدخول ثم نجرّد access_token فقط */
-  return fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/token?grant_type=password",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json", apikey:CFG.anon },
-    body:JSON.stringify({ email:CFG.email, password:password })
-  }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error_description||j.msg||"bad"); return j; }); });
+  return loginRequest(CFG.email, password);
 }
 function changePassword(){
   var cur=document.getElementById("accCurrentPass").value;
@@ -1044,8 +1363,8 @@ function changePassword(){
 function changeEmail(){
   var ne=document.getElementById("accNewEmail").value.trim();
   var btn=document.getElementById("accEmailBtn");
-  if(!ne){ toast(T("email_err")+" (empty)","err"); return; }
-  if(ne===CFG.email){ toast(T("email_err")+" (same)","err"); return; }
+  if(!ne){ toast(T("email_err")+" (فارغ)","err"); return; }
+  if(ne===CFG.email){ toast(T("email_err")+" (نفس البريد)","err"); return; }
   btn.disabled=true;
   api("PUT","/auth/v1/user",{ email:ne }).then(function(u){
     CFG.email=ne; localStorage.setItem("ah-email",CFG.email);
@@ -1062,27 +1381,27 @@ function toast(msg,type){
   var t=document.getElementById("toast");
   t.textContent=msg; t.className="toast "+(type||"ok")+" show";
   clearTimeout(toast._t);
-  toast._t=setTimeout(function(){ t.classList.remove("show"); },3200);
+  toast._t=setTimeout(function(){ t.classList.remove("show"); },3600);
 }
 
 /* ---------------- رفع الصور (Drag & Drop) ---------------- */
 function isImageField(inp){
   var p = inp && inp.getAttribute ? inp.getAttribute("data-path") : "";
-  if(p==="meta.logo"||p==="menu.menu_image") return true;
+  if(p==="meta.logo"||p==="menu.menu_image"||p==="hero.image"||p==="story.image") return true;
   var d=inp.getAttribute("data-dish"); if(d && /\.img$/.test(d)) return true;
   var g=inp.getAttribute("data-gal");  if(g && /\.img$/.test(g)) return true;
   return false;
 }
 function slugify(s){ return String(s||"img").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "img"; }
 function uploadSiteImage(file, label){
-  if(!CFG.url||!CFG.anon) return Promise.reject(new Error(T("need_login")));
+  if(!CFG.url||!CFG.anon) return Promise.reject(new Error("لا يوجد اتصال"));
   if(!/^image\//.test(file.type)) return Promise.reject(new Error("ملف غير صالح — اختر صورة (png/jpg/webp/gif)"));
   var ext=(file.name.match(/\.([a-zA-Z0-9]+)$/)||[])[1]||"png";
   var name=slugify(label)+"_"+Date.now()+"_"+Math.floor(Math.random()*1000)+"."+ext;
   var url=CFG.url.replace(/\/+$/,"")+"/storage/v1/object/site-images/"+name;
   return fetch(url,{
     method:"POST",
-    headers:{ Authorization:"Bearer "+CFG.anon, "Content-Type":file.type, "x-upsert":"true" },
+    headers:{ Authorization:"Bearer "+CFG.token, "Content-Type":file.type, "x-upsert":"true" },
     body:file
   }).then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(JSON.stringify(j)); return j; }); })
   .then(function(){
@@ -1100,13 +1419,11 @@ function makeUploadWidget(inputEl, label){
     '<div class="dropzone">'+
       '<span class="dz-ico">▲</span>'+
       '<span class="dz-txt">اسحب الصورة هنا أو اضغط للاختيار</span>'+
-      '<span class="dz-sub">يُرفع تلقائيًا إلى Supabase عند الحفظ</span>'+
+      '<span class="dz-sub">تُرفع تلقائيًا وتُحفظ مع التغييرات</span>'+
       '<input type="file" accept="image/*" class="dz-file" style="display:none">'+
     '</div>'+
     '<div class="dz-preview"><img alt=""></div>'+
-    '<div class="dz-actions">'+
-      '<button type="button" class="dz-remove" style="display:none">إزالة الصورة</button>'+
-    '</div>'+
+    '<div class="dz-actions"><button type="button" class="dz-remove" style="display:none">إزالة الصورة</button></div>'+
     '<div class="dz-status"></div>';
 
   var dz=box.querySelector(".dropzone");
@@ -1130,37 +1447,38 @@ function makeUploadWidget(inputEl, label){
     uploadSiteImage(file, label).then(function(pub){
       inputEl.value=pub;
       showPreview();
-      setStatus("تم الرفع ✓ — سيُحفظ عند الضغط على «حفظ كل التغييرات»","ok");
+      setStatus("تم الرفع ✓ — سيُحفظ عند الضغط على «حفظ ونشر»","ok");
+      inputEl.dispatchEvent(new Event("input",{bubbles:true}));
     })["catch"](function(e){
       setStatus("فشل الرفع: "+(e&&e.message||String(e)),"err");
     }).then(function(){ dz.classList.remove("dragover"); });
   }
 
-  dz.addEventListener("click", function(e){ fInput.click(); });
-  fInput.addEventListener("change", function(){ doUpload(fInput.files && fInput.files[0]); fInput.value=""; });
-  dz.addEventListener("dragover", function(e){ e.preventDefault(); dz.classList.add("dragover"); });
-  dz.addEventListener("dragleave", function(){ dz.classList.remove("dragover"); });
-  dz.addEventListener("drop", function(e){
+  dz.addEventListener("click",function(){ fInput.click(); });
+  fInput.addEventListener("change",function(){ doUpload(fInput.files&&fInput.files[0]); fInput.value=""; });
+  dz.addEventListener("dragover",function(e){ e.preventDefault(); dz.classList.add("dragover"); });
+  dz.addEventListener("dragleave",function(){ dz.classList.remove("dragover"); });
+  dz.addEventListener("drop",function(e){
     e.preventDefault(); dz.classList.remove("dragover");
-    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];
     doUpload(f);
   });
   inputEl.addEventListener("input", showPreview);
-  removeBtn.addEventListener("click", function(e){ e.stopPropagation(); inputEl.value=""; showPreview(); setStatus(""); });
+  removeBtn.addEventListener("click",function(e){ e.stopPropagation(); inputEl.value=""; showPreview(); setStatus(""); });
 
-  inputEl.parentNode.appendChild(box);
+  inputEl.parentNode.insertBefore(box, inputEl.nextSibling);
   inputEl._widgetRefresh = showPreview;
   showPreview();
 }
 function attachUploadWidgets(){
   document.querySelectorAll("[data-path]").forEach(function(inp){
-    if(isImageField(inp)){ if(inp._widget) { if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, inp.getAttribute("data-path")); }
+    if(isImageField(inp)){ if(inp._widget){ if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, inp.getAttribute("data-path")||"img"); }
   });
   document.querySelectorAll("[data-dish]").forEach(function(inp){
-    if(isImageField(inp)){ if(inp._widget) { if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, "dish"); }
+    if(isImageField(inp)){ if(inp._widget){ if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, "dish"); }
   });
   document.querySelectorAll("[data-gal]").forEach(function(inp){
-    if(isImageField(inp)){ if(inp._widget) { if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, "gal"); }
+    if(isImageField(inp)){ if(inp._widget){ if(inp._widgetRefresh) inp._widgetRefresh(); } else makeUploadWidget(inp, "gal"); }
   });
 }
 
