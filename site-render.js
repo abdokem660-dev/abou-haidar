@@ -536,5 +536,8 @@ loadSiteContent().then(function(content){
     storeArabic();
     applyFallback(localStorage.getItem("ah-lang") || "ar");
     setLang(localStorage.getItem("ah-lang") || "ar");
+    console.log("[site-render] ✓ live content applied from Supabase");
+  } else {
+    console.warn("[site-render] ✗ using embedded/static content (Supabase fetch skipped or failed)");
   }
 });
