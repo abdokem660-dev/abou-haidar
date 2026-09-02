@@ -624,20 +624,34 @@ function api(method, path, body, extra){
   if(extra){ for(var hk in extra){ if(extra.hasOwnProperty(hk)) headers[hk]=extra[hk]; } }
   var opts = { method:method, headers:headers };
   if(body!==undefined){ opts.headers["Content-Type"]="application/json"; opts.body=JSON.stringify(body); }
-  return fetch(url, opts).then(function(r){
-    return r.text().then(function(txt){
-      var j = null;
-      if(txt && txt.trim()){ try{ j = JSON.parse(txt); }catch(e){ j = txt; } }
-      if(r.status===204) return null;
-      if(!r.ok){
-        var msg = (j && (j.message || j.error_description || j.hint || j.details)) || txt || ("HTTP "+r.status);
-        var err = new Error(method+" "+path+" → "+r.status+": "+String(msg).slice(0,300));
-        err.status = r.status;
-        throw err;
-      }
-      return j;
+  var attempt = 0;
+  function one(){
+    return fetch(url, opts).then(function(r){
+      return r.text().then(function(txt){
+        var j = null;
+        if(txt && txt.trim()){ try{ j = JSON.parse(txt); }catch(e){ j = txt; } }
+        if(r.status===204) return null;
+        if(!r.ok){
+          var msg = (j && (j.message || j.error_description || j.hint || j.details)) || txt || ("HTTP "+r.status);
+          var err = new Error(method+" "+path+" → "+r.status+": "+String(msg).slice(0,300));
+          err.status = r.status;
+          throw err;
+        }
+        return j;
+      });
     });
-  });
+  }
+  function attemptWithRetry(){
+    attempt++;
+    return one()["catch"](function(e){
+      var transient = (e.status===401) && /issued at future/i.test(String(e.message||""));
+      if(transient && attempt < 3){
+        return new Promise(function(res){ setTimeout(res, attempt*450); }).then(attemptWithRetry);
+      }
+      throw e;
+    });
+  }
+  return attemptWithRetry();
 }
 function loginRequest(email, password){
   email = (email && email.trim()) || CFG.email;
