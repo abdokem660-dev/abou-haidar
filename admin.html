@@ -700,6 +700,7 @@ function buildWorkFromDB(db){
       if(r.en!=null) node[last].en=r.en;
     } else if(node!=null){
       if(r.ar!=null) node[last]=r.ar;
+      else if(r.en!=null) node[last]=r.en;
     }
   });
   if(base.menu && Array.isArray(db.menu)){
@@ -764,7 +765,7 @@ function resetTheme(){
   Object.keys(window.siteContent.theme).forEach(function(k){
     if(k.indexOf("--")===0) WORK.theme[k]=window.siteContent.theme[k];
   });
-  renderTheme(); toast("تمت استعادة الألوان الافتراضية — اضغط «حفظ ونشر»","ok");
+  renderTheme(); toast(tr("تمت استعادة الألوان الافتراضية — اضغط «حفظ ونشر»"),"ok");
 }
 
 /* ---------------- محرر إحصائيات الهيرو (3 بطاقات ثابتة + شارة) ---------------- */
@@ -875,7 +876,7 @@ function renderMenu(){
         '</div>';
       box.appendChild(it);
     });
-    if(!list.length){ var em=document.createElement("div"); em.className="empty"; em.textContent="لا أطباق في هذه الفئة — اضغط «+ إضافة صنف»"; box.appendChild(em); }
+    if(!list.length){ var em=document.createElement("div"); em.className="empty"; em.textContent=tr("لا أطباق في هذه الفئة — اضغط «+ إضافة صنف»"); box.appendChild(em); }
     el.appendChild(sec);
   });
 }
@@ -1054,7 +1055,11 @@ function flattenTextRows(obj, prefix, out){
         flattenTextRows(v, key, out);
       }
     } else {
-      out.push({ key:key, ar:String(v), en:null });
+      var s = String(v);
+      // الصيغ المسطّحة _ar/_en: ضع القيمة في العمود الصحيح
+      if(/_en$/.test(key)) out.push({ key:key, ar:null, en:s });
+      else if(/_ar$/.test(key)) out.push({ key:key, ar:s, en:null });
+      else out.push({ key:key, ar:s, en:null });
     }
   });
   return out;
@@ -1097,8 +1102,8 @@ function buildThemeRows(){
 function saveAll(){
   var btn=document.getElementById("saveAll");
   var status=document.getElementById("saveStatus");
-  btn.disabled=true; btn.textContent="جارٍ الحفظ…";
-  status.textContent="جاري نشر التغييرات إلى الموقع…";
+  btn.disabled=true; btn.textContent=tr("جارٍ الحفظ…");
+  status.textContent=tr("جاري نشر التغييرات إلى الموقع…");
   syncFromForms();
   var payload = {
     text: flattenTextRows(WORK),
@@ -1109,8 +1114,8 @@ function saveAll(){
   };
   return api("POST","/rest/v1/rpc/admin_publish_site", { payload: payload })
     .then(function(res){
-      var s = (res && res.ok) ? ("تم الحفظ ذرّيًا ✓ — نصوص: "+res.text+" · أصناف: "+res.menu+" · صور: "+res.gallery+" · كروت: "+res.sig+" · ألوان: "+res.theme) : "تم الحفظ بنجاح ✓ — اضغط «حفظ ونشر» عند الحاجة";
-      toast("تم حفظ ونشر الموقع بنجاح ✓","ok");
+      var s = (res && res.ok) ? tr("تم الحفظ ذرّيًا ✓ — نصوص: {T} · أصناف: {M} · صور: {G} · كروت: {S} · ألوان: {H}").replace("{T}",res.text).replace("{M}",res.menu).replace("{G}",res.gallery).replace("{S}",res.sig).replace("{H}",res.theme) : tr("تم الحفظ بنجاح ✓ — اضغط «حفظ ونشر» عند الحاجة");
+      toast(tr("تم حفظ ونشر الموقع بنجاح ✓"),"ok");
       status.textContent=s;
       /* نعيد التحميل من قاعدة البيانات ليعكس ما حُفظ فعليًا */
       return loadFromDB().then(function(db){
@@ -1118,9 +1123,9 @@ function saveAll(){
       });
     })
     ["catch"](function(e){
-      toast("فشل الحفظ: "+e.message,"err");
-      status.textContent="فشل الحفظ — حاول مرة أخرى، وإذا استمرت المشكلة تواصل مع المطوّر.";
-    }).then(function(){ btn.disabled=false; btn.textContent="حفظ ونشر الموقع"; });
+      toast(tr("فشل الحفظ")+": "+e.message,"err");
+      status.textContent=tr("فشل الحفظ — حاول مرة أخرى، وإذا استمرت المشكلة تواصل مع المطوّر.");
+    }).then(function(){ btn.disabled=false; btn.textContent=tr("حفظ ونشر الموقع"); });
 }
 
 /* ---------------- إضافات / حذف / نقل ---------------- */
@@ -1223,11 +1228,266 @@ var LOC = {
     email_err:"Failed to change email:" }
 };
 function T(k){ return (LOC[LAN]&&LOC[LAN][k]!==undefined)?LOC[LAN][k]:k; }
+/* ==== قاموس ترجمة كامل للواجهة (عربي ← إنجليزي) ==== */
+var UI_EN = {
+  "لوحة تحكم أبو حيدر":"Abou Haidar — Admin",
+  "متصل":"Connected", "غير متصل بعد":"Not connected yet",
+  "إعدادات الاتصال":"Connection Settings",
+  "تسجيل الخروج":"Log out",
+  "دخول":"Sign in",
+  "إعدادات الاتصال بـ Supabase":"Supabase Connection Settings",
+  "هذه البيانات موجودة مسبقًا — لا تغيّرها إلا إذا كنت تعرف ما تفعل.":"These values are preconfigured — don't change them unless you know what you're doing.",
+  "Anon Key (المفتاح العام)":"Anon Key (public key)",
+  "بريد صاحب الحساب":"Owner email",
+  "كلمة مرور أولية (للإنشاء الأول فقط)":"Initial password (first-time creation only)",
+  "حفظ الإعدادات":"Save settings",
+  "إنشاء حساب المالك":"Create owner account",
+  "إغلاق":"Close",
+  "كلمة مرور قوية":"strong password",
+  "فتح الموقع في تبويب جديد ↗":"Open the site in a new tab ↗",
+  "معاينة الموقع الجديد بنفس اللحظة:":"Preview the new site instantly:",
+  "الهوية والألوان":"Identity & Colors",
+  "القصة":"Story", "المميزات":"Features", "المنيو":"Menu", "المعرض":"Gallery",
+  "التواصل":"Contact", "الحساب والأمان":"Account & Security",
+  "الحالة والمواقف والأسئلة":"Status, Parking & FAQ",
+  "البراند وبيانات المتصفح (Meta)":"Brand & Browser Meta (Meta)",
+  "اسم المطعم الذي يظهر في شريط المتصفح وعناوين الموقع.":"The restaurant name shown in the browser bar and site headings.",
+  "اسم البراند":"Brand name",
+  "الوصف الفرعي":"Tagline",
+  "عنوان المتصفح":"Browser title",
+  "وصف المتصفح":"Browser description",
+  "عنوان المشاركة (OG)":"Share title (OG)",
+  "وصف المشاركة (OG)":"Share description (OG)",
+  "الشعار (Logo) — ارفع صورة":"Logo — upload an image",
+  "اضغط المربع المنقّط لرفع صورة الشعار، أو الصق رابط مباشر.":"Click the dashed box to upload the logo image, or paste a direct link.",
+  "وصف الشعار":"Logo alt text",
+  "الشاشة الأولى (Hero)":"Hero section",
+  "أول ما يراه الزائر عند فتح الموقع — النظام نص \"الخلطة السرية و… الطعم الأصيل\".":"The first thing visitors see on the site — greeting, headline, buttons.",
+  "السطر التعريفي":"Eyebrow line",
+  "العنوان — الجزء 1":"Title — part 1",
+  "العنوان — الجزء الملوّن":"Title — colored part",
+  "العنوان — الجزء 3":"Title — part 3",
+  "الفقرة التعريفية":"Intro paragraph",
+  "زر المنيو":"Menu button",
+  "زر التواصل":"Contact button",
+  "نص \"مرر للأسفل\"":"\"Scroll down\" text",
+  "سطر الساعات الظاهر":"Visible hours line",
+  "هذا نص العرض في الشاشة الأولى، أما حسابات الفتح/الإغلاق فتأخذ وقتها من قسم «التواصل».":"This is the display text in the hero; open/closed is computed from the Contact section.",
+  "الشارة — \"منذ 1968\"":"Seal — \"Since 1968\"",
+  "الشارة":"Seal",
+  "ملصق الشارة":"Seal label",
+  "صورة الشاشة الأولى — ارفع صورة":"Hero image — upload an image",
+  "وصف صورة الشاشة":"Hero image alt",
+  "ملاحظة الصورة":"Image note",
+  "الإحصائيات (3 أرقام تحت العنوان)":"Stats (3 numbers under the title)",
+  "شارة تاريخ التأسيس":"Founding date badge",
+  "السنة":"Year",
+  "كلمة \"منذ\"":"\"Since\" word",
+  "الإحصائيات":"Stats",
+  "ألوان الهوية":"Identity colors",
+  "اختر اللون وسيتحدّث الموقع مباشرة — الأزرار، العناوين، الخلفيات، الروابط…":"Pick a color and the site updates live — buttons, headings, backgrounds, links…",
+  "استعادة الألوان الافتراضية":"Restore default colors",
+  "قصة المطعم":"Restaurant story",
+  "قسم «قصتنا» — من العنوان حتى نص الحكاية والزر.":"The \"Our Story\" section — from the title to the story text and button.",
+  "اللقب":"Tag",
+  "العنوان — جملة 1":"Title — sentence 1",
+  "العنوان — جملة 2 (الملوّنة)":"Title — sentence 2 (colored)",
+  "العنوان — جملة 2":"Title — sentence 2",
+  "الفقرة 1":"Paragraph 1",
+  "الفقرة 2":"Paragraph 2",
+  "شارة السنوات":"Years badge",
+  "زر «جرّب الطعم»":"\"Try the taste\" button",
+  "صورة القصة — ارفع صورة":"Story image — upload an image",
+  "وصف صورة القصة":"Story image alt",
+  "بطاقات «لماذا نحن» (4 بطاقات بجانب القصة)":"\"Why us\" cards (4 cards beside the story)",
+  "عناوين قسم المميزات":"Features section titles",
+  "العنوان":"Title",
+  "الوصف":"Description",
+  "\"اضغط لمعرفة المزيد\"":"\"Tap to learn more\"",
+  "\"اضغط للإغلاق\"":"\"Tap to close\"",
+  "كروت المميزات (وجه أمامي + وجه خلفي)":"Feature cards (front + back)",
+  "الزائر يضغط الكارت فتظهر التفاصيل. يمكنك إضافة أو حذف أي كارت.":"Visitors tap a card to reveal its details. You can add or delete any card.",
+  "+ إضافة كارت جديد":"+ Add new card",
+  "عناوين المنيو":"Menu titles",
+  "ملاحظة الأسعار":"Price note",
+  "فئات المنيو (التبويبات)":"Menu categories (tabs)",
+  "مثال: شاورما، سندوتشات، عصائر، حلويات. غيّر الأسماء من هنا.":"Example: shawarma, sandwiches, juices, desserts. Rename them here.",
+  "الأصناف حسب الفئة":"Dishes by category",
+  "أضف صنفًا جديدًا تحت أي فئة، وعند حفظ التغييرات يظهر مباشرة في الموقع.":"Add a new dish under any category — it appears on the site right after publishing.",
+  "صورة المنيو الأصلية":"Original printed menu",
+  "صورة المنيو — ارفع صورة":"Menu image — upload an image",
+  "وصف صورة المنيو":"Menu image alt",
+  "المعرّف (حرف لاتيني بدون مسافات)":"ID (Latin letters, no spaces)",
+  "الاسم":"Name",
+  "+ إضافة صنف":"+ Add dish",
+  "السعر":"Price",
+  "الشارة (مثل: الأكثر طلبًا)":"Badge (e.g. most-wanted)",
+  "صورة الصنف — ارفع":"Dish image — upload",
+  "وصف الصورة":"Image alt",
+  "عناوين المعرض":"Gallery titles",
+  "صور المعرض":"Gallery photos",
+  "اضغط «⬆» / «⬇» لتغيير الترتيب، أو ارفع صورة جديدة من مربع الصورة.":"Press ⬆ / ⬇ to reorder, or upload a new photo from its box.",
+  "+ إضافة صورة":"+ Add photo",
+  "مسار الصورة — ارفع":"Image path — upload",
+  "التعليق":"Caption",
+  "معلومات التواصل":"Contact info",
+  "رقم الهاتف":"Phone number",
+  "رابط فيسبوك":"Facebook link",
+  "رابط إنستجرام":"Instagram link",
+  "نص «تابعنا →»":"\"Follow us →\" text",
+  "عنوان النص «الهاتف»":"\"Phone\" heading text",
+  "العنوان (نص الشارع)":"Address (street text)",
+  "عنوان «العنوان»":"\"Address\" heading",
+  "عنوان «مواعيد العمل»":"\"Working hours\" heading",
+  "«يوميًا»":"\"Daily\"",
+  "الوقت (يُستخدم لحساب الفتح/الإغلاق)":"Time (used to compute open/closed)",
+  "الوقت":"Time",
+  "ملاحظة النقد":"Cash note",
+  "نموذج الحجز (نصوص الفورم)":"Booking form (form texts)",
+  "تسميات حقول نموذج «احجز / تواصل معنا».":"Field labels of the \"Book / Contact us\" form.",
+  "عنوان النموذج":"Form title",
+  "وصف النموذج":"Form description",
+  "حقل الاسم":"Name field",
+  "حقل الهاتف":"Phone field",
+  "حقل التاريخ":"Date field",
+  "حقل الوقت":"Time field",
+  "حقل عدد الأشخاص":"Party size field",
+  "حقل نوع الطلب":"Order type field",
+  "حقل الرسالة":"Message field",
+  "زر الإرسال":"Submit button",
+  "\"جاري الإرسال…\"":"\"Sending…\"",
+  "رسالة النجاح":"Success message",
+  "رسالة الخطأ":"Error message",
+  "خيارات نوع الطلب":"Order-type options",
+  "النص":"Text",
+  "التذييل (Footer)":"Footer",
+  "وصف البراند":"Brand description",
+  "عنوان عمود «الموقع»":"\"Site\" column title",
+  "عنوان عمود «تواصل»":"\"Contact\" column title",
+  "عنوان عمود «ساعات العمل»":"\"Working hours\" column title",
+  "«يوميًا:» في التذييل":"\"Daily:\" in footer",
+  "الوقت في التذييل":"Time in footer",
+  "روكسي في التذييل":"Roxy in footer",
+  "«فيسبوك»":"\"Facebook\"",
+  "حقوق النشر":"Copyright",
+  "حالة الفتح / الإغلاق (مؤشر الموقع)":"Open / closed status (site indicator)",
+  "دائرة الحالة في أسفل الموقع يمينًا — تُظهر «مفتوح الآن» أو «مغلق الآن» تلقائيًا من الوقت.":"The status dot at the bottom-right shows \"Open now\" / \"Closed now\" automatically from the time.",
+  "النظام":"Mode",
+  "تلقائي (يُحسب من الوقت)":"Automatic (computed from time)",
+  "مغلق استثنائيًا":"Closed exceptionally",
+  "لو اخترت «مغلق استثنائيًا» سيُعرض السبب للزائر ويغلق الحساب التلقائي.":"If you choose \"Closed exceptionally\" the reason is shown to visitors and the automatic hours stop.",
+  "نص «مفتوح الآن»":"\"Open now\" text",
+  "نص «مغلق الآن»":"\"Closed now\" text",
+  "عنوان «مغلق مؤقتًا»":"\"Temporarily closed\" title",
+  "سبب الإغلاق":"Closure reason",
+  "الوصول ومواقف السيارات":"Access & parking",
+  "عنوان الخريطة":"Map title",
+  "رابط الخريطة (Embed)":"Map link (Embed)",
+  "رابط الخريطة":"Map link",
+  "بطاقات المواقف (أربع بطاقات)":"Parking cards (four cards)",
+  "أيقونة":"Icon",
+  "الأسئلة الشائعة (FAQ)":"FAQ",
+  "+ إضافة سؤال":"+ Add question",
+  "السؤال":"Question",
+  "الإجابة":"Answer",
+  "القيمة":"Value",
+  "التسمية":"Label",
+  "تغيير كلمة المرور":"Change password",
+  "كلمة المرور الحالية":"Current password",
+  "كلمة المرور الجديدة":"New password",
+  "تأكيد كلمة المرور الجديدة":"Confirm new password",
+  "تحديث كلمة المرور":"Update password",
+  "تغيير البريد الإلكتروني":"Change email",
+  "البريد الإلكتروني الجديد":"New email",
+  "تحديث البريد الإلكتروني":"Update email",
+  "سيُرسل تأكيد إلى البريد الجديد قبل التفعيل — أكمل الخطوة من الرسالة.":"A confirmation will be sent to the new email before it activates — complete the step from the message.",
+  "حفظ ونشر الموقع":"Save & publish the site",
+  "عدّل المحتوى ثم اضغط «حفظ ونشر» ليظهر الموقع بنفس اللحظة.":"Edit the content, then press \"Save & publish\" so the site updates instantly.",
+  "جارٍ الحفظ…":"Saving…",
+  "جاري نشر التغييرات إلى الموقع…":"Publishing changes to the site…",
+  "فشل الحفظ":"Save failed",
+  "تم حفظ ونشر الموقع بنجاح ✓":"Site saved & published successfully ✓",
+  "تمت استعادة الألوان الافتراضية — اضغط «حفظ ونشر»":"Default colors restored — press \"Save & publish\"",
+  "تم الحفظ ذرّيًا ✓ — نصوص: {T} · أصناف: {M} · صور: {G} · كروت: {S} · ألوان: {H}":"Saved atomically ✓ — Texts: {T} · Dishes: {M} · Photos: {G} · Cards: {S} · Colors: {H}",
+  "تم الحفظ بنجاح ✓ — اضغط «حفظ ونشر» عند الحاجة":"Saved successfully ✓ — press \"Save & publish\" when needed",
+  "فشل الحفظ — حاول مرة أخرى، وإذا استمرت المشكلة تواصل مع المطوّر.":"Save failed — try again; if the problem persists contact the developer.",
+  "اضبط إعدادات Supabase أولًا":"Set up Supabase settings first",
+  "ضع بريد صاحب الحساب":"Enter the owner email",
+  "ضع كلمة مرور أولية (٦ أحرف على الأقل)":"Enter an initial password (6+ characters)",
+  "فشل إنشاء الحساب":"Failed to create account",
+  "لا توجد كروت بعد — اضغط «+ إضافة كارت جديد»":"No cards yet — press \"+ Add new card\"",
+  "لا توجد صور بعد — اضغط «+ إضافة صورة»":"No photos yet — press \"+ Add photo\"",
+  "لا أطباق في هذه الفئة — اضغط «+ إضافة صنف»":"No dishes in this category — press \"+ Add dish\"",
+  "لا توجد أسئلة — اضغط «+ إضافة سؤال»":"No questions yet — press \"+ Add question\"",
+  "+ إضافة خيار":"+ Add option",
+  "إزالة الصورة":"Remove image",
+  "حذف":"Delete",
+  "الوجه الأمامي":"Front face",
+  "الوجه الخلفي":"Back face",
+  "Alt":"Alt",
+  "اللقب والرقم للعرض في الشريط العلوي":"Hidden",
+  "الوقت المخصص للقيمة":"idx"
+};
+function uiNumberToEN(t){
+  var m=t.match(/^كارت (\d+)$/); if(m) return "Card "+m[1];
+  m=t.match(/^فئة (\d+)$/); if(m) return "Category "+m[1];
+  m=t.match(/^بطاقة (\d+)$/); if(m) return "Info card "+m[1];
+  m=t.match(/^إحصائية (\d+)$/); if(m) return "Stat "+m[1];
+  m=t.match(/^صنف (\d+)$/); if(m) return "Dish "+m[1];
+  m=t.match(/^صورة (\d+)$/); if(m) return "Photo "+m[1];
+  m=t.match(/^خيار (\d+)$/); if(m) return "Option "+m[1];
+  m=t.match(/^سؤال (\d+)$/); if(m) return "Question "+m[1];
+  m=t.match(/^موقف (\d+)$/); if(m) return "Parking slot "+m[1];
+  return null;
+}
+function uiNumberToAR(t){
+  var m=t.match(/^Card (\d+)$/); if(m) return "كارت "+m[1];
+  m=t.match(/^Category (\d+)$/); if(m) return "فئة "+m[1];
+  m=t.match(/^Info card (\d+)$/); if(m) return "بطاقة "+m[1];
+  m=t.match(/^Stat (\d+)$/); if(m) return "إحصائية "+m[1];
+  m=t.match(/^Dish (\d+)$/); if(m) return "صنف "+m[1];
+  m=t.match(/^Photo (\d+)$/); if(m) return "صورة "+m[1];
+  m=t.match(/^Option (\d+)$/); if(m) return "خيار "+m[1];
+  m=t.match(/^Question (\d+)$/); if(m) return "سؤال "+m[1];
+  m=t.match(/^Parking slot (\d+)$/); if(m) return "موقف "+m[1];
+  return null;
+}
+function tr(s){ if(LAN!=="en"||!s) return s; if(UI_EN[s]!=null) return UI_EN[s]; var n=uiNumberToEN(s); if(n) return n; return s; }
+/* ترجمة كل عناصر الواجهة مع الحفاظ على spans الداخلية مثل hint-tag */
+function applyAdminLang(){
+  var en = LAN==="en";
+  document.querySelectorAll("label,button,option,legend,h1,h2,h3,h4,.tip,.card-desc,.card-sub,.sec-sub-label,.sub,.hint,.empty,.item-head b,.preview-bar b,.preview-bar a,.save-row .stats,#connStatus,#connChip,#loginErr,#cfgHint,input[placeholder]").forEach(function(el){
+    if(el.getAttribute && el.getAttribute("placeholder")){ var ph=el.getAttribute("placeholder").trim(); var phr=tr(ph); if(phr!==ph){ if(en&&!el.dataset.ahPhAr) el.dataset.ahPhAr=ph; el.setAttribute("placeholder", en?phr:el.dataset.ahPhAr||phr); } }
+    if(!el.childNodes.length) return;
+    el.childNodes.forEach(function(n,j){
+      if(n.nodeType!==3 || !n.nodeValue || !n.nodeValue.trim()) return;
+      var t=n.nodeValue.trim();
+      var before=n.nodeValue.slice(0,n.nodeValue.indexOf(t));
+      var after=n.nodeValue.slice(n.nodeValue.indexOf(t)+t.length);
+      var first=false; for(var k=0;k<j;k++){ if(el.childNodes[k].nodeType===3 && el.childNodes[k].nodeValue && el.childNodes[k].nodeValue.trim()){ first=true; break; } }
+      if(first) return;
+      if(en){
+        if(el.dataset.ahAr==null) el.dataset.ahAr=t;
+        var r=UI_EN[t]!=null?UI_EN[t]:uiNumberToEN(t);
+        if(!r) return;
+        n.nodeValue = before + r + after;
+      } else {
+        if(el.dataset.ahAr!=null && !(UI_EN[el.dataset.ahAr]===undefined)){
+          n.nodeValue = before + el.dataset.ahAr + after;
+        } else {
+          var rb=uiNumberToAR(t); if(rb) n.nodeValue = before + rb + after;
+        }
+      }
+    });
+  });
+}
+var UI_EN_R = (function(){ var o={}; Object.keys(UI_EN).forEach(function(k){ o[UI_EN[k]]=k; }); return o; })();
 function setAdminLang(l){
   LAN=l; document.documentElement.lang = l==="ar"?"ar":"en"; document.documentElement.dir = l==="ar"?"rtl":"ltr";
   document.body.classList.toggle("lang-en", l==="en");
   document.getElementById("langToggle").textContent = l==="ar"?"English":"عربي";
   document.querySelectorAll("[data-admin]").forEach(function(el){ el.textContent = T(el.getAttribute("data-admin")); });
+  applyAdminLang();
   localStorage.setItem("ah-admin-lang", LAN);
 }
 
@@ -1254,15 +1514,15 @@ function saveCfg(){
 function createOwner(){
   var pass=document.getElementById("cfgSetupPass").value;
   var err=document.getElementById("cfgHint");
-  if(!CFG.anon||!CFG.url){ err.textContent="اضبط إعدادات Supabase أولًا"; return; }
-  if(!CFG.email){ err.textContent="ضع بريد صاحب الحساب"; return; }
-  if(!pass){ err.textContent="ضع كلمة مرور أولية (٦ أحرف على الأقل)"; return; }
+  if(!CFG.anon||!CFG.url){ err.textContent=tr("اضبط إعدادات Supabase أولًا"); return; }
+  if(!CFG.email){ err.textContent=tr("ضع بريد صاحب الحساب"); return; }
+  if(!pass){ err.textContent=tr("ضع كلمة مرور أولية (٦ أحرف على الأقل)"); return; }
   fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/signup",{
     method:"POST", headers:{ "Content-Type":"application/json", apikey:CFG.anon },
     body:JSON.stringify({ email:CFG.email, password:pass })
   }).then(function(r){ return r.text().then(function(txt){ var j=null; if(txt&&txt.trim()){try{j=JSON.parse(txt);}catch(e){}} if(!r.ok) throw new Error((j&&(j.msg||j.error_description))||("HTTP "+r.status)); return j; }); })
   .then(function(){ err.textContent=""; toast(T("owner_ok"),"ok"); document.getElementById("cfgSetupPass").value=""; })
-  ["catch"](function(e){ err.textContent="فشل إنشاء الحساب: "+e.message; });
+  ["catch"](function(e){ err.textContent=tr("فشل إنشاء الحساب")+": "+e.message; });
 }
 
 /* ---------------- تسجيل الدخول / التهيئة ---------------- */
@@ -1270,7 +1530,7 @@ function updateConn(){
   var st=document.getElementById("connStatus");
   var chip=document.getElementById("connChip");
   if(CFG.url){ st.textContent="Supabase: "+CFG.url.replace(/^https?:\/\//,"").replace(/\/$/,""); if(chip){chip.style.display="inline-block";} }
-  else { st.textContent="غير متصل بعد"; if(chip) chip.style.display="none"; }
+  else { st.textContent=tr("غير متصل بعد"); if(chip) chip.style.display="none"; }
 }
 function showDash(){
   document.getElementById("loginView").style.display="none";
@@ -1499,9 +1759,13 @@ function attachUploadWidgets(){
 document.addEventListener("DOMContentLoaded", function(){
   var _orig = init;
   var _super = renderAll;
-  init = function(){ _orig.apply(this, arguments); attachUploadWidgets(); };
-  renderAll = function(){ _super.apply(this, arguments); attachUploadWidgets(); };
+  init = function(){ _orig.apply(this, arguments); attachUploadWidgets(); applyAdminLang(); };
+  renderAll = function(){ _super.apply(this, arguments); attachUploadWidgets(); applyAdminLang(); };
   init();
+  /* ترجمة العناصر الجديدة بعد أي عملية إضافة/حذف/نقل (childList فقط حتى لا نقع في حلقة) */
+  var _langTimer=null;
+  var obs=new MutationObserver(function(){ if(LAN!=="en") return; clearTimeout(_langTimer); _langTimer=setTimeout(function(){ applyAdminLang(); },30); });
+  var dash=document.getElementById("dashView"); if(dash) obs.observe(dash,{ childList:true, subtree:true });
 });
 </script>
 </body>
