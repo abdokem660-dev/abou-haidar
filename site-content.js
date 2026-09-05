@@ -840,8 +840,8 @@ window.siteContent = {
       "en": "Daily:"
     },
     "col_hours_time": {
-      "ar": "8:30 ص — 9:00 م",
-      "en": "8:30 AM — 9:00 PM"
+      "ar": "8:30 ص — 1:30 ص",
+      "en": "8:30 AM — 1:30 AM"
     },
     "col_contact_roxy": {
       "ar": "روكسي، مصر الجديدة",
