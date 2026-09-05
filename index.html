@@ -440,16 +440,16 @@
 
   /* ===== STATUS FAB — دائرة مفتوح / مغلق أسفل يمين الشاشة ===== */
   .status-fab{position:fixed;bottom:20px;right:20px;z-index:1200;display:flex;align-items:center;gap:.7rem;flex-direction:row;direction:ltr}
-  .status-fab .status-btn{width:58px;height:58px;border-radius:50%;background:var(--primary-deep);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.32);padding:0;transition:transform .2s,box-shadow .2s;flex-shrink:0}
+  .status-fab .status-btn{width:58px;height:58px;border-radius:50%;background:var(--primary-deep);border:2px solid #22c55e;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.32);padding:0;transition:transform .2s,box-shadow .2s;flex-shrink:0}
   .status-fab .status-btn:hover{transform:scale(1.07);box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .status-fab.closed .status-btn{background:#3f0d0d;border-color:#e11d48}
-  .status-dot{width:18px;height:18px;border-radius:50%;background:var(--gold);border:2.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 0 rgba(201,162,39,.6);animation:pulse 2s infinite}
+  .status-dot{width:18px;height:18px;border-radius:50%;background:#22c55e;border:2.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 2s infinite}
   .status-fab.closed .status-dot{background:#e11d48;animation:none;box-shadow:none;border-color:rgba(255,255,255,.8)}
   .status-label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;transition:max-width .35s ease,opacity .3s ease;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 24px rgba(62,21,6,.16);padding:0}
   .status-fab:hover .status-label,.status-fab.show .status-label{max-width:280px;opacity:1;padding:.6rem .95rem}
   .status-label .status-text{display:block;font-weight:800;color:var(--ink);font-size:.92rem;text-align:center}
   .status-label .status-reason{display:none;font-size:.78rem;color:var(--secondary);line-height:1.55;margin-top:.2rem;white-space:normal}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}70%{box-shadow:0 0 0 10px rgba(201,162,39,0)}100%{box-shadow:0 0 0 0 rgba(201,162,39,0)}}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
   @media (max-width:640px){.status-fab{bottom:14px;right:14px}.status-fab .status-btn{width:52px;height:52px}.status-fab:hover .status-label,.status-fab.show .status-label{max-width:220px}}
 
   /* ===== PARKING & ACCESS ===== */
@@ -554,7 +554,7 @@
         <span class="eyebrow">
           <span data-i data-key="hero.eyebrow" data-en="The most famous shawarma in Egypt · Since 1968">أشهر شاورما في مصر · منذ 1968</span>
         </span>
-        <h1><span data-i data-key="hero.h1_1" data-en="The secret recipe &amp;">الخلطة السرية و</span><span class="gold" data-i data-key="hero.h1_2" data-en="the authentic taste">الطعم الأصيل</span><br><span data-i data-key="hero.h1_3" data-en="from the heart of Roxy">من قلب روكسي</span></h1>
+        <h1><span data-i data-key="hero.h1_1" data-en="The secret recipe &amp; ">الخلطة السرية و</span><span class="gold" data-i data-key="hero.h1_2" data-en="the authentic taste">الطعم الأصيل</span><br><span data-i data-key="hero.h1_3" data-en="from the heart of Roxy">من قلب روكسي</span></h1>
         <p class="lead" data-i data-key="hero.lead" data-en="Since 1968 we've served the most famous shawarma in Egypt — charcoal-grilled meat with an inherited secret recipe, served in a hot Kaiser roll as if it were the first time, every time.">منذ 1968 ونحن نقدم أشهر شاورما في مصر — لحم مشوي على الفحم بخلطة سرية متوارثة، تُقدَّم في عيش كيزر ساخن كأنها لأول مرة في كل مرة.</p>
         <div class="hero-cta">
           <a href="#menu" class="btn btn-primary">
@@ -840,9 +840,6 @@
         <div class="social">
           <a href="https://www.facebook.com/abouhaidarrestaurant/" target="_blank" rel="noopener" aria-label="فيسبوك">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          </a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="انستجرام">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4a4 4 0 11-7.9 1.2 4 4 0 017.9-1.2z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
         </div>
       </div>
