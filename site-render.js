@@ -57,6 +57,7 @@ async function loadFromSupabase(){
       if(r.en!=null) node[last].en = r.en;
     } else if(node!=null){
       if(r.ar!=null) node[last] = r.ar;
+      else if(r.en!=null) node[last] = r.en;
     }
   });
 
@@ -174,30 +175,61 @@ function _pair(v){
 
 function _txt(v){ return _pair(v).ar; }
 
+/* قراءة القيمة العربية: مفضّلة الصيغة المسطّحة _ar (التي يكتبها الأدمن) مع سقوط للصيغة القديمة */
+function _arOr(v, fallback){
+  if(v!==undefined && v!==null){
+    if(typeof v==="object") return v.ar!=null? v.ar : v.en;
+    return v;
+  }
+  if(fallback!==undefined && fallback!==null){
+    if(typeof fallback==="object") return fallback.ar!=null? fallback.ar : fallback.en;
+    return fallback;
+  }
+  return null;
+}
+/* قراءة القيمة الإنجليزية لصيغة مسطّحة _en (أو كائن)، مع سقوط للصيغة القديمة */
+function _enOr(v, fallback){
+  if(v!==undefined && v!==null){
+    if(typeof v==="object") return v.en!=null? v.en : v.ar;
+    return v;
+  }
+  if(fallback!==undefined && fallback!==null){
+    if(typeof fallback==="object") return fallback.en!=null? fallback.en : fallback.ar;
+    return fallback;
+  }
+  return null;
+}
+
 /* ---------- 1) النصوص: تعبئة عناصر data-key ---------- */
 function applyKeys(C){
   document.querySelectorAll("[data-key]").forEach(function(el){
     var key = el.getAttribute("data-key");
+    if(key==="brand"){
+      // البراند: نص + <small> فرعي — نبنيه من brand_name_ar/en + brand_sub_ar/en
+      var b = _txt(_arOr(_g(C,"brand_name_ar"), _g(C,"brand_name")));
+      var bs = _txt(_arOr(_g(C,"brand_sub_ar"), _g(C,"brand_sub")));
+      if(b||bs){
+        var htmlAr = (b||"") + (bs?("<small>"+bs+"</small>"):"");
+        el.innerHTML = htmlAr;
+        el.setAttribute("data-ar", htmlAr);
+        var pEn = _txt(_enOr(_g(C,"brand_name_en"), _g(C,"brand_name")));
+        var bsEn = _txt(_enOr(_g(C,"brand_sub_en"), _g(C,"brand_sub")));
+        var htmlEn = (pEn||"") + (bsEn?("<small>"+bsEn+"</small>"):"");
+        if(htmlEn) el.setAttribute("data-en", htmlEn);
+      }
+      return;
+    }
     var val = C && _g(C, key);
     if(val==null) return;
     // تخطّ الكائنات البنيوية (مثل حاويات kv/stat) — تُملأ مكوناتها الفرعية فقط
     if(typeof val==="object" && !Array.isArray(val) && val.ar==null && val.en==null) return;
     var pair = _pair(val);
-    if(key==="brand"){
-      // البراند: نص + <small> فرعي — نبنيه من brand_name + brand_sub
-      var b = _txt(_g(C,"brand_name"));
-      var bs = _txt(_g(C,"brand_sub"));
-      if(b||bs){
-        el.innerHTML = (b||"") + (bs?("<small>"+bs+"</small>"):"");
-        var pEn = _pair(_g(C,"brand_name")).en;
-        var bsEn = _pair(_g(C,"brand_sub")).en;
-        el.setAttribute("data-en", (pEn||"") + (bsEn?("<small>"+bsEn+"</small>"):""));
-      }
-      return;
-    }
     // العناصر العادية
     var enOnly = key==="contact.phone";
-    if(!enOnly && (pair.ar||pair.en)) el.innerHTML = pair.ar;
+    if(!enOnly && (pair.ar||pair.en)){
+      el.innerHTML = pair.ar;
+      el.setAttribute("data-ar", pair.ar);
+    }
     if(pair.en!=null) el.setAttribute("data-en", pair.en);
   });
 }
