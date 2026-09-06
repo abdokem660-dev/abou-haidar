@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com/maps https://maps.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://qhvmyiyxkwaziwnerwzy.supabase.co">
+<meta name="referrer" content="no-referrer">
 <title>أبو حيدر — أشهر شاورما في مصر منذ 1968</title>
 <meta name="description" content="مطعم أبو حيدر — أشهر شاورما في مصر، تأسس عام 1968 في روكسي، مصر الجديدة. شاورما على الفحم بالخلطة السرية وعصير المانجو الشهير.">
 <meta property="og:title" content="أبو حيدر — أشهر شاورما في مصر">
@@ -932,8 +934,10 @@ function setLang(lang){
   trans.forEach(el=>{
     const ar = el.getAttribute("data-ar");
     const en = el.getAttribute("data-en");
-    if(isAr){ el.innerHTML = (ar!=null? ar : el.innerHTML); }
-    else { el.innerHTML = (en!=null? en : (ar!=null? ar : el.innerHTML)); }
+    const sAr = ar!=null ? (typeof sanitizeText==="function" ? sanitizeText(ar) : ar) : null;
+    const sEn = en!=null ? (typeof sanitizeText==="function" ? sanitizeText(en) : en) : null;
+    if(isAr){ el.innerHTML = (sAr!=null? sAr : el.innerHTML); }
+    else { el.innerHTML = (sEn!=null? sEn : (sAr!=null? sAr : el.innerHTML)); }
   });
 
   // translate image alt attributes (AR <-> EN)
