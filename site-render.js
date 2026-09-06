@@ -12,7 +12,7 @@ var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 /* ---------- أمان العرض (OWASP A03): تنقية أي HTML يُعرَض من قاعدة البيانات ---------- */
 function attrEsc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-function saneImg(u){ u = String(u==null?"":u).trim(); return (/^https?:\/\//i.test(u) ? u : ""); }
+function saneImg(u){ u = String(u==null?"":u).trim(); if(!u) return ""; if(/^https?:\/\//i.test(u)) return u; if(/^[a-z][a-z0-9+.\-]*:/i.test(u)) return ""; return u; }
 function sanitizeText(s){
   var ALLOW = /^(B|I|U|STRONG|EM|BR|P|SPAN|SMALL|A|SUP|SUB)$/i;
   var ALLOW_CLASS = /^(gold|fg|accent|muted)$/i;
