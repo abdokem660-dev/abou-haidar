@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>404 — الصفحة غير موجودة | أبو حيدر</title>
+<meta name="description" content="الصفحة التي تبحث عنها غير موجودة. عد إلى الرئيسية.">
+<meta property="og:title" content="404 — الصفحة غير موجودة | أبو حيدر">
+<link rel="icon" type="image/png" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@400;500;600;700;800&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#7C2D12;
+    --primary-dark:#5b1f0a;
+    --primary-deep:#3e1506;
+    --secondary:#B91C1C;
+    --accent:#A16207;
+    --accent-light:#D97706;
+    --gold:#C9A227;
+    --bg:#FDF6EC;
+    --bg-alt:#F7EDDC;
+    --card:#FFFFFF;
+    --ink:#3E1506;
+    --ink-soft:#7A5C47;
+    --muted:#9C8571;
+    --border:#EDD9B8;
+    --shadow:0 10px 30px -12px rgba(62,21,6,.35);
+    --shadow-lg:0 30px 60px -25px rgba(62,21,6,.5);
+    --radius:20px;
+    --font-head:var(--fam-head-ar);
+    --fam-head-ar:'Amiri',serif;
+    --fam-head-en:'Playfair Display',serif;
+    --font-label:var(--fam-label-ar);
+    --fam-label-ar:'Almarai',sans-serif;
+    --fam-label-en:'Barlow Condensed',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Almarai',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;flex-direction:column;
+  }
+  body.lang-en{font-family:'Barlow',sans-serif;--font-head:var(--fam-head-en);--font-label:var(--fam-label-en)}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .wrap{width:min(1180px,92%);margin-inline:auto}
+
+  header{background:var(--primary-deep);color:#fff;padding:1.1rem 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.8rem;font-family:var(--font-head)}
+  .brand-logo{width:54px;height:54px;border-radius:14px;overflow:hidden;flex:none;background:var(--card);display:grid;place-items:center}
+  .brand-logo img{width:100%;height:100%;object-fit:cover}
+  .brand-name{display:flex;flex-direction:column;line-height:1.2}
+  .brand-name b{font-size:1.35rem;letter-spacing:.01em}
+  .brand-name small{font-family:var(--font-label);font-weight:700;color:var(--gold);font-size:.8rem;letter-spacing:.12em}
+  .nav-link{font-family:var(--font-label);font-weight:700;font-size:.95rem;letter-spacing:.02em;color:rgba(255,255,255,.85);padding:.55rem 1.1rem;border-radius:999px;border:1.5px solid transparent;transition:all .2s}
+  .nav-link:hover{color:#fff;border-color:var(--gold);background:rgba(255,255,255,.06)}
+
+  main{flex:1;display:grid;place-items:center;padding:4rem 0;position:relative;overflow:hidden}
+  .bg-ornament{position:absolute;inset:0;pointer-events:none;opacity:.05}
+  .bg-ornament svg{width:100%;height:100%}
+  .inner{text-align:center;max-width:620px;position:relative;z-index:1}
+  .code{
+    font-family:var(--font-head);font-weight:800;color:var(--accent);
+    font-size:clamp(6rem,22vw,11rem);line-height:1;
+    background:linear-gradient(135deg,var(--accent),var(--secondary));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    position:relative;display:inline-block;
+  }
+  .code::after{
+    content:"";position:absolute;left:50%;bottom:.1em;transform:translateX(-50%);
+    width:70%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--accent));
+    opacity:.35;
+  }
+  .smoke{font-family:'Dancing Script',cursive;color:var(--accent-light);font-size:clamp(1.4rem,4vw,2rem);margin-top:-.4rem;display:block}
+  h1{font-family:var(--font-head);font-size:clamp(1.7rem,5vw,2.6rem);color:var(--secondary);margin:1.1rem 0 .6rem}
+  .lead{color:var(--ink-soft);font-size:1.05rem;max-width:46ch;margin-inline:auto}
+  .actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.2rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.9rem;border-radius:999px;
+    font-family:var(--font-label);font-weight:700;font-size:1rem;letter-spacing:.02em;line-height:1;border:2px solid transparent;
+    transition:transform .2s ease,background .25s ease,box-shadow .25s ease;
+  }
+  .btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--secondary));color:#fff;box-shadow:0 12px 24px -10px rgba(185,28,28,.6)}
+  .btn-ghost{background:transparent;color:var(--primary);border-color:var(--primary)}
+  .btn-ghost:hover{background:var(--primary);color:#fff}
+  .or{color:var(--muted);font-size:.9rem;margin-top:1.2rem}
+  .or a{color:var(--secondary);font-weight:700;border-bottom:2px solid var(--gold);transition:color .2s}
+  .or a:hover{color:var(--accent)}
+
+  footer{background:var(--primary-deep);color:rgba(255,255,255,.7);padding:1.6rem 0;font-size:.9rem}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{color:var(--gold);font-weight:700}
+  @media (max-width:520px){ .actions{flex-direction:column;align-items:stretch} .btn{justify-content:center} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <span class="brand-logo" aria-hidden="true"><img src="img/logo.png" alt=""></span>
+      <span class="brand-name"><b data-ar="أبو حيدر" data-en="Abou Haidar">أبو حيدر</b><small data-ar="شاورما منذ 1968" data-en="Shawarma since 1968">شاورما منذ 1968</small></span>
+    </a>
+    <a class="nav-link" href="index.html" data-ar="العودة إلى الرئيسية" data-en="Back to home">العودة إلى الرئيسية</a>
+  </div>
+</header>
+
+<main>
+  <div class="bg-ornament" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none" stroke="currentColor" stroke-width="1"><circle cx="200" cy="200" r="180"/><circle cx="200" cy="200" r="140" stroke-dasharray="3 6"/><circle cx="200" cy="200" r="100"/></svg>
+  </div>
+  <div class="inner">
+    <span class="code" aria-hidden="true">404</span>
+    <span class="smoke" data-ar="لا شاورما هنا!" data-en="No shawarma here!">لا شاورما هنا!</span>
+    <h1 data-ar="الصفحة غير موجودة" data-en="Page not found">الصفحة غير موجودة</h1>
+    <p class="lead" data-ar="يبدو أن الصفحة التي تبحث عنها قد غادرت المطعم. لا تقلق — ألذ شاورما في مصر ما زالت تنتظرك." data-en="It looks like the page you're looking for has left the restaurant. Don't worry — the tastiest shawarma in Egypt is still waiting for you.">يبدو أن الصفحة التي تبحث عنها قد غادرت المطعم. لا تقلق — ألذ شاورما في مصر ما زالت تنتظرك.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="index.html" data-ar="العودة إلى الرئيسية" data-en="Back to home">العودة إلى الرئيسية</a>
+      <a class="btn btn-ghost" href="index.html#menu" data-ar="تصفح المنيو" data-en="Browse the menu">تصفح المنيو</a>
+    </div>
+    <p class="or"><span data-ar="أو تواصل معنا مباشرة على" data-en="Or contact us directly at">أو تواصل معنا مباشرة على</span> <a href="tel:+20222570871">+20 2 22570871</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span data-ar="© 2026 أبو حيدر — جميع الحقوق محفوظة" data-en="© 2026 Abou Haidar — All rights reserved">© 2026 أبو حيدر — جميع الحقوق محفوظة</span>
+    <a href="https://www.facebook.com/abouhaidarrestaurant/" target="_blank" rel="noopener" data-ar="تتبّعنا على فيسبوك" data-en="Follow us on Facebook">تتبّعنا على فيسبوك</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  function apply(){
+    var en = localStorage.getItem("ah-lang") === "en";
+    document.documentElement.lang = en ? "en" : "ar";
+    document.documentElement.dir = en ? "ltr" : "rtl";
+    document.body.classList.toggle("lang-en", en);
+    document.querySelectorAll("[data-en],[data-ar]").forEach(function(el){
+      var ar = el.getAttribute("data-ar");
+      var enT = el.getAttribute("data-en");
+      el.textContent = en ? (enT != null ? enT : ar) : (ar != null ? ar : enT);
+    });
+  }
+  apply();
+  try{ window.addEventListener("storage", apply); }catch(e){}
+})();
+</script>
+</body>
+</html>
