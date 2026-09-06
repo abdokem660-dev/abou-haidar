@@ -521,7 +521,7 @@ function applyFaq(C){
   if(!mount || !f.items) return;
   mount.innerHTML = "";
   f.items.forEach(function(it, i){
-    var qA=sanitizeText(q.ar||""), qE=sanitizeText(q.en||""), aA=sanitizeText(a.ar||""), aE=sanitizeText(a.en||"");
+    var itQ=it.q||{}, itA=it.a||{}, qA=sanitizeText(itQ.ar||""), qE=sanitizeText(itQ.en||""), aA=sanitizeText(itA.ar||""), aE=sanitizeText(itA.en||"");
     var item = document.createElement("div");
     item.className = "faq-item";
     var qe = document.createElement("button");
