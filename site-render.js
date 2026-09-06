@@ -10,6 +10,52 @@
 var SUPABASE_URL = "https://qhvmyiyxkwaziwnerwzy.supabase.co";
 var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFodm15aXl4a3dheml3bmVyd3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTE2MTQsImV4cCI6MjEwMzY2NzYxNH0.R3yatbTc7DqaYS1WPMI18Gf04FwqKyc6Cc7ZiZDSuik";
 
+/* ---------- أمان العرض (OWASP A03): تنقية أي HTML يُعرَض من قاعدة البيانات ---------- */
+function attrEsc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function saneImg(u){ u = String(u==null?"":u).trim(); return (/^https?:\/\//i.test(u) ? u : ""); }
+function sanitizeText(s){
+  var ALLOW = /^(B|I|U|STRONG|EM|BR|P|SPAN|SMALL|A|SUP|SUB)$/i;
+  var ALLOW_CLASS = /^(gold|fg|accent|muted)$/i;
+  var FORBID = /^(script|style|iframe|object|embed|form|svg|math|link|meta|base|template|noscript|img|input|button|textarea|select|option|video|audio|source|canvas)$/i;
+  s = String(s==null?"":s);
+  if(!/<[a-zA-Z]/.test(s)) return s;
+  var d = document.createElement("div");
+  d.innerHTML = s;
+  var out = "";
+  (function walk(n){
+    var c = n.firstChild;
+    while(c){
+      var nx = c.nextSibling;
+      if(c.nodeType === 3){
+        out += c.nodeValue;
+      }else if(c.nodeType === 1){
+        var t = c.tagName;
+        if(FORBID.test(t)){ /* يُحذف هو وكل ما بداخله */ }
+        else if(!ALLOW.test(t)){
+          walk(c); /* فك الغلاف: نُبقي المحتوى ونحذف الوسم */
+        }else{
+          if(t === "BR"){ out += "<br>"; }
+          else{
+            out += "<" + t.toLowerCase();
+            if(t === "A"){
+              var href = c.getAttribute("href") || "";
+              if(/^https?:\/\//i.test(href)){ out += ' href="'+attrEsc(href)+'" target="_blank" rel="noopener noreferrer"'; }
+            }else if(t === "SPAN"){
+              var cls = (c.getAttribute("class")||"").split(/\s+/).filter(function(x){ return ALLOW_CLASS.test(x); }).join(" ");
+              if(cls) out += ' class="'+attrEsc(cls)+'"';
+            }
+            out += ">";
+            walk(c);
+            out += "</" + t.toLowerCase() + ">";
+          }
+        }
+      }
+      c = nx;
+    }
+  })(d);
+  return out;
+}
+
 /* ---------- قراءة المحتوى: من Supabase أو من البيانات المدمجة ---------- */
 async function loadSiteContent(){
   if(SUPABASE_URL && SUPABASE_ANON){
@@ -209,12 +255,14 @@ function applyKeys(C){
       var b = _txt(_arOr(_g(C,"brand_name_ar"), _g(C,"brand_name")));
       var bs = _txt(_arOr(_g(C,"brand_sub_ar"), _g(C,"brand_sub")));
       if(b||bs){
-        var htmlAr = (b||"") + (bs?("<small>"+bs+"</small>"):"");
+        var sb = sanitizeText(bs||"");
+        var htmlAr = sanitizeText(b||"") + (sb?("<small>"+sb+"</small>"):"");
         el.innerHTML = htmlAr;
         el.setAttribute("data-ar", htmlAr);
         var pEn = _txt(_enOr(_g(C,"brand_name_en"), _g(C,"brand_name")));
         var bsEn = _txt(_enOr(_g(C,"brand_sub_en"), _g(C,"brand_sub")));
-        var htmlEn = (pEn||"") + (bsEn?("<small>"+bsEn+"</small>"):"");
+        var sEn = sanitizeText(bsEn||"");
+        var htmlEn = sanitizeText(pEn||"") + (sEn?("<small>"+sEn+"</small>"):"");
         if(htmlEn) el.setAttribute("data-en", htmlEn);
       }
       return;
@@ -227,10 +275,10 @@ function applyKeys(C){
     // العناصر العادية
     var enOnly = key==="contact.phone";
     if(!enOnly && (pair.ar||pair.en)){
-      el.innerHTML = pair.ar;
-      el.setAttribute("data-ar", pair.ar);
+      el.innerHTML = sanitizeText(pair.ar);
+      el.setAttribute("data-ar", sanitizeText(pair.ar));
     }
-    if(pair.en!=null) el.setAttribute("data-en", pair.en);
+    if(pair.en!=null) el.setAttribute("data-en", sanitizeText(pair.en));
   });
 }
 
@@ -272,15 +320,19 @@ function applySignatures(C){
     el.setAttribute("tabindex","0");
     el.setAttribute("role","button");
     el.setAttribute("aria-expanded","false");
+    var frA = sanitizeText(fr.ar||""), frE = sanitizeText(fr.en||"");
+    var bkA = sanitizeText(bk.ar||""), bkE = sanitizeText(bk.en||"");
+    var hfA = sanitizeText(hints.front.ar||""), hfE = sanitizeText(hints.front.en||"");
+    var hbA = sanitizeText(hints.back.ar||""), hbE = sanitizeText(hints.back.en||"");
     el.innerHTML =
       '<div class="sig-inner">' +
         '<div class="sig-face">' +
-          '<h4 data-ar="'+(fr.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(fr.en||"").replace(/"/g,"&quot;")+'">'+ (fr.ar||"") +'</h4>' +
-          '<span class="sig-hint" data-ar="'+(hints.front.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(hints.front.en||"").replace(/"/g,"&quot;")+'">'+ (hints.front.ar||"") +'</span>' +
+          '<h4 data-ar="'+attrEsc(frA)+'" data-en="'+attrEsc(frE)+'">'+ frA +'</h4>' +
+          '<span class="sig-hint" data-ar="'+attrEsc(hfA)+'" data-en="'+attrEsc(hfE)+'">'+ hfA +'</span>' +
         '</div>' +
         '<div class="sig-face sig-back">' +
-          '<p data-ar="'+(bk.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(bk.en||"").replace(/"/g,"&quot;")+'">'+ (bk.ar||"") +'</p>' +
-          '<span class="sig-hint" data-ar="'+(hints.back.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(hints.back.en||"").replace(/"/g,"&quot;")+'">'+ (hints.back.ar||"") +'</span>' +
+          '<p data-ar="'+attrEsc(bkA)+'" data-en="'+attrEsc(bkE)+'">'+ bkA +'</p>' +
+          '<span class="sig-hint" data-ar="'+attrEsc(hbA)+'" data-en="'+attrEsc(hbE)+'">'+ hbA +'</span>' +
         '</div>' +
       '</div>';
     mount.appendChild(el);
@@ -319,18 +371,23 @@ function applyMenu(C){
       panel.style.display = (ci===0) ? "grid" : "none";
       (cats[catId]||[]).forEach(function(d){
         var name=_pair(d.name), desc=_pair(d.desc), tag=_pair(d.tag);
+        var nameA=sanitizeText(name.ar||""), nameE=sanitizeText(name.en||""), descA=sanitizeText(desc.ar||""), descE=sanitizeText(desc.en||"");
+        var tagA=sanitizeText(tag.ar||""), tagE=sanitizeText(tag.en||"");
+        var priceA=sanitizeText(d.price_ar||""), priceE=sanitizeText(d.price_en||"");
+        var imgUrl=saneImg(d.img);
         var card=document.createElement("article");
         card.className="dish reveal";
-        var imgHtml = '<div class="dish-img"><img src="'+d.img+'" alt="'+(d.alt_ar||"").replace(/"/g,"&quot;")+'"'+(d.alt_en?(' data-alt-en="'+d.alt_en.replace(/"/g,"&quot;")+'"'):'')+' loading="lazy">'+
-          (d.tag?('<span class="dish-tag" data-ar="'+(tag.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(tag.en||"").replace(/"/g,"&quot;")+'">'+ (tag.ar||"") +'</span>'):'') +
+        var imgHtml = '<div class="dish-img">'+
+          (imgUrl?('<img src="'+attrEsc(imgUrl)+'" alt="'+attrEsc(d.alt_ar||"")+'"'+(d.alt_en?(' data-alt-en="'+attrEsc(d.alt_en)+'"'):'')+' loading="lazy">'):'') +
+          (d.tag&&tagA?('<span class="dish-tag" data-ar="'+attrEsc(tagA)+'" data-en="'+attrEsc(tagE)+'">'+ tagA +'</span>'):'') +
           '</div>';
         var body =
           '<div class="dish-body">' +
             '<div class="dish-head">' +
-              '<h4 data-ar="'+(name.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(name.en||"").replace(/"/g,"&quot;")+'">'+ (name.ar||"") +'</h4>' +
-              '<span class="dish-price" data-currency data-ar="'+(d.price_ar||"").replace(/"/g,"&quot;")+'" data-en="'+(d.price_en||"").replace(/"/g,"&quot;")+'">'+ (d.price_ar||"") +'</span>' +
+              '<h4 data-ar="'+attrEsc(nameA)+'" data-en="'+attrEsc(nameE)+'">'+ nameA +'</h4>' +
+              '<span class="dish-price" data-currency data-ar="'+attrEsc(priceA)+'" data-en="'+attrEsc(priceE)+'">'+ priceA +'</span>' +
             '</div>' +
-            '<p data-ar="'+(desc.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(desc.en||"").replace(/"/g,"&quot;")+'">'+ (desc.ar||"") +'</p>' +
+            '<p data-ar="'+attrEsc(descA)+'" data-en="'+attrEsc(descE)+'">'+ descA +'</p>' +
           '</div>';
         card.innerHTML = imgHtml + body;
         panel.appendChild(card);
@@ -348,11 +405,13 @@ function applyGallery(C){
   mount.innerHTML = "";
   g.items.forEach(function(it){
     var cap = _pair(it.caption);
+    var capA=sanitizeText(cap.ar||""), capE=sanitizeText(cap.en||"");
+    var imgUrl=saneImg(it.img);
     var fig = document.createElement("figure");
     fig.className="gal reveal";
     fig.innerHTML =
-      '<img src="'+it.img+'" alt="'+(it.alt_ar||"").replace(/"/g,"&quot;")+'"'+(it.alt_en?(' data-alt-en="'+it.alt_en.replace(/"/g,"&quot;")+'"'):'')+' loading="lazy">' +
-      '<figcaption data-ar="'+(cap.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(cap.en||"").replace(/"/g,"&quot;")+'">'+ (cap.ar||"") +'</figcaption>';
+      (imgUrl?('<img src="'+attrEsc(imgUrl)+'" alt="'+attrEsc(it.alt_ar||"")+'"'+(it.alt_en?(' data-alt-en="'+attrEsc(it.alt_en)+'"'):'')+' loading="lazy">'):'') +
+      '<figcaption data-ar="'+attrEsc(capA)+'" data-en="'+attrEsc(capE)+'">'+ capA +'</figcaption>';
     mount.appendChild(fig);
   });
 }
@@ -416,15 +475,15 @@ function applyStatusBar(C){
 
   var ar = isClosed ? (closedLabel.ar||"") : (openLabel.ar||"");
   var en = isClosed ? (closedLabel.en||closedLabel.ar) : (openLabel.en||openLabel.ar);
-  txt.setAttribute("data-ar", ar);
-  txt.setAttribute("data-en", en);
-  txt.innerHTML = ar;
+  txt.setAttribute("data-ar", sanitizeText(ar));
+  txt.setAttribute("data-en", sanitizeText(en));
+  txt.innerHTML = sanitizeText(ar);
 
   if(reason && (isClosed || statusIsClosed)){
     reason.style.display = reasonText ? "block" : "none";
-    reason.setAttribute("data-ar", reasonText || "");
-    reason.setAttribute("data-en", closedReason.en || closedReason.ar || "");
-    reason.innerHTML = reasonText || "";
+    reason.setAttribute("data-ar", sanitizeText(reasonText || ""));
+    reason.setAttribute("data-en", sanitizeText(closedReason.en || closedReason.ar || ""));
+    reason.innerHTML = sanitizeText(reasonText || "");
   } else if(reason){
     reason.style.display = "none";
   }
@@ -436,8 +495,8 @@ function applyMap(C){
   var emb = C && C.parking && C.parking.embed;
   if(!frame || !emb) return;
   var p = _pair(emb);
-  var src = p.ar || p.en;
-  if(src) frame.setAttribute("src", src);
+  var src = (p.ar || p.en || "").trim();
+  if(/^https?:\/\//i.test(src)) frame.setAttribute("src", src);
 }
 
 /* ---------- 6d) الأسئلة الشائعة (FAQ) ---------- */
@@ -447,19 +506,19 @@ function applyFaq(C){
   if(!mount || !f.items) return;
   mount.innerHTML = "";
   f.items.forEach(function(it, i){
-    var q = _pair(it.q), a = _pair(it.a);
+    var qA=sanitizeText(q.ar||""), qE=sanitizeText(q.en||""), aA=sanitizeText(a.ar||""), aE=sanitizeText(a.en||"");
     var item = document.createElement("div");
     item.className = "faq-item";
     var qe = document.createElement("button");
     qe.type = "button";
     qe.className = "faq-q";
     qe.setAttribute("aria-expanded","false");
-    qe.innerHTML = '<span data-ar="'+(q.ar||"").replace(/"/g,"&quot;")+'" data-en="'+(q.en||"").replace(/"/g,"&quot;")+'">'+ (q.ar||"") +'</span><span class="faq-ico" aria-hidden="true">+</span>';
+    qe.innerHTML = '<span data-ar="'+attrEsc(qA)+'" data-en="'+attrEsc(qE)+'">'+ qA +'</span><span class="faq-ico" aria-hidden="true">+</span>';
     var ae = document.createElement("div");
     ae.className = "faq-a";
-    ae.setAttribute("data-ar", (a.ar||"").replace(/"/g,"&quot;"));
-    ae.setAttribute("data-en", (a.en||"").replace(/"/g,"&quot;"));
-    ae.innerHTML = a.ar || "";
+    ae.setAttribute("data-ar", attrEsc(aA));
+    ae.setAttribute("data-en", attrEsc(aE));
+    ae.innerHTML = aA;
     item.appendChild(qe);
     item.appendChild(ae);
     mount.appendChild(item);
