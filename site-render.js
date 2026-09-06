@@ -302,6 +302,21 @@ function applyPageMeta(C){
   document.documentElement.lang = "ar";
 }
 
+/* ---------- 2b) صور المقاطع الكبيرة (هيرو / القصة / المنيو) ---------- */
+function applyImages(C){
+  function set(img, val){
+    if(!img) return;
+    var safe = saneImg(val);
+    if(safe) img.setAttribute("src", safe);
+  }
+  if(C && C.hero && C.hero.image){
+    set(document.querySelector(".hero-bg img"), C.hero.image);
+    set(document.querySelector(".hero-img-frame img"), C.hero.image);
+  }
+  set(document.querySelector(".story-media .img-main"), C && C.story && C.story.image);
+  set(document.querySelector(".menu-image img"), C && C.menu && C.menu.menu_image);
+}
+
 /* ---------- 3) مميزاتنا (كروت الفليب) ---------- */
 function applySignatures(C){
   var s = C && C.signatures; if(!s) return;
@@ -605,6 +620,7 @@ function applySiteContent(C){
   if(!C) return;
   applyTheme(C);
   applyPageMeta(C);
+  applyImages(C);
   applyKeys(C);
   applySignatures(C);
   applyMenu(C);
