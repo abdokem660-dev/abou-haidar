@@ -714,7 +714,7 @@ window.siteContent = {
       "en": "Address"
     },
     "address_ar": "١٣ شارع سكة سليمان باشا، متفرع من إبراهيم اللقاني،<br>روكسي، مصر الجديدة، القاهرة",
-    "address_en": "13 Sikka Suleiman Pasha St, off Ibrahim El-Lakkani,<br>Roxy, Heliopolis, Cairo",
+    "address_en": "13 Sekket Soliman Pasha Street, off Ibrahim El-Laqani Street,<br>Roxy, Heliopolis, Cairo",
     "phone_title": {
       "ar": "الهاتف",
       "en": "Phone"
@@ -815,7 +815,8 @@ window.siteContent = {
       }
     },
     "address": {
-      "ar": "١٣ شارع سكة سليمان باشا، متفرع من إبراهيم اللقاني،<br>روكسي، مصر الجديدة، القاهرة"
+      "ar": "١٣ شارع سكة سليمان باشا، متفرع من إبراهيم اللقاني،<br>روكسي، مصر الجديدة، القاهرة",
+      "en": "13 Sekket Soliman Pasha Street, off Ibrahim El-Laqani Street,<br>Roxy, Heliopolis, Cairo"
     }
   },
   "footer": {
@@ -1001,7 +1002,7 @@ window.siteContent = {
         },
         "a": {
           "ar": "الموقع في ١٣ شارع سكة سليمان باشا، متفرع من إبراهيم اللقاني، روكسي، مصر الجديدة. يمكنك استخدام الخريطة أعلاه.",
-          "en": "We're at 13 Sikka Suleiman Pasha St, off Ibrahim El-Lakkani, Roxy, Heliopolis. Use the map above."
+          "en": "We're at 13 Sekket Soliman Pasha Street, off Ibrahim El-Laqani Street, Roxy, Heliopolis, Cairo. Use the map above."
         }
       },
       {
