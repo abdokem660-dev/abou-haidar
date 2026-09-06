@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://qhvmyiyxkwaziwnerwzy.supabase.co; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<script>/* منع التضمين (clickjacking) خارج إطار اللوحة فقط */ (function(){ try{ if(window.top!==window.self){ window.top.location.replace(window.location.href); } }catch(e){ window.location.href=window.location.href; } })();</script>
 <title>لوحة تحكم أبو حيدر</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -589,7 +593,7 @@
 var CFG = {
   url: localStorage.getItem("ah-url") || "https://qhvmyiyxkwaziwnerwzy.supabase.co",
   anon: localStorage.getItem("ah-anon") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFodm15aXl4a3dheml3bmVyd3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTE2MTQsImV4cCI6MjEwMzY2NzYxNH0.R3yatbTc7DqaYS1WPMI18Gf04FwqKyc6Cc7ZiZDSuik",
-  token: localStorage.getItem("ah-token") || "",
+  token: sessionStorage.getItem("ah-token") || "",
   email: localStorage.getItem("ah-email") || ""
 };
 var LAN = localStorage.getItem("ah-admin-lang") || "ar";
@@ -1099,12 +1103,24 @@ function buildThemeRows(){
 }
 
 /* ---------------- الحفظ الذرّي عبر RPC ---------------- */
+function validateWorkUrls(){
+  var bad=[], chk=function(v,t){ v=String(v==null?"":v).trim(); if(v && !/^https?:\/\//i.test(v)) bad.push(t); };
+  (WORK.menu&&WORK.menu.categories||{}).forEach(function(list){ (list||[]).forEach(function(d){ chk(d&&d.img,"صورة صنف"); }); });
+  (WORK.gallery&&WORK.gallery.items||[]).forEach(function(g){ chk(g&&g.img,"صورة معرض"); });
+  chk(WORK.meta&&WORK.meta.logo,"لوجو الموقع"); chk(WORK.menu&&WORK.menu.menu_image,"صورة المنيو");
+  chk(WORK.hero&&WORK.hero.image,"صورة الهيرو"); chk(WORK.story&&WORK.story.image,"صورة القصة");
+  var emb=WORK.parking&&WORK.parking.embed, esrc=emb&&(emb.ar||emb.en);
+  if(esrc && !/^https?:\/\//i.test(String(esrc).trim())) bad.push("خريطة الموقع");
+  return bad;
+}
 function saveAll(){
   var btn=document.getElementById("saveAll");
   var status=document.getElementById("saveStatus");
   btn.disabled=true; btn.textContent=tr("جارٍ الحفظ…");
   status.textContent=tr("جاري نشر التغييرات إلى الموقع…");
   syncFromForms();
+  var bad=validateWorkUrls();
+  if(bad.length){ btn.disabled=false; btn.textContent=tr("حفظ ونشر الموقع"); status.textContent=tr("رابط غير صالح")+": "+bad[0]; toast(tr("رابط غير صالح")+": "+bad[0],"err"); return Promise.resolve(); }
   var payload = {
     text: flattenTextRows(WORK),
     menu: buildMenuRows(),
@@ -1517,11 +1533,14 @@ function createOwner(){
   if(!CFG.anon||!CFG.url){ err.textContent=tr("اضبط إعدادات Supabase أولًا"); return; }
   if(!CFG.email){ err.textContent=tr("ضع بريد صاحب الحساب"); return; }
   if(!pass){ err.textContent=tr("ضع كلمة مرور أولية (٦ أحرف على الأقل)"); return; }
-  fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/signup",{
-    method:"POST", headers:{ "Content-Type":"application/json", apikey:CFG.anon },
-    body:JSON.stringify({ email:CFG.email, password:pass })
-  }).then(function(r){ return r.text().then(function(txt){ var j=null; if(txt&&txt.trim()){try{j=JSON.parse(txt);}catch(e){}} if(!r.ok) throw new Error((j&&(j.msg||j.error_description))||("HTTP "+r.status)); return j; }); })
-  .then(function(){ err.textContent=""; toast(T("owner_ok"),"ok"); document.getElementById("cfgSetupPass").value=""; })
+  api("POST","/rest/v1/rpc/admin_owner_exists",null).then(function(ex){
+    if(ex===true || ex==="true"){ err.textContent=tr("الحساب موجود مسبقًا — سجّل دخولك بدل إنشاء حساب جديد"); return; }
+    return fetch(CFG.url.replace(/\/+$/,"")+"/auth/v1/signup",{
+      method:"POST", headers:{ "Content-Type":"application/json", apikey:CFG.anon },
+      body:JSON.stringify({ email:CFG.email, password:pass })
+    }).then(function(r){ return r.text().then(function(txt){ var j=null; if(txt&&txt.trim()){try{j=JSON.parse(txt);}catch(e){}} if(!r.ok) throw new Error((j&&(j.msg||j.error_description))||("HTTP "+r.status)); return j; }); })
+    .then(function(){ err.textContent=""; toast(T("owner_ok"),"ok"); document.getElementById("cfgSetupPass").value=""; });
+  })
   ["catch"](function(e){ err.textContent=tr("فشل إنشاء الحساب")+": "+e.message; });
 }
 
@@ -1583,7 +1602,7 @@ function init(){
     if(typedEmail){ CFG.email=typedEmail; localStorage.setItem("ah-email",CFG.email); }
     loginRequest(typedEmail, passInput).then(function(j){
       CFG.token=j.access_token;
-      localStorage.setItem("ah-token",CFG.token);
+      sessionStorage.setItem("ah-token",CFG.token);
       return loadFromDB();
     }).then(enterDash)
     ["catch"](function(e){
@@ -1592,7 +1611,7 @@ function init(){
   };
 
   document.getElementById("logoutBtn").onclick=function(){
-    localStorage.removeItem("ah-token"); CFG.token="";
+    sessionStorage.removeItem("ah-token"); CFG.token="";
     showLogin(); document.getElementById("logoutBtn").style.display="none";
     document.getElementById("connChip").style.display="none";
   };
@@ -1604,7 +1623,7 @@ function init(){
       if(!u || u.error){ throw new Error("bad token"); }
       return loadFromDB();
     }).then(enterDash)["catch"](function(){
-      localStorage.removeItem("ah-token"); CFG.token="";
+      sessionStorage.removeItem("ah-token"); CFG.token="";
       document.getElementById("logoutBtn").style.display="none";
     });
   }
@@ -1623,7 +1642,7 @@ function changePassword(){
   if(n1!==n2){ toast(T("pass_mismatch"),"err"); return; }
   btn.disabled=true;
   verifyCurrentPassword(cur).then(function(j){
-    if(j.access_token){ CFG.token=j.access_token; localStorage.setItem("ah-token",CFG.token); }
+    if(j.access_token){ CFG.token=j.access_token; sessionStorage.setItem("ah-token",CFG.token); }
     return api("PUT","/auth/v1/user",{ password:n1 });
   }).then(function(){
     toast(T("pass_ok"),"ok");
